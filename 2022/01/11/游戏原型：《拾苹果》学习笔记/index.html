@@ -23,7 +23,7 @@
   <meta name="description" content="关于《游戏设计、原型与开发》此书中对unity的学习 关于这篇文章 学习本书也有一段时间，用博客来记录输出一些知识，巩固一下知识。《拾苹果》是本书的第一个数字化原型，也是最简单的，可以通过其初步了解unity以及简单游戏的流程，不过本书有点老了，17年的untiy相对于现在的unity已经有比较大的改变，不过基本逻辑并没什么变化，主要是基于代码的一些弃用和更新。如果有兴趣的话，19，20，21版本">
 <meta property="og:type" content="article">
 <meta property="og:title" content="游戏原型：《拾苹果》学习笔记">
-<meta property="og:url" content="http://example.com/2022/01/01/%E6%B8%B8%E6%88%8F%E5%8E%9F%E5%9E%8B%EF%BC%9A%E3%80%8A%E6%8B%BE%E8%8B%B9%E6%9E%9C%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:url" content="http://example.com/2022/01/11/%E6%B8%B8%E6%88%8F%E5%8E%9F%E5%9E%8B%EF%BC%9A%E3%80%8A%E6%8B%BE%E8%8B%B9%E6%9E%9C%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="南有青鸟">
 <meta property="og:description" content="关于《游戏设计、原型与开发》此书中对unity的学习 关于这篇文章 学习本书也有一段时间，用博客来记录输出一些知识，巩固一下知识。《拾苹果》是本书的第一个数字化原型，也是最简单的，可以通过其初步了解unity以及简单游戏的流程，不过本书有点老了，17年的untiy相对于现在的unity已经有比较大的改变，不过基本逻辑并没什么变化，主要是基于代码的一些弃用和更新。如果有兴趣的话，19，20，21版本">
 <meta property="og:locale" content="zh_CN">
@@ -55,14 +55,14 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/GtypeApple/20220806110111.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/GtypeApple/20220806110200.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/GtypeApple/20220806110215.png">
-<meta property="article:published_time" content="2022-01-01T02:29:00.000Z">
-<meta property="article:modified_time" content="2022-08-06T03:03:43.047Z">
+<meta property="article:published_time" content="2022-01-11T02:29:00.000Z">
+<meta property="article:modified_time" content="2022-08-06T03:04:22.785Z">
 <meta property="article:author" content="talentstream">
 <meta property="article:tag" content="Unity">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/GtypeApple/20220806103259.png">
 
-<link rel="canonical" href="http://example.com/2022/01/01/%E6%B8%B8%E6%88%8F%E5%8E%9F%E5%9E%8B%EF%BC%9A%E3%80%8A%E6%8B%BE%E8%8B%B9%E6%9E%9C%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+<link rel="canonical" href="http://example.com/2022/01/11/%E6%B8%B8%E6%88%8F%E5%8E%9F%E5%9E%8B%EF%BC%9A%E3%80%8A%E6%8B%BE%E8%8B%B9%E6%9E%9C%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
 
 <script id="page-configurations">
@@ -195,7 +195,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/01/%E6%B8%B8%E6%88%8F%E5%8E%9F%E5%9E%8B%EF%BC%9A%E3%80%8A%E6%8B%BE%E8%8B%B9%E6%9E%9C%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/11/%E6%B8%B8%E6%88%8F%E5%8E%9F%E5%9E%8B%EF%BC%9A%E3%80%8A%E6%8B%BE%E8%8B%B9%E6%9E%9C%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -218,14 +218,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-01-01 10:29:00" itemprop="dateCreated datePublished" datetime="2022-01-01T10:29:00+08:00">2022-01-01</time>
+              <time title="创建时间：2022-01-11 10:29:00" itemprop="dateCreated datePublished" datetime="2022-01-11T10:29:00+08:00">2022-01-11</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-06 11:03:43" itemprop="dateModified" datetime="2022-08-06T11:03:43+08:00">2022-08-06</time>
+                <time title="修改时间：2022-08-06 11:04:22" itemprop="dateModified" datetime="2022-08-06T11:04:22+08:00">2022-08-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -380,8 +380,8 @@
       <i class="fa fa-chevron-left"></i> 2021 广州核聚变
     </a></div>
       <div class="post-nav-item">
-    <a href="/2022/08/02/hello-world/" rel="next" title="Hello World">
-      Hello World <i class="fa fa-chevron-right"></i>
+    <a href="/2022/05/28/Blender-%E7%94%9C%E7%94%9C%E5%9C%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88Blender-Guru%EF%BC%89/" rel="next" title="Blender 甜甜圈学习笔记（Blender Guru）">
+      Blender 甜甜圈学习笔记（Blender Guru） <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -457,20 +457,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -506,12 +506,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">14k</span>
+    <span title="站点总字数">16k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">13 分钟</span>
+    <span title="站点阅读时长">15 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
