@@ -326,6 +326,253 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/25/c-%E6%B3%9B%E5%9E%8B%E5%85%A5%E9%97%A8-%E7%9F%A5%E8%AF%86%E5%B0%8F%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="talentstream">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="南有青鸟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/06/25/c-%E6%B3%9B%E5%9E%8B%E5%85%A5%E9%97%A8-%E7%9F%A5%E8%AF%86%E5%B0%8F%E8%AE%B0/" class="post-title-link" itemprop="url">c# 泛型入门 知识小记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-06-25 17:15:35" itemprop="dateCreated datePublished" datetime="2022-06-25T17:15:35+08:00">2022-06-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-06 15:24:14" itemprop="dateModified" datetime="2022-08-06T15:24:14+08:00">2022-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>为了理解泛型，首先要理解用于解决什么问题。当我们遇到功能非常相似的模块，只是处理的数据不一样（比如int、string等等），在以前程序员是用object来写的，但是还是很麻烦。在c#2.0时微软更新泛型，不仅解决了程序员不小心忘了该object是什么类型的问题，同时还解决了object（使用时从object自动转为int，不用时又变回object），不断被使用装箱、拆箱消耗的内存和处理器时间。</p>
+<h4 id="泛型的语法"><a href="#泛型的语法" class="headerlink" title="泛型的语法"></a>泛型的语法</h4><p>首先看一下泛型类的语法（下面的代码很随意，只为理解），虽然还有泛型方法、泛型接口、泛型委托，但是泛型类是最常使用的，而且根据面向对象的思想，我们也能很快的理解。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Queue</span>&lt;<span class="title">T</span>&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> T[] data;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">Dequeue</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">         T queueItem = <span class="keyword">this</span>.data[<span class="keyword">this</span>.tail]</span><br><span class="line">         ...</span><br><span class="line">         <span class="keyword">return</span> queueItem;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line">Queue&lt;<span class="built_in">int</span>&gt; intQueue = <span class="keyword">new</span> Queue&lt;<span class="built_in">int</span>&gt;();</span><br><span class="line">Queue&lt;Horse&gt; horseQueue = <span class="keyword">new</span> Queue&lt;Horse&gt;();</span><br></pre></td></tr></table></figure>
+
+<p>命名语法与普通类基本相同，但是会在变量名后面加个 &lt; T &gt;，T 就是一个占位符，其实&lt; &gt; 里面是什么都可以。然后是Dequeue方法，类型为T，返回也为T，跟泛型类的T是一致的。如果是int，这些T都会自动变为int。如果是string，这些T都会自动变为string。使用泛型类的语法基本上与普通类一样，Queue和&lt; T &gt;基本上是等于变量名，只不过T要自己设置。</p>
+<h4 id="泛型约束"><a href="#泛型约束" class="headerlink" title="泛型约束"></a>泛型约束</h4><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PrintableCollection</span>&lt;<span class="title">T</span>&gt; <span class="keyword">where</span> <span class="title">T</span>:<span class="title">IPrintable</span></span><br><span class="line"><span class="comment">//泛型约束其实就是接上接口，只是特定语法，如果不实现接口里的方法，编译器就会报错。</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="创建泛型类"><a href="#创建泛型类" class="headerlink" title="创建泛型类"></a>创建泛型类</h4><p>本例子采用二叉树理论，二叉树是很容易理解的数据结构，而且使用频率很高，作为教学基本上很容易理解泛型。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">BinaryTree</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Tree</span>&lt;<span class="title">TItem</span>&gt; <span class="keyword">where</span> <span class="title">TItem</span>: <span class="title">IComparable</span>&lt;<span class="title">TItem</span>&gt;<span class="comment">//泛型类定义</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">public</span> TItem NodeData &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;<span class="comment">//节点值</span></span><br><span class="line">        <span class="keyword">public</span> Tree&lt;TItem&gt; LeftTree &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;<span class="comment">//左子树</span></span><br><span class="line">        <span class="keyword">public</span> Tree&lt;TItem&gt; RightTree &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;<span class="comment">//右子树</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Tree</span>(<span class="params">TItem nodeValue</span>)<span class="comment">//构造器</span></span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">this</span>.NodeData = nodeValue;</span><br><span class="line">            <span class="keyword">this</span>.LeftTree = <span class="literal">null</span>;</span><br><span class="line">            <span class="keyword">this</span>.RightTree = <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Insert</span>(<span class="params">TItem newItem</span>)<span class="comment">//插入二叉树,小的在左边，大的在右边</span></span></span><br><span class="line">        &#123;</span><br><span class="line">            TItem currentNodeValue = <span class="keyword">this</span>.NodeData;</span><br><span class="line">            <span class="keyword">if</span>(currentNodeValue.CompareTo(newItem) &gt; <span class="number">0</span>) </span><br><span class="line">            <span class="comment">//当前节点值大于要插入的值，返回大于0的值</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(<span class="keyword">this</span>.LeftTree ==<span class="literal">null</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">this</span>.LeftTree = <span class="keyword">new</span> Tree&lt;TItem&gt;(newItem);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">this</span>.LeftTree.Insert(newItem);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">this</span>.RightTree == <span class="literal">null</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">this</span>.RightTree = <span class="keyword">new</span> Tree&lt;TItem&gt;(newItem);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">this</span>.RightTree.Insert(newItem);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">WalkTree</span>()<span class="comment">//Left -&gt; Center -&gt; Right（左根右前序遍历)</span></span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">string</span> result = <span class="string">&quot;&quot;</span>;</span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">this</span>.LeftTree!=<span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                result = <span class="keyword">this</span>.LeftTree.WalkTree();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            result += <span class="string">$&quot; <span class="subst">&#123;<span class="keyword">this</span>.NodeData.ToString()&#125;</span>&quot;</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">this</span>.RightTree !=<span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                result += <span class="keyword">this</span>.RightTree.WalkTree();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> BinaryTree;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title">BinaryTreeTest</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            Tree&lt;<span class="built_in">int</span>&gt; tree1 = <span class="keyword">new</span> Tree&lt;<span class="built_in">int</span>&gt;(<span class="number">10</span>);</span><br><span class="line">            tree1.Insert(<span class="number">5</span>);</span><br><span class="line">            tree1.Insert(<span class="number">11</span>);</span><br><span class="line">            tree1.Insert(<span class="number">5</span>);</span><br><span class="line">            tree1.Insert(<span class="number">-12</span>);</span><br><span class="line">            tree1.Insert(<span class="number">15</span>);</span><br><span class="line">            tree1.Insert(<span class="number">0</span>);</span><br><span class="line">            tree1.Insert(<span class="number">14</span>);</span><br><span class="line">            tree1.Insert(<span class="number">-8</span>);</span><br><span class="line">            tree1.Insert(<span class="number">10</span>);</span><br><span class="line">            tree1.Insert(<span class="number">8</span>);</span><br><span class="line">            tree1.Insert(<span class="number">8</span>);</span><br><span class="line"></span><br><span class="line">            <span class="built_in">string</span> sortedData = tree1.WalkTree();</span><br><span class="line">            Console.WriteLine(<span class="string">$&quot;Sorted data is: <span class="subst">&#123;sortedData&#125;</span>&quot;</span>);</span><br><span class="line"></span><br><span class="line">            Tree&lt;<span class="built_in">string</span>&gt; tree2 = <span class="keyword">new</span> Tree&lt;<span class="built_in">string</span>&gt;(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">            tree2.Insert(<span class="string">&quot;World&quot;</span>);</span><br><span class="line">            tree2.Insert(<span class="string">&quot;How&quot;</span>);</span><br><span class="line">            tree2.Insert(<span class="string">&quot;Are&quot;</span>);</span><br><span class="line">            tree2.Insert(<span class="string">&quot;You&quot;</span>);</span><br><span class="line">            tree2.Insert(<span class="string">&quot;Today&quot;</span>);</span><br><span class="line">            tree2.Insert(<span class="string">&quot;I&quot;</span>);</span><br><span class="line">            tree2.Insert(<span class="string">&quot;Hope&quot;</span>);</span><br><span class="line">            tree2.Insert(<span class="string">&quot;You&quot;</span>);</span><br><span class="line">            tree2.Insert(<span class="string">&quot;Are&quot;</span>);</span><br><span class="line">            tree2.Insert(<span class="string">&quot;Feeling&quot;</span>);</span><br><span class="line">            tree2.Insert(<span class="string">&quot;Well&quot;</span>);</span><br><span class="line">            tree2.Insert(<span class="string">&quot;!&quot;</span>);</span><br><span class="line"></span><br><span class="line">            sortedData = tree2.WalkTree();</span><br><span class="line">            Console.WriteLine(<span class="string">$&quot;Sorted data is: <span class="subst">&#123;sortedData&#125;</span>&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码是用两个c#文件，练习引用程序集，写在一起也是可以的。</p>
+<h4 id="创建泛型方法"><a href="#创建泛型方法" class="headerlink" title="创建泛型方法"></a>创建泛型方法</h4><p>由于上述代码Insert太多了，用泛型方法来实现只有一次方法调用。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> BinaryTree;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title">BuildTree</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">InsertIntoTree</span>&lt;<span class="title">TItem</span>&gt;(<span class="params"><span class="keyword">ref</span> Tree&lt;TItem&gt; tree,</span></span></span><br><span class="line"><span class="params"><span class="function">            <span class="keyword">params</span> TItem[] data</span>) <span class="keyword">where</span> TItem:IComparable&lt;TItem&gt;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">        <span class="comment">//泛型方法，语法与普通方法基本相同，解释一下命名</span></span></span><br><span class="line"><span class="function">        <span class="comment">//获取两个参数，一个是Tree&lt;Item&gt;类型的tree，一个是名为data的参数数组</span></span></span><br><span class="line"><span class="function">        <span class="comment">//指定TItem必须是使用了泛型IComparable&lt;TItem&gt;接口的类型</span></span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">foreach</span>(TItem datum <span class="keyword">in</span> data)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(tree ==<span class="literal">null</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    tree = <span class="keyword">new</span> Tree&lt;TItem&gt;(datum);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    tree.Insert(datum);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            Tree&lt;<span class="built_in">char</span>&gt; charTree = <span class="literal">null</span>;</span><br><span class="line">            InsertIntoTree&lt;<span class="built_in">char</span>&gt;(<span class="keyword">ref</span> charTree, <span class="string">&#x27;M&#x27;</span>, <span class="string">&#x27;X&#x27;</span>, <span class="string">&#x27;A&#x27;</span>, <span class="string">&#x27;M&#x27;</span>, <span class="string">&#x27;Z&#x27;</span>,<span class="string">&#x27;Z&#x27;</span>,<span class="string">&#x27;N&#x27;</span>);</span><br><span class="line">            <span class="built_in">string</span> sortedData = charTree.WalkTree();</span><br><span class="line">            Console.WriteLine(<span class="string">$&quot;Sorted data is: <span class="subst">&#123;sortedData&#125;</span>&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="学习参考"><a href="#学习参考" class="headerlink" title="学习参考"></a>学习参考</h4><ul>
+<li>zhuanlan.zhihu.com&#x2F;p&#x2F;348761322</li>
+<li>《visualc#入门到精通》- 第17章</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/02/c-%E6%8E%A5%E5%8F%A3%E5%92%8C%E6%8A%BD%E8%B1%A1%E7%B1%BB-%E7%9F%A5%E8%AF%86%E5%B0%8F%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="talentstream">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="南有青鸟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/06/02/c-%E6%8E%A5%E5%8F%A3%E5%92%8C%E6%8A%BD%E8%B1%A1%E7%B1%BB-%E7%9F%A5%E8%AF%86%E5%B0%8F%E8%AE%B0/" class="post-title-link" itemprop="url">c# 接口和抽象类 知识小记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-06-02 23:06:42" itemprop="dateCreated datePublished" datetime="2022-06-02T23:06:42+08:00">2022-06-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-06 15:16:06" itemprop="dateModified" datetime="2022-08-06T15:16:06+08:00">2022-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>之所以把接口和抽象类放在一起说，是因为它们的含义相近但又有不同。相同的地方是，我们需要利用接口和抽象类来定义<strong>有什么</strong>，而让<strong>做什么</strong>放在更细分的类里。</p>
+<ul>
+<li><p>在抽象类中，我们可以创造需要由派生类实现的功能。</p>
+</li>
+<li><p>在接口中，我们定义功能，但无法实现。派生类可以可以拓展接口并实现函数。</p>
+</li>
+</ul>
+<p>听起来感觉差不多，但是我们明确一下，抽象类是<strong>对类本质的抽象</strong>，表达的是 is 的关系，比如：SUV is a Car。接口是对<strong>行为的抽象</strong>，表达的是 like 的关系，比如：<strong>SUV like a Aircraft(假设SUV会飞）</strong>，但是<strong>本质上</strong>还是 SUV is a Car.接口的核心是<strong>定义行为</strong>，对于实现主题是谁、是如何实现的，接口并不关心。</p>
+<!-- wp:table -->
+<figure class="wp-block-table"><table><tbody><tr><th>比较项</th><th>接口</th><th>抽象类</th></tr><tr><td>访问修饰符(Access Specifier)</td><td>不能为接口的方法指定访问<a href="https://www.zhihu.com/search?q=%E4%BF%AE%E9%A5%B0%E7%AC%A6&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A%22463345426%22%7D" target="_blank" rel="noreferrer noopener">修饰符</a>。默认为public</td><td>可以为每个方法指定访问修饰符。Public，private，protect ...</td></tr><tr><td>实现(Implementation)</td><td>接口定义的方法只能包含声明，不能包含任何的实现</td><td>抽象类可以为方法提供完整的实现，也可以仅仅定义抽象方法由派生类实现。</td></tr><tr><td>速度(Speed)</td><td>相比较而言接口稍慢</td><td>抽象类快一些</td></tr><tr><td>实例化(Instantiate)</td><td>不可实例化</td><td>不可实例化</td></tr><tr><td>字段(Fields)</td><td>不能定义字段</td><td>可以定义字段</td></tr><tr><td>属性(Properties)</td><td>可以定义属性，但一般没有实现。<br>从C# 8.0开始可以由默认实现</td><td>可以定义属性并由可以有完整实现</td></tr><tr><td>继承(Inherits)</td><td>一个派生类可以继承一个或者多个接口</td><td>一个派生类仅能继承一个抽象类</td></tr><tr><td>构造函数(Constructor)</td><td>接口不能包含构造函数</td><td>抽象类可以包含并实现构造函数</td></tr><tr><td>一般用来定义</td><td>接口一般用来定义一个类的外部的能力</td><td>抽象类用于定义类的实际标识，并将其用作对象或相同类型</td></tr><tr><td>添加新方法</td><td>如果将新方法添加到接口，你需要跟踪所有接口的实现位置并添加该方法的实现</td><td>如果将新方法添加到抽象类，你可以添加一个默认实现，其他地方的代码不需要改变就可以正常工作。</td></tr></tbody></table></figure>
+<!-- /wp:table -->
+
+<p>接下来看一下具体讲解和代码示范，一看便知道大概是怎么用的了，但是具体使用还是根据项目经验来</p>
+<h4 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h4><p>接口有一些小细节和规则</p>
+<ul>
+<li>方法名和返回类型完全匹配</li>
+<li>所有参数（包括ref和out关键字修饰符）都完全匹配</li>
+<li>用于实现接口的所有隐式实现方法都必须具有public可访问性、但使用显示接口实现则不应该添加访问修饰符</li>
+<li>不能在接口中定义任何字段。字段本质上是类或结构的实现细节</li>
+<li>不能定义任何构造器和析构器，即构造函数和析构函数</li>
+<li>不能为任何方法指定访问修饰符。接口所有方法都隐式为公共方法</li>
+<li>不能再接口中嵌套任何类型（例如枚举、结构、类或其他接口)</li>
+<li>接口可以继承另一个接口，但不允许从结构或类继承。</li>
+</ul>
+<p>主程序代码：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title">ConsoleApp1</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            Book book = <span class="keyword">new</span> Book();<span class="comment">//实例化一个Book类</span></span><br><span class="line">            IBook bookDetail = book;<span class="comment">//通过接口来引用类，就跟基类变量能引用派生类对象一样</span></span><br><span class="line">            bookDetail.ID = <span class="number">1001</span>;</span><br><span class="line">            bookDetail.Name = <span class="string">&quot;tynam&quot;</span>;</span><br><span class="line">            bookDetail.Price = <span class="number">60</span>;</span><br><span class="line"></span><br><span class="line">            Console.WriteLine(<span class="string">&quot;id：&#123;0&#125;&quot;</span>, bookDetail.ID);</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;书名：&#123;0&#125;&quot;</span>, bookDetail.Name);</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;定价：&#123;0&#125;&quot;</span>, bookDetail.Price);</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;售卖价：&#123;0&#125;&quot;</span>, bookDetail.SalePrice(<span class="number">8</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Book类代码：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Text;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title">ConsoleApp1</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Book</span> : <span class="title">IBook</span><span class="comment">//拓展IBook接口</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">int</span> IBook.ID &#123; <span class="keyword">get</span>;<span class="keyword">set</span>; &#125;<span class="comment">//显示实现接口</span></span><br><span class="line">        <span class="built_in">string</span> IBook.Name &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">        <span class="keyword">public</span> <span class="built_in">double</span> Price &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;<span class="comment">//隐式实现接口，但是必须要加public</span></span><br><span class="line"></span><br><span class="line">        <span class="built_in">double</span> IBook.SalePrice(<span class="built_in">int</span> discount)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">double</span> salePrice = Price * discount * <span class="number">0.1</span>;</span><br><span class="line">            <span class="keyword">return</span> salePrice;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>IBook接口代码：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Text;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title">ConsoleApp1</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">interface</span> <span class="title">IBook</span><span class="comment">//仅仅有，没得实现</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">int</span> ID &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">        <span class="built_in">string</span> Name &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">        <span class="built_in">double</span> Price &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">        <span class="function"><span class="built_in">double</span> <span class="title">SalePrice</span>(<span class="params"><span class="built_in">int</span> discount</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h4><p>抽象类同样也有一些小细节和规则</p>
+<ul>
+<li>抽象类只作声明，而不包含实现，抽象方法旨在继承后实现，所以不能用private修饰</li>
+<li>抽象类不能被直接实例化</li>
+<li>抽象类可以没有抽象方法，但是有了抽象方法就一定是要声明类为抽象类</li>
+<li>抽象类的派生类不是抽象类，必须重写抽象类的所有抽象方法</li>
+</ul>
+<p>主程序代码：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">ConsoleApp2</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            Human human = <span class="keyword">new</span> Human();</span><br><span class="line">            human.Eat();</span><br><span class="line">            human.Walk();</span><br><span class="line">            human.Speak();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>BaseClass抽象类代码：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Text;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">ConsoleApp2</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">BaseClass</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">Eat</span>()</span>;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">Walk</span>()</span>;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">Speak</span>()</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Human类代码:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Text;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">ConsoleApp2</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Human</span> : <span class="title">BaseClass</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Eat</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;I can eat&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Walk</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;I can eat&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Speak</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;I can eat&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="学习参考"><a href="#学习参考" class="headerlink" title="学习参考"></a>学习参考</h4><ul>
+<li>zhuanlan.zhihu.com&#x2F;p&#x2F;51977526</li>
+<li>《visual c#从入门到精通》- 第十三章</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/28/Blender-%E7%94%9C%E7%94%9C%E5%9C%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88Blender-Guru%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -429,6 +676,125 @@
 <p>11.随机选择，左上角Select -&gt; Select Random</p>
 <p>12.在比例模式按钮旁边可以选择比例模式的类型（可以随便尝试一下）</p>
 <p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/BlenderLearn/20220806112939.png" alt="img"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/07/c-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86-%E7%9F%A5%E8%AF%86%E5%B0%8F%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="talentstream">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="南有青鸟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/07/c-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86-%E7%9F%A5%E8%AF%86%E5%B0%8F%E8%AE%B0/" class="post-title-link" itemprop="url">c# 异常处理 知识小记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-07 14:56:20" itemprop="dateCreated datePublished" datetime="2022-05-07T14:56:20+08:00">2022-05-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-06 15:05:59" itemprop="dateModified" datetime="2022-08-06T15:05:59+08:00">2022-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近在系统学习c#的知识点，有一些知识点比较散且使用频率不高，现在此记录，便于复习。</p>
+<h4 id="关于c-的异常处理"><a href="#关于c-的异常处理" class="headerlink" title="关于c#的异常处理"></a>关于c#的异常处理</h4><p>一句话概括，异常是程序执行期间出现的问题，异常处理的目的是为了维护程序的健壮性和稳定性。举个栗子，比如说除以0，用户输入的数据与预设数据类型不符，数组越界，栈溢出等等。c#给我们提供了一些易于使用的解决方法。主要由四个关键词组成（当然还有其他）： <strong>try，catch，throw，finally</strong></p>
+<ul>
+<li><strong>try</strong>：用于存放可能会出现问题的语句，后面可以跟多个catch</li>
+<li><strong>catch</strong>：用于捕捉异常，通常跟在try后面</li>
+<li><strong>throw</strong>：用于抛出异常，是的，你没看错，比如说为了限制输入范围，限制输入的数字为1~10之间，主要用于自定义的限制</li>
+<li><strong>finally</strong>：不管是否有异常，里面的代码块必定执行，通常跟try一起。</li>
+</ul>
+<p>在菜鸟教程中，有一个易于理解的伪代码</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span></span><br><span class="line">&#123;</span><br><span class="line">   <span class="comment">// 引起异常的语句</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>( ExceptionName e1 )</span><br><span class="line">&#123;</span><br><span class="line">   <span class="comment">// 错误处理代码</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>( ExceptionName e2 )</span><br><span class="line">&#123;</span><br><span class="line">   <span class="comment">// 错误处理代码</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>( ExceptionName eN )</span><br><span class="line">&#123;</span><br><span class="line">   <span class="comment">// 错误处理代码</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">finally</span></span><br><span class="line">&#123;</span><br><span class="line">   <span class="comment">// 要执行的语句</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="c-中的异常类"><a href="#c-中的异常类" class="headerlink" title="c#中的异常类"></a>c#中的异常类</h4><p>C# 异常是使用类来表示的。C# 中的异常类主要是直接或间接地派生于 System.Exception 类。</p>
+<p>System.ApplicationException 和 System.SystemException 类是派生于 System.Exception 类的异常类。</p>
+<p>System.ApplicationException 类支持由应用程序生成的异常。所以程序员定义的异常都应派生自该类。</p>
+<p>System.SystemException 类是所有预定义的系统异常的基类。</p>
+<p>下表列出了一些派生自 System.SystemException 类的预定义的异常类：</p>
+<!-- wp:table -->
+<figure class="wp-block-table"><table><thead><tr><th>异常类</th><th>描述</th></tr></thead><tbody><tr><td>System.IO.IOException</td><td>处理 I/O 错误。</td></tr><tr><td>System.IndexOutOfRangeException</td><td>处理当方法指向超出范围的数组索引时生成的错误。</td></tr><tr><td>System.ArrayTypeMismatchException</td><td>处理当数组类型不匹配时生成的错误。</td></tr><tr><td>System.NullReferenceException</td><td>处理当依从一个空对象时生成的错误。</td></tr><tr><td>System.DivideByZeroException</td><td>处理当除以零时生成的错误。</td></tr><tr><td>System.InvalidCastException</td><td>处理在类型转换期间生成的错误。</td></tr><tr><td>System.OutOfMemoryException</td><td>处理空闲内存不足生成的错误。</td></tr><tr><td>System.StackOverflowException</td><td>处理栈溢出生成的错误。</td></tr></tbody></table></figure>
+<!-- /wp:table -->
+
+<h4 id="通过代码来学习简单的异常处理"><a href="#通过代码来学习简单的异常处理" class="headerlink" title="通过代码来学习简单的异常处理"></a>通过代码来学习简单的异常处理</h4><p>第一个是关于除以0的例子</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title">ErrorHandlingApplication</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">DivNumbers</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">int</span> result;</span><br><span class="line">        DivNumbers()</span><br><span class="line">        &#123;</span><br><span class="line">            result = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">division</span>(<span class="params"><span class="built_in">int</span> num1, <span class="built_in">int</span> num2</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//用于防止可能出现异常的代码块</span></span><br><span class="line">            <span class="keyword">try</span></span><br><span class="line">            &#123;</span><br><span class="line">                result = num1 / num2;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//用于捕捉异常，有多种写法</span></span><br><span class="line">            <span class="comment">//1. catch （系统自带异常 e）比如下面的DivideByZeroException</span></span><br><span class="line">            <span class="comment">//2. catch  (Exception e) 常规所有异常</span></span><br><span class="line">            <span class="comment">//3. catch 可以省略括号，等同于第二种写法，但是有时候要用的参数，根据情况使用</span></span><br><span class="line">            <span class="comment">//4. catch （程序员自定义异常 e) &lt;-需要注意的是，e只是一个参数名，不必过于纠结-&gt;</span></span><br><span class="line">            <span class="keyword">catch</span> (DivideByZeroException e)</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(<span class="string">&quot;Exception caught: &#123;0&#125;&quot;</span>, e);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//不管是否有错误，始终运行的代码</span></span><br><span class="line">            <span class="keyword">finally</span></span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(<span class="string">&quot;Result: &#123;0&#125;&quot;</span>, result);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            DivNumbers d = <span class="keyword">new</span> DivNumbers();</span><br><span class="line">            d.division(<span class="number">25</span>, <span class="number">0</span>);</span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第二个例子，程序员自定义异常类型</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">ConsoleApp3</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">int</span> age;</span><br><span class="line">            <span class="keyword">try</span></span><br><span class="line">            &#123;</span><br><span class="line">                age = <span class="built_in">int</span>.Parse(Console.ReadLine());</span><br><span class="line">                <span class="keyword">if</span> (age &lt; <span class="number">18</span> || age &gt; <span class="number">45</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> AgeException(<span class="string">&quot;年龄必须在18到45岁之间！&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    Console.WriteLine(age);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span> (AgeException e)</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(e);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span> (Exception e)</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(e);</span><br><span class="line">                Console.WriteLine();</span><br><span class="line">                Console.WriteLine(<span class="string">&quot;输入数据错误&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">finally</span></span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine();</span><br><span class="line">                Console.WriteLine(<span class="string">&quot;HELLO&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">AgeException</span>: <span class="title">ApplicationException</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AgeException</span>(<span class="params"><span class="built_in">string</span> message</span>) : <span class="title">base</span>(<span class="params">message</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="关于catch的小知识点"><a href="#关于catch的小知识点" class="headerlink" title="关于catch的小知识点"></a>关于catch的小知识点</h4><p>不管是程序员自定义的异常类型，还是系统自带的异常类型，都继承于 System.Execption 类。catch的规则是执行完第一个符合异常的 catch 后面就不会再执行了，所以说越具体的要放在越前面。</p>
+<h4 id="学习参考"><a href="#学习参考" class="headerlink" title="学习参考"></a>学习参考</h4><ul>
+<li>菜鸟教程 - <a target="_blank" rel="noopener" href="https://www.runoob.com/csharp/csharp-exception-handling.html">https://www.runoob.com/csharp/csharp-exception-handling.html</a></li>
+<li>微软官方doc - <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/fundamentals/exceptions/">https://docs.microsoft.com/zh-cn/dotnet/csharp/fundamentals/exceptions/</a></li>
+<li>《visual c#从入门到精通》- 第六章</li>
+</ul>
 
       
     </div>
@@ -913,7 +1279,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -926,7 +1292,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -962,12 +1328,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">16k</span>
+    <span title="站点总字数">27k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">15 分钟</span>
+    <span title="站点阅读时长">24 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

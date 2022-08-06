@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="为了理解泛型，首先要理解用于解决什么问题。当我们遇到功能非常相似的模块，只是处理的数据不一样（比如int、string等等），在以前程序员是用object来写的，但是还是很麻烦。在c#2.0时微软更新泛型，不仅解决了程序员不小心忘了该object是什么类型的问题，同时还解决了object（使用时从object自动转为int，不用时又变回object），不断被使用装箱、拆箱消耗的内存和处理器时间。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c# 泛型入门 知识小记">
+<meta property="og:url" content="http://example.com/2022/06/25/c-%E6%B3%9B%E5%9E%8B%E5%85%A5%E9%97%A8-%E7%9F%A5%E8%AF%86%E5%B0%8F%E8%AE%B0/index.html">
+<meta property="og:site_name" content="南有青鸟">
+<meta property="og:description" content="为了理解泛型，首先要理解用于解决什么问题。当我们遇到功能非常相似的模块，只是处理的数据不一样（比如int、string等等），在以前程序员是用object来写的，但是还是很麻烦。在c#2.0时微软更新泛型，不仅解决了程序员不小心忘了该object是什么类型的问题，同时还解决了object（使用时从object自动转为int，不用时又变回object），不断被使用装箱、拆箱消耗的内存和处理器时间。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-06-25T09:15:35.000Z">
+<meta property="article:modified_time" content="2022-08-06T07:24:14.621Z">
+<meta property="article:author" content="talentstream">
+<meta property="article:tag" content="c#">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/06/25/c-%E6%B3%9B%E5%9E%8B%E5%85%A5%E9%97%A8-%E7%9F%A5%E8%AF%86%E5%B0%8F%E8%AE%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>c# 泛型入门 知识小记 | 南有青鸟</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">南有青鸟</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/25/c-%E6%B3%9B%E5%9E%8B%E5%85%A5%E9%97%A8-%E7%9F%A5%E8%AF%86%E5%B0%8F%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="talentstream">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="南有青鸟">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          c# 泛型入门 知识小记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-06-25 17:15:35" itemprop="dateCreated datePublished" datetime="2022-06-25T17:15:35+08:00">2022-06-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-06 15:24:14" itemprop="dateModified" datetime="2022-08-06T15:24:14+08:00">2022-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>为了理解泛型，首先要理解用于解决什么问题。当我们遇到功能非常相似的模块，只是处理的数据不一样（比如int、string等等），在以前程序员是用object来写的，但是还是很麻烦。在c#2.0时微软更新泛型，不仅解决了程序员不小心忘了该object是什么类型的问题，同时还解决了object（使用时从object自动转为int，不用时又变回object），不断被使用装箱、拆箱消耗的内存和处理器时间。</p>
+<h4 id="泛型的语法"><a href="#泛型的语法" class="headerlink" title="泛型的语法"></a>泛型的语法</h4><p>首先看一下泛型类的语法（下面的代码很随意，只为理解），虽然还有泛型方法、泛型接口、泛型委托，但是泛型类是最常使用的，而且根据面向对象的思想，我们也能很快的理解。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Queue</span>&lt;<span class="title">T</span>&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> T[] data;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">Dequeue</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">         T queueItem = <span class="keyword">this</span>.data[<span class="keyword">this</span>.tail]</span><br><span class="line">         ...</span><br><span class="line">         <span class="keyword">return</span> queueItem;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line">Queue&lt;<span class="built_in">int</span>&gt; intQueue = <span class="keyword">new</span> Queue&lt;<span class="built_in">int</span>&gt;();</span><br><span class="line">Queue&lt;Horse&gt; horseQueue = <span class="keyword">new</span> Queue&lt;Horse&gt;();</span><br></pre></td></tr></table></figure>
+
+<p>命名语法与普通类基本相同，但是会在变量名后面加个 &lt; T &gt;，T 就是一个占位符，其实&lt; &gt; 里面是什么都可以。然后是Dequeue方法，类型为T，返回也为T，跟泛型类的T是一致的。如果是int，这些T都会自动变为int。如果是string，这些T都会自动变为string。使用泛型类的语法基本上与普通类一样，Queue和&lt; T &gt;基本上是等于变量名，只不过T要自己设置。</p>
+<h4 id="泛型约束"><a href="#泛型约束" class="headerlink" title="泛型约束"></a>泛型约束</h4><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PrintableCollection</span>&lt;<span class="title">T</span>&gt; <span class="keyword">where</span> <span class="title">T</span>:<span class="title">IPrintable</span></span><br><span class="line"><span class="comment">//泛型约束其实就是接上接口，只是特定语法，如果不实现接口里的方法，编译器就会报错。</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="创建泛型类"><a href="#创建泛型类" class="headerlink" title="创建泛型类"></a>创建泛型类</h4><p>本例子采用二叉树理论，二叉树是很容易理解的数据结构，而且使用频率很高，作为教学基本上很容易理解泛型。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">BinaryTree</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Tree</span>&lt;<span class="title">TItem</span>&gt; <span class="keyword">where</span> <span class="title">TItem</span>: <span class="title">IComparable</span>&lt;<span class="title">TItem</span>&gt;<span class="comment">//泛型类定义</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">public</span> TItem NodeData &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;<span class="comment">//节点值</span></span><br><span class="line">        <span class="keyword">public</span> Tree&lt;TItem&gt; LeftTree &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;<span class="comment">//左子树</span></span><br><span class="line">        <span class="keyword">public</span> Tree&lt;TItem&gt; RightTree &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;<span class="comment">//右子树</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Tree</span>(<span class="params">TItem nodeValue</span>)<span class="comment">//构造器</span></span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">this</span>.NodeData = nodeValue;</span><br><span class="line">            <span class="keyword">this</span>.LeftTree = <span class="literal">null</span>;</span><br><span class="line">            <span class="keyword">this</span>.RightTree = <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Insert</span>(<span class="params">TItem newItem</span>)<span class="comment">//插入二叉树,小的在左边，大的在右边</span></span></span><br><span class="line">        &#123;</span><br><span class="line">            TItem currentNodeValue = <span class="keyword">this</span>.NodeData;</span><br><span class="line">            <span class="keyword">if</span>(currentNodeValue.CompareTo(newItem) &gt; <span class="number">0</span>) </span><br><span class="line">            <span class="comment">//当前节点值大于要插入的值，返回大于0的值</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(<span class="keyword">this</span>.LeftTree ==<span class="literal">null</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">this</span>.LeftTree = <span class="keyword">new</span> Tree&lt;TItem&gt;(newItem);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">this</span>.LeftTree.Insert(newItem);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">this</span>.RightTree == <span class="literal">null</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">this</span>.RightTree = <span class="keyword">new</span> Tree&lt;TItem&gt;(newItem);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">this</span>.RightTree.Insert(newItem);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">WalkTree</span>()<span class="comment">//Left -&gt; Center -&gt; Right（左根右前序遍历)</span></span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">string</span> result = <span class="string">&quot;&quot;</span>;</span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">this</span>.LeftTree!=<span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                result = <span class="keyword">this</span>.LeftTree.WalkTree();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            result += <span class="string">$&quot; <span class="subst">&#123;<span class="keyword">this</span>.NodeData.ToString()&#125;</span>&quot;</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">this</span>.RightTree !=<span class="literal">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                result += <span class="keyword">this</span>.RightTree.WalkTree();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> BinaryTree;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title">BinaryTreeTest</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            Tree&lt;<span class="built_in">int</span>&gt; tree1 = <span class="keyword">new</span> Tree&lt;<span class="built_in">int</span>&gt;(<span class="number">10</span>);</span><br><span class="line">            tree1.Insert(<span class="number">5</span>);</span><br><span class="line">            tree1.Insert(<span class="number">11</span>);</span><br><span class="line">            tree1.Insert(<span class="number">5</span>);</span><br><span class="line">            tree1.Insert(<span class="number">-12</span>);</span><br><span class="line">            tree1.Insert(<span class="number">15</span>);</span><br><span class="line">            tree1.Insert(<span class="number">0</span>);</span><br><span class="line">            tree1.Insert(<span class="number">14</span>);</span><br><span class="line">            tree1.Insert(<span class="number">-8</span>);</span><br><span class="line">            tree1.Insert(<span class="number">10</span>);</span><br><span class="line">            tree1.Insert(<span class="number">8</span>);</span><br><span class="line">            tree1.Insert(<span class="number">8</span>);</span><br><span class="line"></span><br><span class="line">            <span class="built_in">string</span> sortedData = tree1.WalkTree();</span><br><span class="line">            Console.WriteLine(<span class="string">$&quot;Sorted data is: <span class="subst">&#123;sortedData&#125;</span>&quot;</span>);</span><br><span class="line"></span><br><span class="line">            Tree&lt;<span class="built_in">string</span>&gt; tree2 = <span class="keyword">new</span> Tree&lt;<span class="built_in">string</span>&gt;(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">            tree2.Insert(<span class="string">&quot;World&quot;</span>);</span><br><span class="line">            tree2.Insert(<span class="string">&quot;How&quot;</span>);</span><br><span class="line">            tree2.Insert(<span class="string">&quot;Are&quot;</span>);</span><br><span class="line">            tree2.Insert(<span class="string">&quot;You&quot;</span>);</span><br><span class="line">            tree2.Insert(<span class="string">&quot;Today&quot;</span>);</span><br><span class="line">            tree2.Insert(<span class="string">&quot;I&quot;</span>);</span><br><span class="line">            tree2.Insert(<span class="string">&quot;Hope&quot;</span>);</span><br><span class="line">            tree2.Insert(<span class="string">&quot;You&quot;</span>);</span><br><span class="line">            tree2.Insert(<span class="string">&quot;Are&quot;</span>);</span><br><span class="line">            tree2.Insert(<span class="string">&quot;Feeling&quot;</span>);</span><br><span class="line">            tree2.Insert(<span class="string">&quot;Well&quot;</span>);</span><br><span class="line">            tree2.Insert(<span class="string">&quot;!&quot;</span>);</span><br><span class="line"></span><br><span class="line">            sortedData = tree2.WalkTree();</span><br><span class="line">            Console.WriteLine(<span class="string">$&quot;Sorted data is: <span class="subst">&#123;sortedData&#125;</span>&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码是用两个c#文件，练习引用程序集，写在一起也是可以的。</p>
+<h4 id="创建泛型方法"><a href="#创建泛型方法" class="headerlink" title="创建泛型方法"></a>创建泛型方法</h4><p>由于上述代码Insert太多了，用泛型方法来实现只有一次方法调用。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> BinaryTree;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title">BuildTree</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">InsertIntoTree</span>&lt;<span class="title">TItem</span>&gt;(<span class="params"><span class="keyword">ref</span> Tree&lt;TItem&gt; tree,</span></span></span><br><span class="line"><span class="params"><span class="function">            <span class="keyword">params</span> TItem[] data</span>) <span class="keyword">where</span> TItem:IComparable&lt;TItem&gt;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">        <span class="comment">//泛型方法，语法与普通方法基本相同，解释一下命名</span></span></span><br><span class="line"><span class="function">        <span class="comment">//获取两个参数，一个是Tree&lt;Item&gt;类型的tree，一个是名为data的参数数组</span></span></span><br><span class="line"><span class="function">        <span class="comment">//指定TItem必须是使用了泛型IComparable&lt;TItem&gt;接口的类型</span></span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">foreach</span>(TItem datum <span class="keyword">in</span> data)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(tree ==<span class="literal">null</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    tree = <span class="keyword">new</span> Tree&lt;TItem&gt;(datum);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    tree.Insert(datum);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            Tree&lt;<span class="built_in">char</span>&gt; charTree = <span class="literal">null</span>;</span><br><span class="line">            InsertIntoTree&lt;<span class="built_in">char</span>&gt;(<span class="keyword">ref</span> charTree, <span class="string">&#x27;M&#x27;</span>, <span class="string">&#x27;X&#x27;</span>, <span class="string">&#x27;A&#x27;</span>, <span class="string">&#x27;M&#x27;</span>, <span class="string">&#x27;Z&#x27;</span>,<span class="string">&#x27;Z&#x27;</span>,<span class="string">&#x27;N&#x27;</span>);</span><br><span class="line">            <span class="built_in">string</span> sortedData = charTree.WalkTree();</span><br><span class="line">            Console.WriteLine(<span class="string">$&quot;Sorted data is: <span class="subst">&#123;sortedData&#125;</span>&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="学习参考"><a href="#学习参考" class="headerlink" title="学习参考"></a>学习参考</h4><ul>
+<li>zhuanlan.zhihu.com&#x2F;p&#x2F;348761322</li>
+<li>《visualc#入门到精通》- 第17章</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/c/" rel="tag"># c#</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/06/02/c-%E6%8E%A5%E5%8F%A3%E5%92%8C%E6%8A%BD%E8%B1%A1%E7%B1%BB-%E7%9F%A5%E8%AF%86%E5%B0%8F%E8%AE%B0/" rel="prev" title="c# 接口和抽象类 知识小记">
+      <i class="fa fa-chevron-left"></i> c# 接口和抽象类 知识小记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/08/02/hello-world/" rel="next" title="Hello World">
+      Hello World <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%AF%AD%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">泛型的语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B3%9B%E5%9E%8B%E7%BA%A6%E6%9D%9F"><span class="nav-number">2.</span> <span class="nav-text">泛型约束</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%B3%9B%E5%9E%8B%E7%B1%BB"><span class="nav-number">3.</span> <span class="nav-text">创建泛型类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%B3%9B%E5%9E%8B%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">创建泛型方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">学习参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="talentstream"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">talentstream</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022-08 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">talentstream</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">27k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">24 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
