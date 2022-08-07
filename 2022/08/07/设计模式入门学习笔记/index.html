@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言最近花了点读了《敏捷软件开发》这本书，关于这本书，我基本上是随便看看，了解有什么知识，也就在代码部分（具体示例方面）花了些功夫。尽管知道了解了这些知识，但是在工程上，没写个1w行以上的代码还是难以融会贯通。毕竟理论和工程是不一样的，工程实现理论至少是两个数量级以上的难度。不过通过画简单的UML图和短小的代码是可以快速认识到是什么，用来做什么，这样就足够了。 《敏捷软件开发》阅读经验这本书还是一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式入门学习笔记">
+<meta property="og:url" content="http://example.com/2022/08/07/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="南有青鸟">
+<meta property="og:description" content="前言最近花了点读了《敏捷软件开发》这本书，关于这本书，我基本上是随便看看，了解有什么知识，也就在代码部分（具体示例方面）花了些功夫。尽管知道了解了这些知识，但是在工程上，没写个1w行以上的代码还是难以融会贯通。毕竟理论和工程是不一样的，工程实现理论至少是两个数量级以上的难度。不过通过画简单的UML图和短小的代码是可以快速认识到是什么，用来做什么，这样就足够了。 《敏捷软件开发》阅读经验这本书还是一">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/DesignPatternsRuMen/20220807220610.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/DesignPatternsRuMen/20220807221329.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/DesignPatternsRuMen/20220807221347.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/DesignPatternsRuMen/20220807221552.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/DesignPatternsRuMen/20220807222154.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/DesignPatternsRuMen/20220807222354.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/DesignPatternsRuMen/20220807222649.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/DesignPatternsRuMen/20220807223108.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/DesignPatternsRuMen/20220807223430.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/DesignPatternsRuMen/20220807223521.png">
+<meta property="article:published_time" content="2022-08-07T13:04:20.000Z">
+<meta property="article:modified_time" content="2022-08-07T16:07:37.484Z">
+<meta property="article:author" content="talentstream">
+<meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/DesignPatternsRuMen/20220807220610.png">
+
+<link rel="canonical" href="http://example.com/2022/08/07/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>设计模式入门学习笔记 | 南有青鸟</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">南有青鸟</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/07/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="talentstream">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="南有青鸟">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          设计模式入门学习笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-07 21:04:20" itemprop="dateCreated datePublished" datetime="2022-08-07T21:04:20+08:00">2022-08-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-08 00:07:37" itemprop="dateModified" datetime="2022-08-08T00:07:37+08:00">2022-08-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>最近花了点读了《敏捷软件开发》这本书，关于这本书，我基本上是随便看看，了解有什么知识，也就在代码部分（具体示例方面）花了些功夫。尽管知道了解了这些知识，但是在工程上，没写个1w行以上的代码还是难以融会贯通。毕竟理论和工程是不一样的，工程实现理论至少是两个数量级以上的难度。不过通过画简单的UML图和短小的代码是可以快速认识到是什么，用来做什么，这样就足够了。</p>
+<h4 id="《敏捷软件开发》阅读经验"><a href="#《敏捷软件开发》阅读经验" class="headerlink" title="《敏捷软件开发》阅读经验"></a>《敏捷软件开发》阅读经验</h4><p>这本书还是一本很好的书，对于了解敏捷开发，设计模式是足够的，同时也有足够多的源代码可以读。我读的一版是《敏捷软件开发：原则、模式与实践》c++版本的，不过里面也有java，虽然我的主语言是c#，但是也是阅读起来也不会太困难。这本书中文版虽然是在03年出版的，但是在现在对于我这种未入行业的小白也是十分有启发的。<br>根据我这次阅读的经验，我推荐第I部分（也就是1-6章）还有第II部分的第7章<strong>粗读</strong>，对原则和设计模式之类的进行<strong>通读</strong>，18，19章的薪水支付实践进行<strong>细读</strong></p>
+<h4 id="什么是设计模式"><a href="#什么是设计模式" class="headerlink" title="什么是设计模式"></a>什么是设计模式</h4><p>设计模式是软件设计中常见问题的典型解决方案。 它们就像能根据需求进行调整的预制蓝图，可用于解决代码中反复出现的设计问题。不过设计模式的出现基本上是为了解决 <strong>“设计的臭味”</strong> ——僵化性(Rigidity)，脆弱性(Fragility)，牢固性(Immobility)，粘滞性(Viscosity)，不必要的复杂性(Needless Complexity)，不必要的重复(Needless Repetition)，以及晦涩性(Opacity)</p>
+<ul>
+<li><strong>僵化性</strong>：很难对系统改动，因为每次改动都会使其他地方改动</li>
+<li><strong>脆弱性</strong>：对系统的改动会导致其他的地方出现问题</li>
+<li><strong>牢固性</strong>：设计中包含对其它系统有用的部分，但是把这部分抽离出来成本太高</li>
+<li><strong>粘滞性</strong>：做新的改动时，保持系统设计的方法比破坏设计的方法更难使用</li>
+<li><strong>不必要的复杂性</strong>：包含当前没有用的组成部分，可能会变得混乱</li>
+<li><strong>不必要的重复</strong>：包含重复的结构，原本可以用单一的抽象进行统一</li>
+<li><strong>晦涩性</strong>：难以阅读、理解</li>
+</ul>
+<h5 id="设计模式的描述常常包含以下内容"><a href="#设计模式的描述常常包含以下内容" class="headerlink" title="设计模式的描述常常包含以下内容"></a>设计模式的描述常常包含以下内容</h5><ul>
+<li><strong>意图(Problem)</strong> 部分简单描述问题和解决方案。</li>
+<li><strong>动机(Solution)</strong> 部分将进一步解释问题并说明模式会如何提供解决方案。</li>
+<li><strong>结构(Structure)</strong> 部分展示模式的每个部分和它们之间的关系。</li>
+</ul>
+<h5 id="学习设计模式的好处以及一些问题"><a href="#学习设计模式的好处以及一些问题" class="headerlink" title="学习设计模式的好处以及一些问题"></a>学习设计模式的好处以及一些问题</h5><ul>
+<li>现在常常说的23种设计模式是经过实践验证的解决方案。了解这些设计模式对于阅读源代码十分有用。</li>
+<li>同时方便交流，只要知晓模式以及名称的原理，就可以用一个设计模式的名字来互相沟通这里该怎么写</li>
+</ul>
+<p>同时设计模式也一些问题，设计模式有一些是为了弥补语言本身的缺陷，有些语言有方便的语法，基本上一句话就可以代表一种设计模式。</p>
+<p>“如果你只有一把铁锤， 那么任何东西看上去都像是钉子。” 这点是最重要的，对于初学者会带来一定困扰，学习某个模式之后，他们会在所有地方使用该模式，即便是在较为简单的代码中也使用这种模式。所以说初学者学来帮助自己阅读源码就绰绰有余了。</p>
+<h4 id="UML类图"><a href="#UML类图" class="headerlink" title="UML类图"></a>UML类图</h4><p>在学习设计模式之前，我们得先学会如何读UML图。虽然UML图有很多种，但是基本上只要会读UML类图，就可以胜任大部分的工作。</p>
+<h5 id="UML类方框"><a href="#UML类方框" class="headerlink" title="UML类方框"></a>UML类方框</h5><p>UML类图中基本上就三种普通类，抽象类和接口。都用矩形框表示，第一层是类名称，第二层是成员变量，第三层是类的方法。</p>
+<ul>
+<li><strong>“+”</strong> 表示 public</li>
+<li><strong>“-“</strong> 表示 private</li>
+<li><strong>“#”</strong> 表示 protected</li>
+</ul>
+<p>抽象类的类名以及抽象方法都用斜体，接口会在第一层加上一个&lt;&lt; interface &gt;&gt;其他并没有什么不同</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/DesignPatternsRuMen/20220807220610.png" alt="img"><br><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/DesignPatternsRuMen/20220807221329.png" alt="img"><br><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/DesignPatternsRuMen/20220807221347.png" alt="img"></p>
+<h5 id="UML类图中的关系"><a href="#UML类图中的关系" class="headerlink" title="UML类图中的关系"></a>UML类图中的关系</h5><p>下面一张图如果可能的话应该在《c++ prime plus》中看过，可以很快理解是什么意思，我们基本上只要记得关系对应的箭头就可以了。不过不知道也没关系，我们可以快速过一遍，了解足矣。<br><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/DesignPatternsRuMen/20220807221552.png" alt="img"></p>
+<h6 id="实现关系"><a href="#实现关系" class="headerlink" title="实现关系"></a>实现关系</h6><p>简单来说就是类实现接口，由类指向接口<br><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/DesignPatternsRuMen/20220807222154.png" alt="img"></p>
+<h6 id="泛化关系"><a href="#泛化关系" class="headerlink" title="泛化关系"></a>泛化关系</h6><p>指对象之间的继承关系，由子类指向父类<br><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/DesignPatternsRuMen/20220807222354.png" alt="img"></p>
+<h6 id="关联关系"><a href="#关联关系" class="headerlink" title="关联关系"></a>关联关系</h6><p>指这个对象在内部引用了另一个对象，关联关系内部又为依赖关联、聚合关联和组合关联三种类型</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/DesignPatternsRuMen/20220807222649.png" alt="img"></p>
+<h6 id="依赖关系"><a href="#依赖关系" class="headerlink" title="依赖关系"></a>依赖关系</h6><p>指A使用了B，但是A和B并没什么关系，就可以认为是依赖关系</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/DesignPatternsRuMen/20220807223108.png" alt="img"></p>
+<h6 id="聚合关系"><a href="#聚合关系" class="headerlink" title="聚合关系"></a>聚合关系</h6><p>指A拥有B，B可以属于多种A</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/DesignPatternsRuMen/20220807223430.png" alt="img"></p>
+<h6 id="组合关系"><a href="#组合关系" class="headerlink" title="组合关系"></a>组合关系</h6><p>指A包括B，同生同灭</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/DesignPatternsRuMen/20220807223521.png" alt="img"></p>
+<h5 id="UML类图小结"><a href="#UML类图小结" class="headerlink" title="UML类图小结"></a>UML类图小结</h5><p>大概稍微看一下就行了，我认为看英文(is a那些)更容易理解关系是什么意思，虽然关联关系还可再分，不过基本上不搞那么详细。毕竟UML类图是为了前期快速构思类的关系的，基本上我们只用前三种关系——<strong>实现关系、泛化关系，关联关系</strong></p>
+<h4 id="面向对象设计的一些原则"><a href="#面向对象设计的一些原则" class="headerlink" title="面向对象设计的一些原则"></a>面向对象设计的一些原则</h4><p>在了解设计模式之前，我们需要了解一些原则，这也是使用设计模式的目的之一。</p>
+<h5 id="单一职责原则-SRP-Single-Responsibility-Principle"><a href="#单一职责原则-SRP-Single-Responsibility-Principle" class="headerlink" title="单一职责原则(SRP-Single Responsibility Principle)"></a>单一职责原则(SRP-Single Responsibility Principle)</h5><p>当一个类承担的职责过多，就等于把这些职责耦合在了一起，一个职责变化的时候，可能就容易导致其他职责的变化。假设一个类既可以链接管理，又可以进行数据通信，在数据通信方面由于客户需求不断变化，可能在数据通信方面不断修改导致链接管理修改起来也很麻烦，这时就应该分离这两个职责，让两个职责分别置于不同的类中。</p>
+<h5 id="开放-封闭原则-OCP-The-Open-Closed-Principle"><a href="#开放-封闭原则-OCP-The-Open-Closed-Principle" class="headerlink" title="开放-封闭原则(OCP-The Open-Closed Principle)"></a>开放-封闭原则(OCP-The Open-Closed Principle)</h5><p>指的是在一个类中新加入的扩展的功能并不需要修改原有的功能。比如说绘制图案，原本只能绘制正方形和圆形，如果加入三角形，那在绘制图案的时候只需添加三角形这个类而不修改其他类。</p>
+<h5 id="Liskov替换原则-LSP-Liskov-Substitution-Principle"><a href="#Liskov替换原则-LSP-Liskov-Substitution-Principle" class="headerlink" title="Liskov替换原则(LSP-Liskov Substitution Principle)"></a>Liskov替换原则(LSP-Liskov Substitution Principle)</h5><p>违反LSP原则必然违反OCP原则，任何基类可以出现的地方，子类一定可以出现，即在使用时子类可以替换掉基类但是功能不受影响</p>
+<h5 id="依赖导致原则-DIP-Dependency-Inversion-Principle"><a href="#依赖导致原则-DIP-Dependency-Inversion-Principle" class="headerlink" title="依赖导致原则(DIP-Dependency Inversion Principle)"></a>依赖导致原则(DIP-Dependency Inversion Principle)</h5><ul>
+<li>高层模块不应该依赖于底层模块，二者都应该依赖于抽象</li>
+<li>抽象不应该依赖于细节，细节应该依赖于抽象</li>
+</ul>
+<p>高层模块即实践模块，比如main函数，修改了main函数的实现方式却不改变底层模块类的代码变化</p>
+<h5 id="接口隔离原则-ISP-Interface-Segregation-Principle"><a href="#接口隔离原则-ISP-Interface-Segregation-Principle" class="headerlink" title="接口隔离原则(ISP-Interface Segregation Principle)"></a>接口隔离原则(ISP-Interface Segregation Principle)</h5><p>建立单一接口，不要建立臃肿庞大的接口。再通俗一点讲：接口尽量细化，同时接口中的方法尽量少。跟SRP差不多</p>
+<h4 id="设计模式介绍"><a href="#设计模式介绍" class="headerlink" title="设计模式介绍"></a>设计模式介绍</h4><p>设计模式可以根据其意图来分类。主要分为三种类别</p>
+<ul>
+<li><strong>创建型模式(Creational Patterns)</strong> 提供创建对象的机制， 增加已有代码的灵活性和可复用性</li>
+<li><strong>结构型模式(Structural Patterns)</strong> 介绍如何将对象和类组装成较大的结构， 并同时保持结构的灵活和高效</li>
+<li><strong>行为模式(Behavioral Patterns)</strong> 负责对象间的高效沟通和职责委派</li>
+</ul>
+<h4 id="创建型模式-Creational-Patterns"><a href="#创建型模式-Creational-Patterns" class="headerlink" title="创建型模式(Creational Patterns)"></a>创建型模式(Creational Patterns)</h4><h5 id="Factory-Method-工厂模式"><a href="#Factory-Method-工厂模式" class="headerlink" title="Factory Method(工厂模式)"></a>Factory Method(工厂模式)</h5>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag"># 设计模式</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/03/%E6%AD%A3%E5%BC%8F%E7%9A%84Hello-World/" rel="prev" title="正式的Hello World">
+      <i class="fa fa-chevron-left"></i> 正式的Hello World
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E3%80%8A%E6%95%8F%E6%8D%B7%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E3%80%8B%E9%98%85%E8%AF%BB%E7%BB%8F%E9%AA%8C"><span class="nav-number">2.</span> <span class="nav-text">《敏捷软件开发》阅读经验</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">什么是设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E6%8F%8F%E8%BF%B0%E5%B8%B8%E5%B8%B8%E5%8C%85%E5%90%AB%E4%BB%A5%E4%B8%8B%E5%86%85%E5%AE%B9"><span class="nav-number">3.1.</span> <span class="nav-text">设计模式的描述常常包含以下内容</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%A5%BD%E5%A4%84%E4%BB%A5%E5%8F%8A%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98"><span class="nav-number">3.2.</span> <span class="nav-text">学习设计模式的好处以及一些问题</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UML%E7%B1%BB%E5%9B%BE"><span class="nav-number">4.</span> <span class="nav-text">UML类图</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#UML%E7%B1%BB%E6%96%B9%E6%A1%86"><span class="nav-number">4.1.</span> <span class="nav-text">UML类方框</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#UML%E7%B1%BB%E5%9B%BE%E4%B8%AD%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">4.2.</span> <span class="nav-text">UML类图中的关系</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E5%85%B3%E7%B3%BB"><span class="nav-number">4.2.1.</span> <span class="nav-text">实现关系</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%B3%9B%E5%8C%96%E5%85%B3%E7%B3%BB"><span class="nav-number">4.2.2.</span> <span class="nav-text">泛化关系</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB"><span class="nav-number">4.2.3.</span> <span class="nav-text">关联关系</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB"><span class="nav-number">4.2.4.</span> <span class="nav-text">依赖关系</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%81%9A%E5%90%88%E5%85%B3%E7%B3%BB"><span class="nav-number">4.2.5.</span> <span class="nav-text">聚合关系</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E5%85%B3%E7%B3%BB"><span class="nav-number">4.2.6.</span> <span class="nav-text">组合关系</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#UML%E7%B1%BB%E5%9B%BE%E5%B0%8F%E7%BB%93"><span class="nav-number">4.3.</span> <span class="nav-text">UML类图小结</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1%E7%9A%84%E4%B8%80%E4%BA%9B%E5%8E%9F%E5%88%99"><span class="nav-number">5.</span> <span class="nav-text">面向对象设计的一些原则</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99-SRP-Single-Responsibility-Principle"><span class="nav-number">5.1.</span> <span class="nav-text">单一职责原则(SRP-Single Responsibility Principle)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BC%80%E6%94%BE-%E5%B0%81%E9%97%AD%E5%8E%9F%E5%88%99-OCP-The-Open-Closed-Principle"><span class="nav-number">5.2.</span> <span class="nav-text">开放-封闭原则(OCP-The Open-Closed Principle)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Liskov%E6%9B%BF%E6%8D%A2%E5%8E%9F%E5%88%99-LSP-Liskov-Substitution-Principle"><span class="nav-number">5.3.</span> <span class="nav-text">Liskov替换原则(LSP-Liskov Substitution Principle)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E5%AF%BC%E8%87%B4%E5%8E%9F%E5%88%99-DIP-Dependency-Inversion-Principle"><span class="nav-number">5.4.</span> <span class="nav-text">依赖导致原则(DIP-Dependency Inversion Principle)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3%E9%9A%94%E7%A6%BB%E5%8E%9F%E5%88%99-ISP-Interface-Segregation-Principle"><span class="nav-number">5.5.</span> <span class="nav-text">接口隔离原则(ISP-Interface Segregation Principle)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D"><span class="nav-number">6.</span> <span class="nav-text">设计模式介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F-Creational-Patterns"><span class="nav-number">7.</span> <span class="nav-text">创建型模式(Creational Patterns)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Factory-Method-%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="nav-number">7.1.</span> <span class="nav-text">Factory Method(工厂模式)</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="talentstream"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">talentstream</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022-08 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">talentstream</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">29k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">27 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
