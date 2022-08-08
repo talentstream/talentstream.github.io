@@ -191,7 +191,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-08 15:03:54" itemprop="dateModified" datetime="2022-08-08T15:03:54+08:00">2022-08-08</time>
+                <time title="修改时间：2022-08-08 15:16:15" itemprop="dateModified" datetime="2022-08-08T15:16:15+08:00">2022-08-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -209,14 +209,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.4k</span>
+              <span>6.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
+              <span>6 分钟</span>
             </span>
 
         </div>
@@ -327,7 +327,19 @@
 <h6 id="问题-1"><a href="#问题-1" class="headerlink" title="问题"></a>问题</h6><p>假设你正在开发一款家具商店模拟器。你的代码中包括一些类，用于表示：<br>1.一系列相关产品，例如 椅子Chair、沙发Sofa和咖啡桌Cof­fee­Table。<br>2.系列产品的不同变体。例如，你可以使用现代Mod­ern、维多利亚Vic­to­ri­an、​装饰风艺术Art­Deco等风格生成椅子、沙发和咖啡桌。</p>
 <p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/DesignPatternsRuMen/20220808150223.png" alt="img"></p>
 <p>你需要设法单独生成每件家具对象，这样才能确保其风格一致。如果顾客收到的家具风格不一样，他们可不会开心。<br>此外，你也不希望在添加新产品或新风格时修改已有代码。家具供应商对于产品目录的更新非常频繁，你不会想在每次更新时都去修改核心代码的。</p>
-<h6 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案"></a>解决方案</h6>
+<h6 id="解决方案-1"><a href="#解决方案-1" class="headerlink" title="解决方案"></a>解决方案</h6><p>首先， 抽象工厂模式建议为系列中的<strong>每件产品</strong>明确声明接口（例如椅子、沙发或咖啡桌）。然后，确保所有产品变体都继承这些接口。例如，所有风格的椅子都实现椅子接口；所有风格的咖啡桌都实现咖啡桌接口，以此类推。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/DesignPatternsRuMen/20220808150715.png" alt="img"></p>
+<p>接下来，我们需要声明抽象工厂——包含系列中所有产品构造方法的接口。例如cre­ate­Chair创建椅子、​cre­ate­Sofa创建沙发和cre­ate­Cof­fee­Table创建咖啡桌.这些方法必须返回抽象产品类型，即我们之前抽取的那些接口：椅子,沙发和咖啡桌等等。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/DesignPatternsRuMen/20220808150835.png" alt="img"></p>
+<p>那么该如何处理产品变体呢？对于系列产品的每个变体，我们都将基于抽象工厂接口创建不同的工厂类。每个工厂类都只能返回特定类别的产品，例如，​现代家具工厂Mod­ern­Fur­ni­ture­Fac­to­ry只能创建现代椅子Mod­ern­Chair、现代沙发Mod­ern­Sofa和现代咖啡桌Mod­ern­Cof­fee­Table对象。</p>
+<p>客户端代码可以通过相应的抽象接口调用工厂和产品类。 你无需修改实际客户端代码， 就能更改传递给客户端的工厂类， 也能更改客户端代码接收的产品变体。</p>
+<h6 id="抽象工厂模式结构"><a href="#抽象工厂模式结构" class="headerlink" title="抽象工厂模式结构"></a>抽象工厂模式结构</h6><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/DesignPatternsRuMen/20220808151005.png" alt="img"></p>
+<p>1.<strong>抽象产品(Abstract Prod­uct)</strong> 为构成系列产品的一组不同但相关的产品声明接口。</p>
+<p>2.<strong>具体产品(Con­crete Prod­uct)</strong> 是抽象产品的多种不同类型实现。所有变体 （维多利亚&#x2F;现代）都必须实现相应的抽象产品 （椅子&#x2F;沙发）。</p>
+<p>3.<strong>抽象工厂(Abstract Fac­to­ry)</strong> 接口声明了一组创建各种抽象产品的方法。</p>
+<p>4.<strong>具体工厂(Con­crete Fac­to­ry)</strong> 实现抽象工厂的构建方法。每个具体工厂都对应特定产品变体，且仅创建此种产品变体。</p>
+<p>5.尽管具体工厂会对具体产品进行初始化，其构建方法签名必须返回相应的抽象产品。这样，使用工厂类的客户端代码就不会与工厂创建的特定产品变体耦合。<strong>客户端 (Client)</strong> 只需通过抽象接口调用工厂和产品对象，就能与任何具体工厂&#x2F;产品变体交互。</p>
+<h6 id="伪代码-1"><a href="#伪代码-1" class="headerlink" title="伪代码"></a>伪代码</h6>
       
     </div>
 
@@ -1514,12 +1526,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">32k</span>
+    <span title="站点总字数">33k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">29 分钟</span>
+    <span title="站点阅读时长">30 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
