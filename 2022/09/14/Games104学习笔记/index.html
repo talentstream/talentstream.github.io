@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="首次使用 [Github + Hexo] 来撰写博客，在期间也折腾了很久。作为学生党，服务器的费用还是过于昂贵，所以决定从方便的wordpress转过来(后续会在这里不断写关于编程方面的博客，之前写过的博客也会逐一搬运过来。">
+  <meta name="description" content="前言感觉104这套课程很不错，虽然我志不在引擎，但是了解引擎各部分的组成会更有利于自己使用引擎。104会从比较简单的部分介绍引擎的各个模块是如何组成。正好后续也打算花时间阅读《GameEngineArchitecture》这本书，算是一种相辅相成的学习。我可能了解了API的调用却不明白总体情况，这是我所缺少的。 01-导论第一讲内容并不是这么干货，大概介绍了什么是游戏引擎，引擎历史和课程内容。简单">
 <meta property="og:type" content="article">
-<meta property="og:title" content="正式的Hello World">
-<meta property="og:url" content="http://example.com/2022/08/03/%E6%AD%A3%E5%BC%8F%E7%9A%84Hello-World/index.html">
+<meta property="og:title" content="Games104学习笔记">
+<meta property="og:url" content="http://example.com/2022/09/14/Games104%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="南有青鸟">
-<meta property="og:description" content="首次使用 [Github + Hexo] 来撰写博客，在期间也折腾了很久。作为学生党，服务器的费用还是过于昂贵，所以决定从方便的wordpress转过来(后续会在这里不断写关于编程方面的博客，之前写过的博客也会逐一搬运过来。">
+<meta property="og:description" content="前言感觉104这套课程很不错，虽然我志不在引擎，但是了解引擎各部分的组成会更有利于自己使用引擎。104会从比较简单的部分介绍引擎的各个模块是如何组成。正好后续也打算花时间阅读《GameEngineArchitecture》这本书，算是一种相辅相成的学习。我可能了解了API的调用却不明白总体情况，这是我所缺少的。 01-导论第一讲内容并不是这么干货，大概介绍了什么是游戏引擎，引擎历史和课程内容。简单">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-08-03T02:34:38.000Z">
-<meta property="article:modified_time" content="2022-08-03T02:43:39.644Z">
+<meta property="article:published_time" content="2022-09-14T12:53:24.000Z">
+<meta property="article:modified_time" content="2022-09-21T02:20:19.025Z">
 <meta property="article:author" content="talentstream">
-<meta property="article:tag" content="杂谈">
+<meta property="article:tag" content="游戏引擎">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2022/08/03/%E6%AD%A3%E5%BC%8F%E7%9A%84Hello-World/">
+<link rel="canonical" href="http://example.com/2022/09/14/Games104%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>正式的Hello World | 南有青鸟</title>
+  <title>Games104学习笔记 | 南有青鸟</title>
   
 
 
@@ -166,7 +166,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/03/%E6%AD%A3%E5%BC%8F%E7%9A%84Hello-World/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/14/Games104%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -179,7 +179,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          正式的Hello World
+          Games104学习笔记
         </h1>
 
         <div class="post-meta">
@@ -188,17 +188,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-08-03 10:34:38 / 修改时间：10:43:39" itemprop="dateCreated datePublished" datetime="2022-08-03T10:34:38+08:00">2022-08-03</time>
+              <time title="创建时间：2022-09-14 20:53:24" itemprop="dateCreated datePublished" datetime="2022-09-14T20:53:24+08:00">2022-09-14</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-21 10:20:19" itemprop="dateModified" datetime="2022-09-21T10:20:19+08:00">2022-09-21</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9D%82%E8%B0%88/" itemprop="url" rel="index"><span itemprop="name">杂谈</span></a>
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
                 </span>
             </span>
 
@@ -208,7 +214,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>108</span>
+              <span>1.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -227,7 +233,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>首次使用 [Github + Hexo] 来撰写博客，在期间也折腾了很久。作为学生党，服务器的费用还是过于昂贵，所以决定从方便的wordpress转过来(<br>后续会在这里不断写关于编程方面的博客，之前写过的博客也会逐一搬运过来。</p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>感觉104这套课程很不错，虽然我志不在引擎，但是了解引擎各部分的组成会更有利于自己使用引擎。104会从比较简单的部分介绍引擎的各个模块是如何组成。正好后续也打算花时间阅读《GameEngineArchitecture》这本书，算是一种相辅相成的学习。我可能了解了API的调用却不明白总体情况，这是我所缺少的。</p>
+<h3 id="01-导论"><a href="#01-导论" class="headerlink" title="01-导论"></a>01-导论</h3><p>第一讲内容并不是这么干货，大概介绍了什么是游戏引擎，引擎历史和课程内容。简单了解一下课程的大概组成，引擎架构，各系统原理和开发，前沿领域。各系统大概分为，引擎架构和数据管理，渲染，动画，物理系统，Gameplay，特效，导航，相机，工具链的开发，网上联机。先进技术在课上会讲的有吗motion matching(动态匹配？) ,procedural content generation(PCG),Data-Oriented Programming(DOP),Job System(未来的可能架构，即让多线程每个线程尽量吃满),Lumen(全局光照)，Nanite（高精度多几何面？)。<br>同时也推荐了参考，《Game Engine Architecture》正好配合来读。总而言之，第一节课导论都算是大概性介绍，我对游戏引擎的探索估计也就是浅尝辄止，104的介绍估计足够了（或许不一定）。</p>
+<p>2022-9-14</p>
+<h3 id="02-引擎架构分层"><a href="#02-引擎架构分层" class="headerlink" title="02-引擎架构分层"></a>02-引擎架构分层</h3><p>时隔一周再看104，尽管很久没看了仍就记忆深刻，老师讲的东西尽量都很基础了，根据闫神说的话，如果Games系列听不懂的话那就说明是自己的问题。开始进入正题，这一次讲的是游戏引擎的架构如何分层，在《Game Engine Architecture》有一个传世经典的图。这里简单分一下 Tool -&gt; Function -&gt; Resource -&gt; Core -&gt; Platform 以及 3rd SDK ，构成游戏引擎。课程安排是按照 32451来进行讲解的。数据层顾名思义就是将导入的资源统一转换成引擎的资产，毕竟资源有很多格式，同时进行全局的唯一识别和管理资产的生命周期。然后是功能层，功能层就是各种具体的实现，比如引擎的核心，tick，之前看过计算机体系结构，能够很容易理解，每一次tick相当于一次周期，tick又有tickLogic和tickRender，通常先进行逻辑运算再进行渲染运算，也可以多线程分别加载。然后是核心层，核心层就是底层代码了，主要是Math Library(提高数学运算效率) ， Data Structure &amp; Containers(减少内存碎片),内存管理(1.尽量让数据放一起被处理 2.尽量让数据按顺序访问 3.allocate and de-allocate as a block尽量以块进行分配和回收)。第四个便是平台层，一个要考虑多种平台中graphics API的变化，就比如dx11和dx12，还有考虑硬件架构的变化，方便做移植。最后是工具层，工具层性能要求便没有这么高，用各种语言开发都可以，开发效率越高越好，尽可能地让非程序员也能轻松使用工具。<br>记不住没关系，记住三条金科玉律就可以 1.引擎是分层架构，为了降低程序的复杂度，这与我在设计模式中学到的思想差不多。2.越底层的代码越稳定，质量要越高，越顶层越灵活,顶层可以调用底层代码，但是底层不能调用顶层代码 3.游戏世界的核心是tick，即我们在一次tick中完成所有运算</p>
+<p>2022-9-21</p>
 
     </div>
 
@@ -237,7 +247,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E6%9D%82%E8%B0%88/" rel="tag"># 杂谈</a>
+              <a href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E/" rel="tag"># 游戏引擎</a>
           </div>
 
         
@@ -246,13 +256,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/08/02/hello-world/" rel="prev" title="Hello World">
-      <i class="fa fa-chevron-left"></i> Hello World
+    <a href="/2022/08/31/Algorithm-4th-Union-Find-%E5%B9%B6%E6%9F%A5%E9%9B%86/" rel="prev" title="Algorithm 4th_Union-Find(并查集)">
+      <i class="fa fa-chevron-left"></i> Algorithm 4th_Union-Find(并查集)
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/08/07/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="next" title="设计模式入门学习笔记">
-      设计模式入门学习笔记 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -311,6 +318,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#01-%E5%AF%BC%E8%AE%BA"><span class="nav-number">2.</span> <span class="nav-text">01-导论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02-%E5%BC%95%E6%93%8E%E6%9E%B6%E6%9E%84%E5%88%86%E5%B1%82"><span class="nav-number">3.</span> <span class="nav-text">02-引擎架构分层</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
