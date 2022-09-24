@@ -46,8 +46,17 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924155257.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924155709.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924155912.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924200758.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924201303.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202059.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202202.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202244.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202359.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202539.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202606.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202704.png">
 <meta property="article:published_time" content="2022-08-30T10:53:32.000Z">
-<meta property="article:modified_time" content="2022-09-24T08:08:49.056Z">
+<meta property="article:modified_time" content="2022-09-24T12:45:09.392Z">
 <meta property="article:author" content="talentstream">
 <meta property="article:tag" content="CS">
 <meta name="twitter:card" content="summary">
@@ -216,7 +225,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-24 16:08:49" itemprop="dateModified" datetime="2022-09-24T16:08:49+08:00">2022-09-24</time>
+                <time title="修改时间：2022-09-24 20:45:09" itemprop="dateModified" datetime="2022-09-24T20:45:09+08:00">2022-09-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -234,14 +243,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.1k</span>
+              <span>5.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -334,7 +343,32 @@
 <li>Variable symbols 通常从地址16开始记</li>
 </ul>
 <p><strong>关于project</strong> : 作业就是写一些机器语言来实现简单功能，参考着例子基本上就能明白怎么写，我觉得难度甚至比前面几章还简单(</p>
-<h3 id="Computer-Architecture"><a href="#Computer-Architecture" class="headerlink" title="Computer Architecture"></a>Computer Architecture</h3>
+<h3 id="Computer-Architecture"><a href="#Computer-Architecture" class="headerlink" title="Computer Architecture"></a>Computer Architecture</h3><p>这章大概是过一下计组的框架，不会细讲，主要讲解冯诺伊曼架构以及具体实现。</p>
+<h4 id="von-Neumann-Architecture"><a href="#von-Neumann-Architecture" class="headerlink" title="von Neumann Architecture"></a>von Neumann Architecture</h4><p>下面这张图可以大概解释von-Neumann架构</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924200758.png" alt="img"></p>
+<p><strong>Memory</strong> : Memory就是之前花了一章来讲解的，主要分为Data memory 和 Instruction Memory ，在计算机中供CPU调用和存储</p>
+<p><strong>CPU</strong> : CPU 包含ALU，一堆registers和一个control units。</p>
+<p>然后我们来看看作为chip这些大的构件是如何运作的</p>
+<p><strong>CPU</strong> : CPU 从memory中读取inM(从RAM)和instruction(从ROM) 以及一个reset，if(reset &#x3D;&#x3D; 1) 重启程序 else 继续执行<br>然后会产生一系列结果, out address 和 write(给RAM), pc(给ROM)</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924201303.png" alt="img"></p>
+<p>如果instruction是A的话，CPU就会将instruction存进CPU中的A register里。如果是C-instruction的话，CPU就会让ALU进行计算，并且将结果写到(A,D,M)的子集中，如果C-instruction中其中一个dest是M的话，那么CPU的outM就为CPU中ALU的out，writeM则为 1 。否则 writeM 为 0 ,即不写入RAM中,outM任何结果都有可能。看了这段话可能并不知道CPU的内核时如何运行的。看着下图做完project就知道怎么运行的了。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202059.png" alt="img"></p>
+<p><strong>Instruction Memory</strong> : 看图应该很容易理解</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202202.png" alt="img"></p>
+<p><strong>Screen</strong> : screen 算是一个output设备，虽然现在还有很多output设备，但是我们只考虑简单方面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202244.png" alt="img"></p>
+<p><strong>Keyboard</strong> : keyboard 也很简单，甚至没有图</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202359.png" alt="img"></p>
+<p><strong>Data Memory</strong> : 学习前面的Screen和keyboard几乎就铺垫完了，基本上只是对这个大chip进行排列组合</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202539.png" alt="img"></p>
+<p><strong>Computer</strong> : 到了最后计算机的组成，计算机这个chip就是用memory，cpu的chip组合而成</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202606.png" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202704.png" alt="img"></p>
+<p><strong>关于project</strong> : 这一章的内容都比较简单，CPU的chip编写可能有些难点，看点参考就可以过了。而且算是一种浅科普吧，如果要对于计算机组成更了解的话可以看看CSAPP。</p>
+<h3 id="Assembler"><a href="#Assembler" class="headerlink" title="Assembler"></a>Assembler</h3><p>这一章大概就讲了下怎么从asm格式的机器语言转化为01十六位二进制。机器语言这里只包含一些要点，第一点是注意各种不同的instruction,A,C,L这三个，注意的是L的symbol地址位优先级是更高的。第二点是注意注释符号。第三点是注意静态变量的symbol。所以总结下来这里的程序运行是先扫一遍删除注释和增加L-instruction的symbol，然后再扫一遍将A-instruction和C-instruction翻译成01二进制</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>学的时候都是一些陌生的知识，需要一到两小时的适应，到后面才知道这些底层知识的好处。同时知识点不难，coursa上老师讲课也讲的好，虽然是看全英版本的，也能够听懂。基本上一个星期就能完成一个Part，不过我太鸽了，现在才着手写这篇blog，希望国庆前能完成Part II的blog</p>
+<p>2022-09-24</p>
+
     </div>
 
     
@@ -352,12 +386,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/08/30/Nand2Tetris%20Part%20I-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="Nand2Tetris Part I 学习笔记">
-      <i class="fa fa-chevron-left"></i> Nand2Tetris Part I 学习笔记
+    <a href="/2022/08/07/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="设计模式入门学习笔记">
+      <i class="fa fa-chevron-left"></i> 设计模式入门学习笔记
     </a></div>
       <div class="post-nav-item">
-    <a href="/2022/08/31/Algorithm-4th-Union-Find-%E5%B9%B6%E6%9F%A5%E9%9B%86/" rel="next" title="Algorithm 4th_Union-Find(并查集)">
-      Algorithm 4th_Union-Find(并查集) <i class="fa fa-chevron-right"></i>
+    <a href="/2022/08/30/Nand2Tetris%20Part%20I-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="next" title="Nand2Tetris Part I 学习笔记">
+      Nand2Tetris Part I 学习笔记 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -417,7 +451,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Part-I-%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">Part I 概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Boolean-Logic"><span class="nav-number">3.</span> <span class="nav-text">Boolean Logic</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Boolean-Arithmetic"><span class="nav-number">4.</span> <span class="nav-text">Boolean Arithmetic</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Memory"><span class="nav-number">5.</span> <span class="nav-text">Memory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Machine-Language"><span class="nav-number">6.</span> <span class="nav-text">Machine Language</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#instructions"><span class="nav-number">6.1.</span> <span class="nav-text">instructions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hack-Machine-Language"><span class="nav-number">6.2.</span> <span class="nav-text">Hack Machine Language</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Computer-Architecture"><span class="nav-number">7.</span> <span class="nav-text">Computer Architecture</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Part-I-%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">Part I 概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Boolean-Logic"><span class="nav-number">3.</span> <span class="nav-text">Boolean Logic</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Boolean-Arithmetic"><span class="nav-number">4.</span> <span class="nav-text">Boolean Arithmetic</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Memory"><span class="nav-number">5.</span> <span class="nav-text">Memory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Machine-Language"><span class="nav-number">6.</span> <span class="nav-text">Machine Language</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#instructions"><span class="nav-number">6.1.</span> <span class="nav-text">instructions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hack-Machine-Language"><span class="nav-number">6.2.</span> <span class="nav-text">Hack Machine Language</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Computer-Architecture"><span class="nav-number">7.</span> <span class="nav-text">Computer Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#von-Neumann-Architecture"><span class="nav-number">7.1.</span> <span class="nav-text">von Neumann Architecture</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Assembler"><span class="nav-number">8.</span> <span class="nav-text">Assembler</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">9.</span> <span class="nav-text">总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -482,12 +516,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">118k</span>
+    <span title="站点总字数">120k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:48</span>
+    <span title="站点阅读时长">1:49</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
