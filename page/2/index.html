@@ -160,6 +160,125 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/07/c-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86-%E7%9F%A5%E8%AF%86%E5%B0%8F%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="talentstream">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="南有青鸟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/07/c-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86-%E7%9F%A5%E8%AF%86%E5%B0%8F%E8%AE%B0/" class="post-title-link" itemprop="url">c# 异常处理 知识小记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-07 14:56:20" itemprop="dateCreated datePublished" datetime="2022-05-07T14:56:20+08:00">2022-05-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-06 15:05:59" itemprop="dateModified" datetime="2022-08-06T15:05:59+08:00">2022-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>最近在系统学习c#的知识点，有一些知识点比较散且使用频率不高，现在此记录，便于复习。</p>
+<h4 id="关于c-的异常处理"><a href="#关于c-的异常处理" class="headerlink" title="关于c#的异常处理"></a>关于c#的异常处理</h4><p>一句话概括，异常是程序执行期间出现的问题，异常处理的目的是为了维护程序的健壮性和稳定性。举个栗子，比如说除以0，用户输入的数据与预设数据类型不符，数组越界，栈溢出等等。c#给我们提供了一些易于使用的解决方法。主要由四个关键词组成（当然还有其他）： <strong>try，catch，throw，finally</strong></p>
+<ul>
+<li><strong>try</strong>：用于存放可能会出现问题的语句，后面可以跟多个catch</li>
+<li><strong>catch</strong>：用于捕捉异常，通常跟在try后面</li>
+<li><strong>throw</strong>：用于抛出异常，是的，你没看错，比如说为了限制输入范围，限制输入的数字为1~10之间，主要用于自定义的限制</li>
+<li><strong>finally</strong>：不管是否有异常，里面的代码块必定执行，通常跟try一起。</li>
+</ul>
+<p>在菜鸟教程中，有一个易于理解的伪代码</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span></span><br><span class="line">&#123;</span><br><span class="line">   <span class="comment">// 引起异常的语句</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>( ExceptionName e1 )</span><br><span class="line">&#123;</span><br><span class="line">   <span class="comment">// 错误处理代码</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>( ExceptionName e2 )</span><br><span class="line">&#123;</span><br><span class="line">   <span class="comment">// 错误处理代码</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>( ExceptionName eN )</span><br><span class="line">&#123;</span><br><span class="line">   <span class="comment">// 错误处理代码</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">finally</span></span><br><span class="line">&#123;</span><br><span class="line">   <span class="comment">// 要执行的语句</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="c-中的异常类"><a href="#c-中的异常类" class="headerlink" title="c#中的异常类"></a>c#中的异常类</h4><p>C# 异常是使用类来表示的。C# 中的异常类主要是直接或间接地派生于 System.Exception 类。</p>
+<p>System.ApplicationException 和 System.SystemException 类是派生于 System.Exception 类的异常类。</p>
+<p>System.ApplicationException 类支持由应用程序生成的异常。所以程序员定义的异常都应派生自该类。</p>
+<p>System.SystemException 类是所有预定义的系统异常的基类。</p>
+<p>下表列出了一些派生自 System.SystemException 类的预定义的异常类：</p>
+<!-- wp:table -->
+<figure class="wp-block-table"><table><thead><tr><th>异常类</th><th>描述</th></tr></thead><tbody><tr><td>System.IO.IOException</td><td>处理 I/O 错误。</td></tr><tr><td>System.IndexOutOfRangeException</td><td>处理当方法指向超出范围的数组索引时生成的错误。</td></tr><tr><td>System.ArrayTypeMismatchException</td><td>处理当数组类型不匹配时生成的错误。</td></tr><tr><td>System.NullReferenceException</td><td>处理当依从一个空对象时生成的错误。</td></tr><tr><td>System.DivideByZeroException</td><td>处理当除以零时生成的错误。</td></tr><tr><td>System.InvalidCastException</td><td>处理在类型转换期间生成的错误。</td></tr><tr><td>System.OutOfMemoryException</td><td>处理空闲内存不足生成的错误。</td></tr><tr><td>System.StackOverflowException</td><td>处理栈溢出生成的错误。</td></tr></tbody></table></figure>
+<!-- /wp:table -->
+
+<h4 id="通过代码来学习简单的异常处理"><a href="#通过代码来学习简单的异常处理" class="headerlink" title="通过代码来学习简单的异常处理"></a>通过代码来学习简单的异常处理</h4><p>第一个是关于除以0的例子</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title">ErrorHandlingApplication</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">DivNumbers</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">int</span> result;</span><br><span class="line">        DivNumbers()</span><br><span class="line">        &#123;</span><br><span class="line">            result = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">division</span>(<span class="params"><span class="built_in">int</span> num1, <span class="built_in">int</span> num2</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//用于防止可能出现异常的代码块</span></span><br><span class="line">            <span class="keyword">try</span></span><br><span class="line">            &#123;</span><br><span class="line">                result = num1 / num2;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//用于捕捉异常，有多种写法</span></span><br><span class="line">            <span class="comment">//1. catch （系统自带异常 e）比如下面的DivideByZeroException</span></span><br><span class="line">            <span class="comment">//2. catch  (Exception e) 常规所有异常</span></span><br><span class="line">            <span class="comment">//3. catch 可以省略括号，等同于第二种写法，但是有时候要用的参数，根据情况使用</span></span><br><span class="line">            <span class="comment">//4. catch （程序员自定义异常 e) &lt;-需要注意的是，e只是一个参数名，不必过于纠结-&gt;</span></span><br><span class="line">            <span class="keyword">catch</span> (DivideByZeroException e)</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(<span class="string">&quot;Exception caught: &#123;0&#125;&quot;</span>, e);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//不管是否有错误，始终运行的代码</span></span><br><span class="line">            <span class="keyword">finally</span></span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(<span class="string">&quot;Result: &#123;0&#125;&quot;</span>, result);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            DivNumbers d = <span class="keyword">new</span> DivNumbers();</span><br><span class="line">            d.division(<span class="number">25</span>, <span class="number">0</span>);</span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第二个例子，程序员自定义异常类型</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">ConsoleApp3</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">int</span> age;</span><br><span class="line">            <span class="keyword">try</span></span><br><span class="line">            &#123;</span><br><span class="line">                age = <span class="built_in">int</span>.Parse(Console.ReadLine());</span><br><span class="line">                <span class="keyword">if</span> (age &lt; <span class="number">18</span> || age &gt; <span class="number">45</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> AgeException(<span class="string">&quot;年龄必须在18到45岁之间！&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    Console.WriteLine(age);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span> (AgeException e)</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(e);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span> (Exception e)</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(e);</span><br><span class="line">                Console.WriteLine();</span><br><span class="line">                Console.WriteLine(<span class="string">&quot;输入数据错误&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">finally</span></span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine();</span><br><span class="line">                Console.WriteLine(<span class="string">&quot;HELLO&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">AgeException</span>: <span class="title">ApplicationException</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AgeException</span>(<span class="params"><span class="built_in">string</span> message</span>) : <span class="title">base</span>(<span class="params">message</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="关于catch的小知识点"><a href="#关于catch的小知识点" class="headerlink" title="关于catch的小知识点"></a>关于catch的小知识点</h4><p>不管是程序员自定义的异常类型，还是系统自带的异常类型，都继承于 System.Execption 类。catch的规则是执行完第一个符合异常的 catch 后面就不会再执行了，所以说越具体的要放在越前面。</p>
+<h4 id="学习参考"><a href="#学习参考" class="headerlink" title="学习参考"></a>学习参考</h4><ul>
+<li>菜鸟教程 - <a target="_blank" rel="noopener" href="https://www.runoob.com/csharp/csharp-exception-handling.html">https://www.runoob.com/csharp/csharp-exception-handling.html</a></li>
+<li>微软官方doc - <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/fundamentals/exceptions/">https://docs.microsoft.com/zh-cn/dotnet/csharp/fundamentals/exceptions/</a></li>
+<li>《visual c#从入门到精通》- 第六章</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/11/%E6%B8%B8%E6%88%8F%E5%8E%9F%E5%9E%8B%EF%BC%9A%E3%80%8A%E6%8B%BE%E8%8B%B9%E6%9E%9C%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -628,7 +747,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -677,12 +796,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">114k</span>
+    <span title="站点总字数">118k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:44</span>
+    <span title="站点阅读时长">1:48</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
