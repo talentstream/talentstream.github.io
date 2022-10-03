@@ -160,6 +160,119 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/03/Nand2Tetris-Part-II-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="talentstream">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="南有青鸟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/10/03/Nand2Tetris-Part-II-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">Nand2Tetris Part II 学习笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-10-03 13:51:03 / 修改时间：21:24:51" itemprop="dateCreated datePublished" datetime="2022-10-03T13:51:03+08:00">2022-10-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>国庆前做完还是鸽鸽了，主要是瓦罗兰特太好玩了，虽然已经学完了，但还是没写，趁国庆没回家补补blog。关于 Part II 主要是讲计算机软件层面的东西，一个是Virtual Machine(虚拟机)，一个是高级语言，一个是Compiler(编译器),最后稍微提了一下operating system，不过这个是我在后面一门课要学的，所以只是稍微了解一下就可以了。关于这部分的project，稍微做了一下7的project，然后就不打算做了。就是嗯磨时间，其实看看参考代码看明白就行了，跟Part I的机器语言转化为01字符串是一样的。总的来说，还是比较容易理解的，看完之后我稍微明白了C#和C++的区别，还有为什么有各种编译器的区别了。Let’s go</p>
+<p>2022-10-03</p>
+<h3 id="Virtual-Machine"><a href="#Virtual-Machine" class="headerlink" title="Virtual Machine"></a>Virtual Machine</h3><p>关于这部分我是打算7，8章一起的，如果做project的话也是建议一起做了，难度并不大，只是磨时间。而且我认为理解起来也挺简单的，顺便也能理解为什么递归会出栈溢出这个报错了。<br>第7章我们会快速过一下VM是什么，并且理解一些VM的语言，基本上基于栈的思想，不过详细一点就没有了，只是让你了解操作逻辑。下图是java程序如何转化为计算机认得的语言，跟C#差不多，这也是为什么C++运行效率较高，因为C++少了一层编译，简单来说就是讲高级语言通过编译器转化成VM语言，这也是我们第10、11章要做的，然后将VM语言转化成机器语言，这是我们现在要做的。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20221003135914.png" alt="img"></p>
+<p><strong>virtual machine paradigm</strong> : 虚拟机范例，也就是上面那张图，以java为例，通过VM framework 进行编译后，虽然损失了些运行效率，但是代码会更加优雅，同时开发效率会更高。C和C++是单层编译的，但是Modern C++是单层编译和包含VM两层编译的结合，也就是说新特性让C++在代码中更好用。</p>
+<p><strong>Stack Machine</strong> : 基于栈实现VM，这是这章课的核心。首先是push和pop,如果学过数据结构的可以一下子就懂了，没有学过也不要紧，栈就是一个简单的先入后出的存储数据的结构。下面四图是关于在栈上的基本实现。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20221003152725.png" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20221003152903.png" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20221003152920.png" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20221003153007.png" alt="img"></p>
+<p>上述几张图简单讲了一下如何存储数据和进行一些逻辑运算，那么如果要像在高级语言中一样实现分支，循环，函数等操作，同样也有提供，了解过后，也是非常的简单。</p>
+<p><strong>Branching</strong> : 分支，也就是用if goto 实现所有的if else switch while for 等条件。根据下图高级语言和VMcode对比一下便能理解</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20221003153314.png" alt="img"></p>
+<p><strong>Functions</strong> : 在Branching部分我们就看到了function和return，在这一部分会有更详细地解释，同时可以了解为什么递归太多次会造成栈溢出的问题。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20221003153531.png" alt="img"></p>
+<p>这个是关于存储函数栈的结构</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20221003153618.png" alt="img"></p>
+<p>这张图很好地解释了当函数执行时，临时变量在栈中如何占据储存空间，当函数执行的时候会为临时变量占用一定的空间，此时临时变量还没有计算出来。也就是先push进去，当最后运算的时候才pop出来，只有当函数return后才会正式回收这些数据。这下子大概理解了数据为什么要回收了，调用其他函数都是自动回收，但是在main中的数据只有当结束了才会回收，那么垃圾回收十分重要，不过这是在c++，c#大部分是自动回收机制，还是很方便的。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20221003153741.png" alt="img"></p>
+<p>大部分内容都是关于VM语言如果转化为机器语言的具体实操建议，并不是很需要去理解记住，如果不做project的话，我甚至认为没有必要去看。</p>
+<h3 id="Compiler"><a href="#Compiler" class="headerlink" title="Compiler"></a>Compiler</h3><p>直接跳到Compiler这里，因为High-level language那一章是Nand2Tetris作者自己写的语言，如果学过高级语言的话我认为没必要了解了，内容基本上都差不多。Compiler这里都可以是编译原理的点了，我们稍微了解一下就可以了，学习一下Syntax Analysis 和 Code Generation两个核心知识点就可以了。编译器也就是将高级语言翻译成更底层的语言(VM语言或者是直接到机器语言)，我们主要就是学习编译器是如何理解程序的。</p>
+<h4 id="syntax-analysis"><a href="#syntax-analysis" class="headerlink" title="syntax analysis"></a>syntax analysis</h4><p>语法分析通常分为两个子部分，一个是tokenizing(单词化？),parsing(解释),看下图大概就明白大概流程了，不用太管project10那个线。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20221003155333.png" alt="img"></p>
+<p><strong>Lexical Analysis</strong> : 词法分析，也就是将程序中的字符序列转化为tokens的操作。tokens通常分为5类，keywords(关键词，也就是class while if这些)，symbols(像+-*&lt;&gt;这些)，integer constants(整型常数)，string constants(字符串),identifiers(就是我们命名的一些东西，比如说类，变量，函数等等) 下图可以理解大概分类</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20221003155854.png" alt="img"></p>
+<p><strong>Grammars</strong> : 语法也就是要每一句程序都判断是否写的正确，就如编译器给出的警告。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20221003160201.png" alt="img"></p>
+<p><strong>Parsing</strong> : 当嵌套循环了怎么办，比如if(x&gt;0){if(y&lt;0) z &#x3D; c;} 我们可以整理出类似parse tree的东西，如果能生成树，那么这一段语法就是合法的。同时也很容易理解层次结构。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20221003160856.png" alt="img"></p>
+<p>接下来就是关于project的说明了，理解还是很容易的，就此跳过，如果时间充裕的话，可以做做，这也是编译原理的作业之一。</p>
+<h4 id="code-generation"><a href="#code-generation" class="headerlink" title="code generation"></a>code generation</h4><p>前面是分析，现在是将程序分析生成底层代码。其实这个没什么好说的，书上说的很详细，从variable、expressions、strings、statements、objects、arrays等一系列都讲完了。如果要写project的建议认真读一读，不写的话看一下图片就差不多了。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Software部分主要就包括虚拟机和编译器，这两个部分主要又是编译原理的部分讲的更详细些，了解一下就足够了。关于Part II的操作系统，我基本上只是扫了一眼，后续打算仔细学习OS的内容，所以只是了解个大概。Nand2Tetris对于了解整个计算机的大概很有帮助，同时也不难，对于直接读黑皮书来说读这个门槛会低一些。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/14/Games104%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -368,7 +481,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/30/Nand2Tetris%20Part%20I-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/30/Nand2Tetris-Part%20I%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -382,95 +495,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/08/30/Nand2Tetris%20Part%20I-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">Nand2Tetris Part I 学习笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-08-30 18:53:32" itemprop="dateCreated datePublished" datetime="2022-08-30T18:53:32+08:00">2022-08-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-13 09:41:06" itemprop="dateModified" datetime="2022-09-13T09:41:06+08:00">2022-09-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>124</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>虽然坑开的很早，已经花了一周学完了Part I，但是两周过后还是没有写这篇博客，由于实在是太懒狗了。不过我也知道原因，毕竟学完一大部分再写博客总结，就会感觉到有好多东西要写，就没有动笔的勇气。这次算是填坑吧。以后尽量学一小部分就写一点，防止拖延。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/30/Nand2Tetris-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="talentstream">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="南有青鸟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/08/30/Nand2Tetris-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">Nand2Tetris Part I 学习笔记</a>
+            <a href="/2022/08/30/Nand2Tetris-Part%20I%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">Nand2Tetris Part I 学习笔记</a>
         </h2>
 
         <div class="post-meta">
@@ -2227,12 +2252,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">120k</span>
+    <span title="站点总字数">122k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:49</span>
+    <span title="站点阅读时长">1:51</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
