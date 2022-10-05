@@ -304,7 +304,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-21 10:20:19" itemprop="dateModified" datetime="2022-09-21T10:20:19+08:00">2022-09-21</time>
+                <time title="修改时间：2022-10-05 21:40:15" itemprop="dateModified" datetime="2022-10-05T21:40:15+08:00">2022-10-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -322,14 +322,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.4k</span>
+              <span>3.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -346,6 +346,13 @@
 <p>2022-9-14</p>
 <h3 id="02-引擎架构分层"><a href="#02-引擎架构分层" class="headerlink" title="02-引擎架构分层"></a>02-引擎架构分层</h3><p>时隔一周再看104，尽管很久没看了仍就记忆深刻，老师讲的东西尽量都很基础了，根据闫神说的话，如果Games系列听不懂的话那就说明是自己的问题。开始进入正题，这一次讲的是游戏引擎的架构如何分层，在《Game Engine Architecture》有一个传世经典的图。这里简单分一下 Tool -&gt; Function -&gt; Resource -&gt; Core -&gt; Platform 以及 3rd SDK ，构成游戏引擎。课程安排是按照 32451来进行讲解的。数据层顾名思义就是将导入的资源统一转换成引擎的资产，毕竟资源有很多格式，同时进行全局的唯一识别和管理资产的生命周期。然后是功能层，功能层就是各种具体的实现，比如引擎的核心，tick，之前看过计算机体系结构，能够很容易理解，每一次tick相当于一次周期，tick又有tickLogic和tickRender，通常先进行逻辑运算再进行渲染运算，也可以多线程分别加载。然后是核心层，核心层就是底层代码了，主要是Math Library(提高数学运算效率) ， Data Structure &amp; Containers(减少内存碎片),内存管理(1.尽量让数据放一起被处理 2.尽量让数据按顺序访问 3.allocate and de-allocate as a block尽量以块进行分配和回收)。第四个便是平台层，一个要考虑多种平台中graphics API的变化，就比如dx11和dx12，还有考虑硬件架构的变化，方便做移植。最后是工具层，工具层性能要求便没有这么高，用各种语言开发都可以，开发效率越高越好，尽可能地让非程序员也能轻松使用工具。<br>记不住没关系，记住三条金科玉律就可以 1.引擎是分层架构，为了降低程序的复杂度，这与我在设计模式中学到的思想差不多。2.越底层的代码越稳定，质量要越高，越顶层越灵活,顶层可以调用底层代码，但是底层不能调用顶层代码 3.游戏世界的核心是tick，即我们在一次tick中完成所有运算</p>
 <p>2022-9-21</p>
+<h3 id="03-如何构建游戏世界"><a href="#03-如何构建游戏世界" class="headerlink" title="03-如何构建游戏世界"></a>03-如何构建游戏世界</h3><p>104的这一章课含金量很足，解决了许多问题。同样的，难度也不是很高（指听得懂的程度）,如果要进一步了解的话，务必要阅读104团队引擎的源码（但是我的c++还只认识98😭）。在看完后写博客组织知识架构并记录算是十分重要的，看完去外面吃了顿饭时隔4个小时，记忆消失的有点快。杂谈完了，让我们快速进入到正题吧。<br>各种游戏里我们能看到的世界是由什么组成的，我们如何描述这些事情，以及它们是怎么被组织起来的，这是我们需要了解的事情。首先提到的就是GAMEOBJECT了，这里分为许多种，dynamic，static，environment，空气墙，网格，Trigger(触发器)，以及Ruler（即由代码写好的规则），这一切都为game object。如果了解了这一件事，对于unity中gameobject的理解会更加深刻。然后在代码层面讲述了用习以为常的OOP思想来描述物体，这个算是很简单的。只要学过OOP思想类的语言都能理解，但是在游戏引擎方面中有所不同。假设一群GO，比如课程中讲述的无人机，无人机有很多种，但是相似处很多，如果只是简单的用组成思想（即has a），代码容易耦合。在这里，提出了component思想，即每个GO由许多component构成，在unity中也能体会到这一点，比如transform，rigidbody，renderer，collider等等。在现实世界中，就好比装配一辆汽车，是由不同构件构成的，也就是用组成（contains a）来描述一个GO，这与设计模式中学习的思想差不多。如果学过c#，即多用接口定义行为，用类定义是什么。尽管是随便看看这个104课程，对于GO和component的理解也能进一步加强，所以说，gameplay程序员了解一下就引擎方面的知识还是很有必要的。总结一下，在游戏世界中，任何事(everything)都是GO，GO是由组件构成的。<br>仅仅讲述GO，并不能让这个游戏世界动起来。然后便详细讲到了Tick方面（即游戏在每一帧更新）的知识（虽然也不是很详细）。凭直觉来说，就是在一帧中每个GO按顺序加载完成。但是游戏引擎目前来说是采用Component方式的更新，即每一帧每个Component按顺序更新，最后在将GO更新好。类比来说，就是现实世界的流水线，像课程中的例子，做汉堡，并不是一个汉堡一个汉堡地做，而是面包，肉饼，菜，蛋分开来做，最后有一个人来做成汉堡，同时可以并行操作，更符合多线程，游戏引擎也是如此。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Games104/20221005213056.png" alt="img"></p>
+<p>接着讲述事件系统和管理游戏对象，首先简单提出了一个问题，当炮弹射到某个区域，如何对炮弹范围内的GO进行处理，这在unity中写gameplay十分简单，如果是游戏引擎层面，该如何解决。首先我们最容易想到的是如果范围内的东西，如果触发了先判断类别，然后再执行各部分代码（这种代码我感觉直接在unity逻辑上这样写都挺傻的，更何况引擎层面），接着就引出了事件系统，事件系统是十分重要的内容，Unity也经常用，感觉就像是设计模式中的订阅者模式。但是也不可能给全部GO发信，那么如何管理成千上万的GO。就是给每个GO一个UID，并且每个GO有自己的坐标，这是最直觉的思路。回到之前的炮弹问题，场景中的很多GO如何处理。最简单的思路就是计算每个GO的位置是否在炮弹范围里，但是这样就很容陷入n^2的时间复杂度。一个升级思路就是将一块场景分成很多块（分块思想），虽然相对之前有所进步，但是有种常见的情况即分布密集程度的问题，每个方块拥有的GO不一样。在之后，提出以二分为思想，即四叉树思想，先将整个大场景分成四块，然后选择最密集的一块再分四块，以此推进，能够有效保证每个方块的数量大概相同。这样子在也减少了搜索所需要的时间复杂度。同样还有许多场景管理方法，比如BVN，八叉树，BSP等等，王希老师推荐一个引擎里至少要包含两到三种场景管理的算法，<br>总结一下，GO的状态在tickloop更新，GO通过事件机制进行交互，GO在场景管理中需要用到高效的算法。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Games104/20221005212415.png" alt="img"><br><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Games104/20221005212733.png" alt="img"></p>
+<p>然后是关于一些复杂情况的处理，就比如说物体的绑定，就比如人坐车上。还有组件之间的依赖，通常是先完成运动，虽然坐标已经到了，但是之后才播放动画和物理计算。然后是事件系统，如何确定信息的发送是否重复耦合，就比如说发生了一件事件，A想发信息给B，同时B也想，但是信息冲突了，一个解决方法是建立了一个中间项，让中间项（邮局）先把所有信息收集了，然后再统一发出去，这样子B想发送冲突的信息前一定会收到A的信息，这样子A与B所发的信息不会相同了。</p>
+<p>这就是课程的大概了，课程的QA也很重要，一个是讲如果在一次tick中需要处理的时间超过一次tick会怎么样，还有component系统的优缺点等等，王希老师虽然回答了，但是我只是有所了解，但是并不能完全理解，便不在这里写出了。希望到后面的学习中可以触类旁通。</p>
+<p>2022-10-5</p>
 
       
     </div>
@@ -2252,12 +2259,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">122k</span>
+    <span title="站点总字数">124k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:51</span>
+    <span title="站点阅读时长">1:53</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
