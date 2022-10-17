@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言最近DDL比较多，但是计划是在10月完成对OS的学习，几乎在月中才开始加快进度，刚看完自己所计划的关于这本书的Part I部分，也就是对CPU的Virtualization，简单来说就是操作系统如何调度CPU，刚接触这方面有很多新词，虽然不是很难，但是看起来还是比较辛苦的，希望月底能看完OS方面的东西并且完成这本书的project，毕竟下个月要计网了。关于最近看的书，《人月神话》算是看完了，每">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OSTEP学习笔记">
+<meta property="og:url" content="http://example.com/2022/10/17/OSTEP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="南有青鸟">
+<meta property="og:description" content="前言最近DDL比较多，但是计划是在10月完成对OS的学习，几乎在月中才开始加快进度，刚看完自己所计划的关于这本书的Part I部分，也就是对CPU的Virtualization，简单来说就是操作系统如何调度CPU，刚接触这方面有很多新词，虽然不是很难，但是看起来还是比较辛苦的，希望月底能看完OS方面的东西并且完成这本书的project，毕竟下个月要计网了。关于最近看的书，《人月神话》算是看完了，每">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20221017161057.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20221017161126.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20221017162004.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20221017162019.png">
+<meta property="article:published_time" content="2022-10-17T01:43:40.000Z">
+<meta property="article:modified_time" content="2022-10-17T08:27:26.108Z">
+<meta property="article:author" content="talentstream">
+<meta property="article:tag" content="OS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20221017161057.png">
+
+<link rel="canonical" href="http://example.com/2022/10/17/OSTEP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>OSTEP学习笔记 | 南有青鸟</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">南有青鸟</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/17/OSTEP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="talentstream">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="南有青鸟">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OSTEP学习笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-10-17 09:43:40 / 修改时间：16:27:26" itemprop="dateCreated datePublished" datetime="2022-10-17T09:43:40+08:00">2022-10-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近DDL比较多，但是计划是在10月完成对OS的学习，几乎在月中才开始加快进度，刚看完自己所计划的关于这本书的Part I部分，也就是对CPU的Virtualization，简单来说就是操作系统如何调度CPU，刚接触这方面有很多新词，虽然不是很难，但是看起来还是比较辛苦的，希望月底能看完OS方面的东西并且完成这本书的project，毕竟下个月要计网了。关于最近看的书，《人月神话》算是看完了，每天睡前在床上看一点算是看完了，对于这本书如果我是小白的话，肯定收获颇丰。但是并不是，不过仍然可以收获很多东西，只是大部分收获的东西应该在工作的时候才能体会到了。</p>
+<p>再回到这本书，这本书本身作者写的很容易让人理解，同时每一小章开始会问问题，差不多就是阅读理解了，如果你能找到问题的所有答案，基本上就代表了你理解了这一章。大部分homework都是运行式的，也就是给你代码你运行看结果，用于加深理解。而且在一大部分的内容前后会有作者自己模拟的两段对话，差不多算是作者给你概要和总结了。</p>
+<p>关于作业，作者使用的c语言头文件都是在linu才有的，windows自己并不能编译，所以我装了一个VMware虚拟机来使用Ubuntu系统，基本上没什么难度，一次成功，仅仅是用来写小型代码和阅读C，linux还是挺方便的。</p>
+<p>2022-10-17</p>
+<h3 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h3><h4 id="Diaglogue"><a href="#Diaglogue" class="headerlink" title="Diaglogue"></a>Diaglogue</h4><p>Dialogue 部分就是大概讲了一下这本书的组成和OS的组成，算是抛砖引玉。简单来说，我们将会在这里以三部分——virtualization,concurrency and persistence 进行学习，具体来说，就是会学到一个操作系统是如何运作的，包括如何让哪一个程序在CPU是下一个运行的，如何处理内存溢出，虚拟机如何工作，如何管理硬盘内容，甚至会了解如何建造一个并发系统可以在部分系统崩溃时运作。</p>
+<h4 id="Introduction-to-operating-systems"><a href="#Introduction-to-operating-systems" class="headerlink" title="Introduction to operating systems"></a>Introduction to operating systems</h4><p>首先知道程序是如何运作的，简单来说，就是执行指令。处理器从内存中捕获指令，然后解码它最后执行，这也就是von Neumann 结构。那么在软件方面上便是操作系统，Virtualization 也就是将物理资源(processer memory disk等) 转化成虚拟的，然后便是稍微提了一下虚拟化CPU和Memory。这本书提供的程序只要看一下就可以了，如果写过类C语言基本上都能看懂的，之后是Concurrency，中文翻译是并发，看了下程序感觉就是多线程。接着提了Persistence，也就是这本书的第三部分，刚开始看到这个词的时候还是云里雾里的，看了内容，就是关于存储数据的。</p>
+<p>看完前面这三部分的介绍，大概就能理解OS在做什么，使用物理资产，比如CPU，内存，硬盘，然后虚拟化它们。并发可以来同时处理很多问题，然后长时间地存储文件，保证安全性。</p>
+<p>最后是介绍OS的发展，从早期的库，再到各种概念,system call , trap hander, kernel mode, return-from trap,后面到multiprogramming的介绍，再到UNIX、LINUX，MacOS的介绍，不过都只是泛泛的介绍，如果已经知道的话就没什么营养。</p>
+<h3 id="Virtualization"><a href="#Virtualization" class="headerlink" title="Virtualization"></a>Virtualization</h3><h4 id="Dialogue-on-Virtualization"><a href="#Dialogue-on-Virtualization" class="headerlink" title="Dialogue on Virtualization"></a>Dialogue on Virtualization</h4><p>依然是熟悉的Dialogue，如果去看官方网站的话，你会发现作者将书的内容分为了大概5个部分，虽然总体还是三个部分，但是学习起来还是5个部分方便一些。这一部分就是在讲关于CPU怎么Virtualization，其中的例子就是桃子，很多人要吃桃子，但是只有一个，如何骗他们每个人都可以吃到。这也就是CPU在OS的工作原理，只有一块CPU，但是OS可以给一堆程序制造很多虚拟CPU的幻象，让每个程序都可以在CPU上跑。</p>
+<h4 id="Process"><a href="#Process" class="headerlink" title="Process"></a>Process</h4><p>这一章的两个问题感觉很相近</p>
+<ul>
+<li>如何产生有很多CPU的假象</li>
+<li>虽然只有一些可用的物理CPU，如何让OS提供看起来用不完的CPU</li>
+</ul>
+<p>在这一章，我们将会讨论最基本的抽象概念:进程，简单来说，就是在运行的程序。如果打开任务管理器的话，我们就能看到一个一个进程，并且能看到进程的状态，以及各种占用率，如果看到详细信息，可以看到名称，PID，状态，CPU，内存以及一堆信息等等。那么CPU是如何运行一堆程序的呢？<br>最基本的技术，就是time sharing，就是CPU被一段程序用了一段时间，可以再让另一个东西用一段时间。相对应的是space sharing,磁盘空间就是被共享的资源，如果其中一块被分配给一个文件，这块就不能被分配给其他文件了，除非这个文件被删除。</p>
+<p><strong>Process API</strong> : Create,Destroy,wait,Miscellaneous Control,Status.<br>前面的大概就是Process 的API，进行部分的讲解。</p>
+<p><strong>Process Creation</strong> : OS如何让程序运行。第一件事便是将磁盘加载程序的代码和数据到内存中，一旦加载好，然后将一些内存分配到栈上，一些分配到堆上，最后再完成一些关于I&#x2F;O的设置，这样就为程序的执行准备好了条件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20221017161057.png" alt="img"></p>
+<p><strong>Process States</strong> : 在了解了什么是进程，以及粗略地了解了如何创建，现在来了解一些进程的状态，并且有几张图帮助理解：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20221017161126.png" alt="img"></p>
+<ul>
+<li>Running : 运行</li>
+<li>Ready : 准备运行，但是没轮到</li>
+<li>Blocked : 阻塞状态，程序运行到无法进行操作会先挂起让其他Ready程序先运行，等好了进入Ready状态，还得等别人Running完</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20221017162004.png" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20221017162019.png" alt="img"></p>
+<p><strong>Summary</strong> ：这一章探讨了进程，可以简单地被看成运行的程序，关于这一章的问题，虽然这里没有直接提及，我的理解就是，因为大部分程序不一定在运行，将运行中的程序转化成一个一个进程的概念，来使用CPU，但是是有顺序使用CPU的，这样每个程序都能用到CPU，这样就造成了每个程序都有自己的CPU的感觉（这里并没有提到多线程的内容）</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OS/" rel="tag"># OS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/10/03/Nand2Tetris-Part-II-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="Nand2Tetris Part II 学习笔记">
+      <i class="fa fa-chevron-left"></i> Nand2Tetris Part II 学习笔记
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Intro"><span class="nav-number">2.</span> <span class="nav-text">Intro</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Diaglogue"><span class="nav-number">2.1.</span> <span class="nav-text">Diaglogue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Introduction-to-operating-systems"><span class="nav-number">2.2.</span> <span class="nav-text">Introduction to operating systems</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Virtualization"><span class="nav-number">3.</span> <span class="nav-text">Virtualization</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Dialogue-on-Virtualization"><span class="nav-number">3.1.</span> <span class="nav-text">Dialogue on Virtualization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Process"><span class="nav-number">3.2.</span> <span class="nav-text">Process</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="talentstream"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">talentstream</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022-08 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">talentstream</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">126k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:55</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
