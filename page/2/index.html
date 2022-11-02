@@ -160,6 +160,128 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/28/Blender-%E7%94%9C%E7%94%9C%E5%9C%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88Blender-Guru%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="talentstream">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="南有青鸟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/28/Blender-%E7%94%9C%E7%94%9C%E5%9C%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88Blender-Guru%EF%BC%89/" class="post-title-link" itemprop="url">Blender 甜甜圈学习笔记（Blender Guru）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-05-28 11:12:49" itemprop="dateCreated datePublished" datetime="2022-05-28T11:12:49+08:00">2022-05-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-06 11:30:30" itemprop="dateModified" datetime="2022-08-06T11:30:30+08:00">2022-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1/" itemprop="url" rel="index"><span itemprop="name">设计</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>许久未学习Blender，已经忘得差不多了，为了作业不得不捡回来，这次学习的是Youtube上的Blender Guru的Donuts（Blender版本3.0），算是很多人推荐的教程，可以学到很多。至此边学习便记录以便复习。</p>
+<h4 id="Part-1：Beginner-Tutorial"><a href="#Part-1：Beginner-Tutorial" class="headerlink" title="Part 1：Beginner Tutorial"></a>Part 1：Beginner Tutorial</h4><p>第一部分算是对Blender进行一个基本认知，界面UI的了解，根据80&#x2F;20原理，我们只需要认真学20%的知识，就能完成80%的任务，一开始对于复杂的UI界面会感到惊慌失措，无所适从，Just following，就能做出一个很好的3D模型，并且对于Blender有一个更深层次的认知。</p>
+<p>对于3D建模软件来说，记住hotkey是十分重要的，一开始有太多的hotkey，当学到新的知识就会重复用到老的知识点，所以只要跟着教程做就可以记住，不必当心一下子就忘记了。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/BlenderLearn/20220806113005.png" alt="img"></p>
+<p>1.快速认识3d viewport，主要是装着3D模型的界面（除去右边的和上面的界面）</p>
+<p>2.如果想看到渲染后的图片，可以在顶部导航栏点击Render，然后点击Render Image或者按下<strong>hotkey F12</strong></p>
+<p>3.<strong>移动物体</strong>，用鼠标左键选择物体，可以在3d viewport的左侧栏点击 移动键（长得像十字）这样会出现关于物体的XYZ坐标轴，值得注意的是这里的 Z 坐标是高度（与Unity不同，Unity Y是高度）。也可按下<strong>hotkey G</strong>来移动物体，按下G的同时按下鼠标中键可以跟着一根坐标轴移动，同样也可以G+X 、G+Y，G+Z来跟随坐标轴移动</p>
+<p>4.<strong>旋转或者放大放小物体</strong>。同样在左侧栏可以找到，不过我们仍然习惯用hotkey，分别是<strong>R（Rotate），S（Scale）</strong>，跟随坐标变化跟移动键相同</p>
+<p>5.旋转viewport的视角，按住鼠标中键</p>
+<p>6.对于鼠标按键的设置，不喜欢用中键的可以设置，laptop user without middle mouse button (Edit&gt;Preferences&gt;Input&gt;Enable Emulate 3 Button Mouse, hold ALT + left click to orbiting)</p>
+<p>7.根据喜好改变用户界面的大小（Edit&gt;Preferences&gt;Interface&gt;Resolution Scale)</p>
+<p>8.移动（panning）viewport的视角，用shift+<strong>中键</strong></p>
+<p>9.放大缩小viewport，用<strong>中键滚轮</strong></p>
+<p>10.快速调整视角有三种方法，1.用数字小键盘 2.按住 <strong>hotkey ~</strong> ，然后选择视角 3.在显示ObjectMode的旁边有一个View按钮，View&gt;ViewPoint&gt;选择想要的视角（不推荐）4.用ALT+鼠标中键</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/BlenderLearn/20220806112954.png" alt="img"></p>
+<p>11.右上的界面是这个文件里有多少东西，右下的是这个物体的属性，不过太多了，边用边学，现在不必了解。</p>
+<p>12.删除物体，选择物体后有<strong>两个hotkey，一个是X，一个是Delete</strong>，凭借自己爱好使用。</p>
+<p>13.复制物体，<strong>hotkey shift+D</strong> 拖到想要的位置鼠标左键为确定，鼠标右键为取消该次操作</p>
+<h4 id="Part-2：Object-Editing-Tutorial"><a href="#Part-2：Object-Editing-Tutorial" class="headerlink" title="Part 2：Object Editing Tutorial"></a>Part 2：Object Editing Tutorial</h4><p>这一Part主要是关于 Object 模式和 Editing 模式的介绍，没有介绍的那么详细，但是好用的功能基本是有了。</p>
+<p>1.添加物体，<strong>hotkey shift +A</strong> ,或者是Viewport界面左上有一个Add按钮。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/BlenderLearn/20220806112858.png" alt="img"></p>
+<p>2.本教程做的是donut，我们选择Torus，然后会弹出一个初始化Torus选项的菜单 <strong>hotkey F9</strong>或者删掉重新建一个会出来菜单（一旦进行操作后不能修改）</p>
+<p>3.快速弹出选择的物体的属性栏 <strong>hotkey N</strong> 或者直接点击右上方的 ← 箭头，可以直接拉回去，也可以用hotkey。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/BlenderLearn/20220806112913.png" alt="img"></p>
+<p>4.初始化属性参数，除了Dimensions，Location，Rotation以及Scale是可以初始化参数的，假设你变大了，用 <strong>hotkey Ctrl+A to apply &gt; Scale</strong> ，可以使Scale重新变为（1，1，1）</p>
+<p>5.在创建球体，环圈等带有弧线的物体，会出现锯齿线，只需要选择物体后 点击鼠标右键 弹出shade smooth&#x2F;shade flat ，选择shade smooth，就可以变得较为光滑</p>
+<p>6.即使shade smooth之后，边界也没有那么光滑，这时我们为其添加变形器,选择subdivision surface，他是可以增加表面的UV数，只看边界,两点构成一条直线，如果在其中间再加一个点，使其变得更像一条弧线。subdivision surface 就是做这个的，参数越高，越来越顺滑，不过基本3就够用了。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/BlenderLearn/20220806112928.png" alt="img"></p>
+<p>7.稍微讲解了Object模式的部分组件，接下来转到了编辑模式，编辑模式是只编辑你选择的物体。有几种方式可以快速调到Edit 模式（1.hotkey Tab 2.在左上方Object Mode的地方可以选择 3.<strong>Ctrl+Tab</strong>可以选择所有模式。）</p>
+<p>8.开始调整上面的UV点，按住<strong>shift+左键</strong>可以多选，按G去移动点。</p>
+<p>9.比例编辑，<strong>hotkey O</strong>可以转为比例编辑模式，比例编辑模式按G与普通模式按G的区别是：比例模式相当于牵一发而动全身，而普通模式只动选择的部分。开启比例编辑模式通常会出现一个圈来调整范围大小。</p>
+<p>10.伸缩功能(shrink and flatten)在左侧可以选，<strong>hotkey Alt+S</strong>,即是让物体沿着正常路线移动</p>
+<p>11.随机选择，左上角Select -&gt; Select Random</p>
+<p>12.在比例模式按钮旁边可以选择比例模式的类型（可以随便尝试一下）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/BlenderLearn/20220806112939.png" alt="img"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/01/11/%E6%B8%B8%E6%88%8F%E5%8E%9F%E5%9E%8B%EF%BC%9A%E3%80%8A%E6%8B%BE%E8%8B%B9%E6%9E%9C%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -794,7 +916,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -843,12 +965,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">126k</span>
+    <span title="站点总字数">128k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:55</span>
+    <span title="站点阅读时长">1:56</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

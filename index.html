@@ -160,6 +160,215 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/02/Algorithm%204th_Sort/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="talentstream">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="南有青鸟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/11/02/Algorithm%204th_Sort/" class="post-title-link" itemprop="url">Algorithm-4th_Sort</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-11-02 11:29:04 / 修改时间：13:37:52" itemprop="dateCreated datePublished" datetime="2022-11-02T11:29:04+08:00">2022-11-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>鸽了好久才开始写这一个博客，排序算法在阅读之时发现这本书写的代码十分优雅，仅仅在十几行就能实现排序，而且在各种排序算法也有深入，对于深入理解也值得复习。</p>
+<h3 id="Elementary-Sort-简单排序"><a href="#Elementary-Sort-简单排序" class="headerlink" title="Elementary Sort(简单排序)"></a>Elementary Sort(简单排序)</h3><p>一开始我们从简单的算法开始，插入排序和冒泡排序，这两种排序十分符合自然思维，虽然消耗的时间复杂度挺高的，需要O(n^2)，但是从这里入手然后再去学习O*(nlogn)的算法将会事半功倍。</p>
+<p>首先我们了解一下简单的API，原书是用java写的，虽然与c#差不多，但还是有许多细小的差异。同时，IComparable 是可比较的数组，由于数据类型有挺多的，int string 还有自定义的类等，我们统一为比较接口，其实这里用到泛型也是可以的</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SortExample</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Sort</span>(<span class="params">IComparable[] a</span>)</span></span><br><span class="line">    &#123; </span><br><span class="line">        <span class="comment">// 排序，核心部分</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="built_in">bool</span> <span class="title">Less</span>(<span class="params">IComparable v,IComparable w</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 排序规则 , 这里是从小到大</span></span><br><span class="line">        <span class="keyword">return</span> v.CompareTo(w) &lt; <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Exch</span>(<span class="params">IComparable[] a,<span class="built_in">int</span> i,<span class="built_in">int</span> j</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 数组中交换两个数数据位置</span></span><br><span class="line">        IComparable t = a[i]; a[i] = a[j]; a[j] = t;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Show</span>(<span class="params">IComparable[] a</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 展示数组，可有可无</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; a.Length; i++)</span><br><span class="line">            Console.Write(a[i].Fahrenheit + <span class="string">&quot; &quot;</span>);</span><br><span class="line">        Console.WriteLine();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="built_in">bool</span> <span class="title">IsSorted</span>(<span class="params">IComparable[] a</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 判断是否排序成功，可有可无</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt; a.Length; i++)</span><br><span class="line">            <span class="keyword">if</span> (Less(a[i], a[i - <span class="number">1</span>])) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="SelectionSort-插入排序"><a href="#SelectionSort-插入排序" class="headerlink" title="SelectionSort(插入排序)"></a>SelectionSort(插入排序)</h4><p>插入排序很简单，就是遍历一遍数组，将数组中遍历到的最小的数字放在第一个索引，然后再从第二个索引开始遍历，再把这之间的最小的放在第二个索引。<br>所以有<strong>定律A</strong>——插入排序会用到大约 N^2&#x2F;2 次比较以及 N 次位置交换，很容易证明。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 插入排序的核心代码</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Sort</span>(<span class="params">IComparable[] a</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> n = a.Length;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 先创建最小值的索引定位</span></span><br><span class="line">        <span class="built_in">int</span> min = i;</span><br><span class="line">        <span class="comment">// 然后开始从 i+1 位与 min 索引所在的值进行比较一直到最后一位，获取最小值的索引</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> j = i + <span class="number">1</span>; j &lt; n; j++)</span><br><span class="line">        &#123;                </span><br><span class="line">            <span class="keyword">if</span> (Less(a[j], a[min])) min = j;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 然后进行交换。</span></span><br><span class="line">        <span class="comment">// 当完成 0~n 找出最小值放在第 0 位 ，之后则是从 1~n 里找到最小值放在 1 这里 </span></span><br><span class="line">        Exch(a, i, min);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/31/Algorithm-4th-Union-Find-%E5%B9%B6%E6%9F%A5%E9%9B%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="talentstream">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="南有青鸟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/31/Algorithm-4th-Union-Find-%E5%B9%B6%E6%9F%A5%E9%9B%86/" class="post-title-link" itemprop="url">Algorithm 4th_Union-Find(并查集)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-31 09:37:01" itemprop="dateCreated datePublished" datetime="2022-08-31T09:37:01+08:00">2022-08-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-02 13:37:51" itemprop="dateModified" datetime="2022-11-02T13:37:51+08:00">2022-11-02</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>并查集在打竞赛的时候就学过了，现在差不多过了两年半，重拾算法，认真学学。当时在学的时候完全不理解并查集是什么意思，只能说当文科背了。认真看了英文版的ALgorithm 4th，才完全理解了这个并、查是什么意思，集应该是集合，也有可能是数据结构的意思，不知道是谁翻译的。如果阅读CS相关的书，尤其是基础书(即前置知识只需要你会写代码即可)，我推荐看英文版。虽然一开始看的很辛苦，但是一旦进入状态，基本能够了解作者想要告诉你什么，而且书里面的英语基本上是英文的大白话，除去几个专有名词需要查一下，其他基本上都是高中学过的单词。希望我能通过这段时间的英文教材阅读来练习自己以后阅读英文文档的能力吧。<br>关于并查集，我们直接看英文，Union - Find，Union即为并，即链接，Find为查找，查找出所在的集合。之所以叫这个名字，是因为Union和Find这两个方法是必不可少的，而且后续讨论优化也是在这两个方法中优化。</p>
+<h3 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h3><h4 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h4><p>当我们说p q时，即说p连接了q，然后有以下特点 ：</p>
+<ul>
+<li>反身性：p自身连接自己</li>
+<li>对称性：如果p连接了q，则q连接了p</li>
+<li>传递性：如果p连接了q且q连接了r，则p连接了r</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">UF</span></span><br><span class="line">&#123;</span><br><span class="line">    UF(<span class="built_in">int</span> N)<span class="comment">//初始化</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Union</span>(<span class="params"><span class="built_in">int</span> p,<span class="built_in">int</span> q</span>)<span class="comment">//连接p和q，即让他们在同一个集合</span></span></span><br><span class="line"><span class="function">    <span class="built_in">int</span> <span class="title">Find</span>(<span class="params"><span class="built_in">int</span> p</span>)<span class="comment">//找到p所在的集合</span></span></span><br><span class="line"><span class="function">    <span class="built_in">bool</span> <span class="title">Connected</span>(<span class="params"><span class="built_in">int</span> p,<span class="built_in">int</span> q</span>)<span class="comment">//判断p和q点是否在同一个集合</span></span></span><br><span class="line"><span class="function">    <span class="built_in">int</span> <span class="title">Count</span>()<span class="comment">//返回有多少个集合</span></span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>简单来说，并查集就是让一个一个孤立的点连在一起，连在一起的点有一个共同的集合</p>
+<h4 id="基本架构实现"><a href="#基本架构实现" class="headerlink" title="基本架构实现"></a>基本架构实现</h4><p>这里给出基本架构，可以看到，需要更改的基本上是Find和Union</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">UF</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span>[] id;<span class="comment">//集合的id</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> count;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">UF</span>(<span class="params"><span class="built_in">int</span> N</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        count = N;</span><br><span class="line">        id = <span class="keyword">new</span> <span class="built_in">int</span>[N];</span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; N; i++)</span><br><span class="line">            id[i] = i ;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">Count</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">Connected</span>(<span class="params"><span class="built_in">int</span> p, <span class="built_in">int</span> q</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> Find(p)==Find(q);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">Find</span>(<span class="params"><span class="built_in">int</span> p</span>)<span class="comment">//Find函数，后面会实现</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Union</span>(<span class="params"><span class="built_in">int</span> p,<span class="built_in">int</span> q</span>)<span class="comment">//Union函数，后面会实现</span></span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Quick-Find实现"><a href="#Quick-Find实现" class="headerlink" title="Quick-Find实现"></a>Quick-Find实现</h4><p>先来快速看看实现的代码</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">Find</span>(<span class="params"><span class="built_in">int</span> p</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> id[p];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Union</span>(<span class="params"><span class="built_in">int</span> p, <span class="built_in">int</span> q</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> pId = Find(p);</span><br><span class="line">    <span class="built_in">int</span> qId = Find(q);</span><br><span class="line">    <span class="keyword">if</span>(pID == qID) <span class="keyword">return</span> ;</span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">int</span> i=<span class="number">0</span>; i &lt; id.Length; i++)</span><br><span class="line">        <span class="keyword">if</span>(id[i] == pId) </span><br><span class="line">            id[i] = qId;</span><br><span class="line">    count--;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其实这里很简单，id就是p所在的集合编号，如果在Union中两个id不同，那么就会遍历全部集合，如果遍历到的点都属于p所在的集合，那么我们把遍历到的点的id改为q所属的集合的id。</p>
+<p>不过我们想想，Find的时间复杂度为 O(1),而Union的时间复杂度为 O(N)。假设我们仅仅使用了N-1次连接我们就可以使整个连接成一个集合，那时间复杂度也至少是 N*(N-1),也就是O(N^2)，那当N大的时候消耗的时间将会很多。所以接下来我们来优化一下Union方法。</p>
+<h4 id="Quick-Union实现"><a href="#Quick-Union实现" class="headerlink" title="Quick-Union实现"></a>Quick-Union实现</h4><p>先来快速看看两个方法里的代码</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">Find</span>(<span class="params"><span class="built_in">int</span> p</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">while</span>(p != parent[p]) </span><br><span class="line">        p = parent[p];</span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Union</span>(<span class="params"><span class="built_in">int</span> p,<span class="built_in">int</span> q</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> pRoot = Find(p);</span><br><span class="line">    <span class="built_in">int</span> qRoot = Find(q);</span><br><span class="line">    <span class="keyword">if</span>(pRoot == qRoot) <span class="keyword">return</span> ;</span><br><span class="line">    id[pRoot] = qRoot;</span><br><span class="line">    count--;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以看到Find和Union做了些许改变，parent和root可以让我们很快的联想到树的结构，我们将树根作为集合的编号，这样子Union仅仅需要O(1)即可完成一次连接，而Find消耗的时间复杂度虽然变多了，但是还是可以接受的。不过这并不是一个稳定的算法，假如Union将树形集合连接成了一个树链，那么Find的总时间就会变为(1+2+…N) ~ N^2&#x2F;2 ~ N^2,虽然最坏的情况也会比之前Quick-Find快，但是作为O(N^2)级别的时间复杂度，当数据量足够大也与Quick-Find差别不大。所以我们可以改变连接的方式，避免树链的出现。</p>
+<h4 id="Weighted-Quick-Union-实现"><a href="#Weighted-Quick-Union-实现" class="headerlink" title="Weighted Quick-Union 实现"></a>Weighted Quick-Union 实现</h4><p>先来看看这次的Union代码，Find实现没有变，这次我们增加了一个Weight的实现,即树的权重(以集合里面有多少个点来计算，如果有N个点，则Weight为N)，加权树有一个特点，它可以保证树的最大深度&lt;&#x3D;lgN，因为不可能有树链的情况产生，且保证较小的树是直接加到根上的，这样最多仅仅让树的深度 +1</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Union</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> pRoot = Find(p);</span><br><span class="line">    <span class="built_in">int</span> qRoot = Find(q);</span><br><span class="line">    <span class="keyword">if</span>(pRoot == qRoot) <span class="keyword">return</span> ;</span><br><span class="line">    <span class="keyword">if</span>(weight[pRoot] &lt; weight[qRoot]) </span><br><span class="line">    &#123;</span><br><span class="line">        parent[pRoot] = qRoot; </span><br><span class="line">        weight[qRoot] += weight[pRoot];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">    &#123;</span><br><span class="line">        parent[qRoot] = pRoot;</span><br><span class="line">        weight[pRoot] +=weight[qRoot];</span><br><span class="line">    &#125;</span><br><span class="line">    count--;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们在这次Weighted Quick-Union做的改变就是尽可能地让小树直接连在大树的根上，这样子基本上不会出现有树链的情况。我们来证明一下，假设让小树直接连接在大树的根上，设两棵树的权重分别为 i ，j 且 i &lt;&#x3D; j，设 i+j &#x3D; k,大树本身所需要的遍历时间不变，而小树的最大遍历时间会增加 1 ,即最大遍历时间变为 1 + lgi &#x3D; lg(i+i) &lt;&#x3D; lg(i+j) &#x3D; lg(k)，即 lgk 最多可能等于 lgi + 1。所以可以保证最坏时间复杂度为 N*(2*lgN)即为O(NlgN)。</p>
+<p>我们可以更加极限一点，让每个点直接连着根，即路径压缩</p>
+<h4 id="Weighted-Quick-Union-with-Path-Compression-实现"><a href="#Weighted-Quick-Union-with-Path-Compression-实现" class="headerlink" title="Weighted Quick-Union with Path Compression 实现"></a>Weighted Quick-Union with Path Compression 实现</h4><p>我们仅仅需要在Find中爬树的过程中将爬过的点直接附着在根上，这样可以保证树的深度在Find后很难超过2，使时间复杂度接近 1</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">Find</span>(<span class="params"><span class="built_in">int</span> p</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> root = p;</span><br><span class="line">    <span class="comment">//首先先找出根</span></span><br><span class="line">    <span class="keyword">while</span> (root != parent[root])</span><br><span class="line">        root = parent[root];</span><br><span class="line">    <span class="comment">//然后再次找根在遍历的过程中把每个节点直接附着在根上</span></span><br><span class="line">    <span class="keyword">while</span> (p != root)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">int</span> newp = parent[p];</span><br><span class="line">        parent[p] = root;</span><br><span class="line">        p = newp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Algorithm配套习题"><a href="#Algorithm配套习题" class="headerlink" title="Algorithm配套习题"></a>Algorithm配套习题</h3><p>由于配套习题实在是太多了，我们这里只看网站上提供的题目</p>
+<p><strong>1.5.8</strong> 给出反例来说明为什么这个quickFind中的Union方法是错误的</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">union</span>(<span class="params"><span class="built_in">int</span> p, <span class="built_in">int</span> q</span>)</span> &#123;</span><br><span class="line">   <span class="keyword">if</span> (connected(p, q)) <span class="keyword">return</span>;</span><br><span class="line">   <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; id.length; i++)</span><br><span class="line">      <span class="keyword">if</span> (id[i] == id[p]) id[i] = id[q];</span><br><span class="line">   count--;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*对比</span></span><br><span class="line"><span class="comment">public void Union(int p, int q)</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">    int pId = Find(p);</span></span><br><span class="line"><span class="comment">    int qId = Find(q);</span></span><br><span class="line"><span class="comment">    if(pID == qID) return ;</span></span><br><span class="line"><span class="comment">    for(int i=0; i &lt; id.Length; i++)</span></span><br><span class="line"><span class="comment">        if(id[i] == pId) </span></span><br><span class="line"><span class="comment">            id[i] = qId;</span></span><br><span class="line"><span class="comment">    count--;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<p>答：我们可以看到for循环中id[i] &#x3D;&#x3D; id[p]这里，在遍历中，我们可能改变了id[p]的值，比如(id[i] &#x3D;&#x3D; id[p],i&#x3D;&#x3D;p)，这样子当 i &gt; p 时，后面的都会失效。</p>
+<p><strong>1.5.10</strong> 在Weighted Quick-Union中，假设我们让id[rootp] &#x3D;&#x3D; q 来代替id[rootp]&#x3D;&#x3D;id[rootq].算法的结果会出错吗？</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Union</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> pRoot = Find(p);</span><br><span class="line">    <span class="built_in">int</span> qRoot = Find(q);</span><br><span class="line">    <span class="keyword">if</span>(pRoot == qRoot) <span class="keyword">return</span> ;</span><br><span class="line">    <span class="keyword">if</span>(weight[pRoot] &lt; weight[qRoot]) </span><br><span class="line">    &#123;</span><br><span class="line">        parent[pRoot] = qRoot; </span><br><span class="line">        <span class="comment">//parent[pRoot] = q;</span></span><br><span class="line">        weight[qRoot] += weight[pRoot];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">    &#123;</span><br><span class="line">        parent[qRoot] = pRoot;</span><br><span class="line">        weight[pRoot] +=weight[qRoot];</span><br><span class="line">    &#125;</span><br><span class="line">    count--;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>答：不会.但是这样子不能让小树直接附着在大树的根上，这样时间复杂度并不能达到我们想要的效果。</p>
+<h4 id="算法网址及Github代码"><a href="#算法网址及Github代码" class="headerlink" title="算法网址及Github代码"></a>算法网址及Github代码</h4><p>有一些部分题目是写代码，直接放在github中了，可以看看网址，有图助于理解</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://algs4.cs.princeton.edu/15uf/">https://algs4.cs.princeton.edu/15uf/</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/talentstream/Algorithm-4th-Practice-/tree/main/Union-Find">https://github.com/talentstream/Algorithm-4th-Practice-/tree/main/Union-Find</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/17/OSTEP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -183,10 +392,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-10-17 09:43:40 / 修改时间：16:27:26" itemprop="dateCreated datePublished" datetime="2022-10-17T09:43:40+08:00">2022-10-17</time>
+              <time title="创建时间：2022-10-17 09:43:40" itemprop="dateCreated datePublished" datetime="2022-10-17T09:43:40+08:00">2022-10-17</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-10-19 14:17:09" itemprop="dateModified" datetime="2022-10-19T14:17:09+08:00">2022-10-19</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -203,7 +418,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.4k</span>
+              <span>2.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -250,6 +465,8 @@
 <p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20221017162004.png" alt="img"></p>
 <p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20221017162019.png" alt="img"></p>
 <p><strong>Summary</strong> ：这一章探讨了进程，可以简单地被看成运行的程序，关于这一章的问题，虽然这里没有直接提及，我的理解就是，因为大部分程序不一定在运行，将运行中的程序转化成一个一个进程的概念，来使用CPU，但是是有顺序使用CPU的，这样每个程序都能用到CPU，这样就造成了每个程序都有自己的CPU的感觉（这里并没有提到多线程的内容）</p>
+<h4 id="Direct-Execution"><a href="#Direct-Execution" class="headerlink" title="Direct Execution"></a>Direct Execution</h4><p>这一章的是主要问题就是如何有效通过控制来虚拟化CPU</p>
+<p><strong>Limited Direct Execution</strong> :</p>
 
       
     </div>
@@ -655,122 +872,6 @@
 <h3 id="Assembler"><a href="#Assembler" class="headerlink" title="Assembler"></a>Assembler</h3><p>这一章大概就讲了下怎么从asm格式的机器语言转化为01十六位二进制。机器语言这里只包含一些要点，第一点是注意各种不同的instruction,A,C,L这三个，注意的是L的symbol地址位优先级是更高的。第二点是注意注释符号。第三点是注意静态变量的symbol。所以总结下来这里的程序运行是先扫一遍删除注释和增加L-instruction的symbol，然后再扫一遍将A-instruction和C-instruction翻译成01二进制</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>学的时候都是一些陌生的知识，需要一到两小时的适应，到后面才知道这些底层知识的好处。同时知识点不难，coursa上老师讲课也讲的好，虽然是看全英版本的，也能够听懂。基本上一个星期就能完成一个Part，不过我太鸽了，现在才着手写这篇blog，希望国庆前能完成Part II的blog</p>
 <p>2022-09-24</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/31/Algorithm-4th-Union-Find-%E5%B9%B6%E6%9F%A5%E9%9B%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="talentstream">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="南有青鸟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/08/31/Algorithm-4th-Union-Find-%E5%B9%B6%E6%9F%A5%E9%9B%86/" class="post-title-link" itemprop="url">Algorithm 4th_Union-Find(并查集)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-08-31 09:37:01 / 修改时间：11:20:25" itemprop="dateCreated datePublished" datetime="2022-08-31T09:37:01+08:00">2022-08-31</time>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>并查集在打竞赛的时候就学过了，现在差不多过了两年半，重拾算法，认真学学。当时在学的时候完全不理解并查集是什么意思，只能说当文科背了。认真看了英文版的ALgorithm 4th，才完全理解了这个并、查是什么意思，集应该是集合，也有可能是数据结构的意思，不知道是谁翻译的。如果阅读CS相关的书，尤其是基础书(即前置知识只需要你会写代码即可)，我推荐看英文版。虽然一开始看的很辛苦，但是一旦进入状态，基本能够了解作者想要告诉你什么，而且书里面的英语基本上是英文的大白话，除去几个专有名词需要查一下，其他基本上都是高中学过的单词。希望我能通过这段时间的英文教材阅读来练习自己以后阅读英文文档的能力吧。<br>关于并查集，我们直接看英文，Union - Find，Union即为并，即链接，Find为查找，查找出所在的集合。之所以叫这个名字，是因为Union和Find这两个方法是必不可少的，而且后续讨论优化也是在这两个方法中优化。</p>
-<h3 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h3><h4 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h4><p>当我们说p q时，即说p连接了q，然后有以下特点 ：</p>
-<ul>
-<li>反身性：p自身连接自己</li>
-<li>对称性：如果p连接了q，则q连接了p</li>
-<li>传递性：如果p连接了q且q连接了r，则p连接了r</li>
-</ul>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">UF</span></span><br><span class="line">&#123;</span><br><span class="line">    UF(<span class="built_in">int</span> N)<span class="comment">//初始化</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Union</span>(<span class="params"><span class="built_in">int</span> p,<span class="built_in">int</span> q</span>)<span class="comment">//连接p和q，即让他们在同一个集合</span></span></span><br><span class="line"><span class="function">    <span class="built_in">int</span> <span class="title">Find</span>(<span class="params"><span class="built_in">int</span> p</span>)<span class="comment">//找到p所在的集合</span></span></span><br><span class="line"><span class="function">    <span class="built_in">bool</span> <span class="title">Connected</span>(<span class="params"><span class="built_in">int</span> p,<span class="built_in">int</span> q</span>)<span class="comment">//判断p和q点是否在同一个集合</span></span></span><br><span class="line"><span class="function">    <span class="built_in">int</span> <span class="title">Count</span>()<span class="comment">//返回有多少个集合</span></span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p>简单来说，并查集就是让一个一个孤立的点连在一起，连在一起的点有一个共同的集合</p>
-<h4 id="基本架构实现"><a href="#基本架构实现" class="headerlink" title="基本架构实现"></a>基本架构实现</h4><p>这里给出基本架构，可以看到，需要更改的基本上是Find和Union</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">UF</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span>[] id;<span class="comment">//集合的id</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> count;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">UF</span>(<span class="params"><span class="built_in">int</span> N</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        count = N;</span><br><span class="line">        id = <span class="keyword">new</span> <span class="built_in">int</span>[N];</span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; N; i++)</span><br><span class="line">            id[i] = i ;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">Count</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">bool</span> <span class="title">Connected</span>(<span class="params"><span class="built_in">int</span> p, <span class="built_in">int</span> q</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> Find(p)==Find(q);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">Find</span>(<span class="params"><span class="built_in">int</span> p</span>)<span class="comment">//Find函数，后面会实现</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Union</span>(<span class="params"><span class="built_in">int</span> p,<span class="built_in">int</span> q</span>)<span class="comment">//Union函数，后面会实现</span></span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="Quick-Find实现"><a href="#Quick-Find实现" class="headerlink" title="Quick-Find实现"></a>Quick-Find实现</h4><p>先来快速看看实现的代码</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">Find</span>(<span class="params"><span class="built_in">int</span> p</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> id[p];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Union</span>(<span class="params"><span class="built_in">int</span> p, <span class="built_in">int</span> q</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> pId = Find(p);</span><br><span class="line">    <span class="built_in">int</span> qId = Find(q);</span><br><span class="line">    <span class="keyword">if</span>(pID == qID) <span class="keyword">return</span> ;</span><br><span class="line">    <span class="keyword">for</span>(<span class="built_in">int</span> i=<span class="number">0</span>; i &lt; id.Length; i++)</span><br><span class="line">        <span class="keyword">if</span>(id[i] == pId) </span><br><span class="line">            id[i] = qId;</span><br><span class="line">    count--;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>其实这里很简单，id就是p所在的集合编号，如果在Union中两个id不同，那么就会遍历全部集合，如果遍历到的点都属于p所在的集合，那么我们把遍历到的点的id改为q所属的集合的id。</p>
-<p>不过我们想想，Find的时间复杂度为 O(1),而Union的时间复杂度为 O(N)。假设我们仅仅使用了N-1次连接我们就可以使整个连接成一个集合，那时间复杂度也至少是 N*(N-1),也就是O(N^2)，那当N大的时候消耗的时间将会很多。所以接下来我们来优化一下Union方法。</p>
-<h4 id="Quick-Union实现"><a href="#Quick-Union实现" class="headerlink" title="Quick-Union实现"></a>Quick-Union实现</h4><p>先来快速看看两个方法里的代码</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">Find</span>(<span class="params"><span class="built_in">int</span> p</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">while</span>(p != parent[p]) </span><br><span class="line">        p = parent[p];</span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Union</span>(<span class="params"><span class="built_in">int</span> p,<span class="built_in">int</span> q</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> pRoot = Find(p);</span><br><span class="line">    <span class="built_in">int</span> qRoot = Find(q);</span><br><span class="line">    <span class="keyword">if</span>(pRoot == qRoot) <span class="keyword">return</span> ;</span><br><span class="line">    id[pRoot] = qRoot;</span><br><span class="line">    count--;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我们可以看到Find和Union做了些许改变，parent和root可以让我们很快的联想到树的结构，我们将树根作为集合的编号，这样子Union仅仅需要O(1)即可完成一次连接，而Find消耗的时间复杂度虽然变多了，但是还是可以接受的。不过这并不是一个稳定的算法，假如Union将树形集合连接成了一个树链，那么Find的总时间就会变为(1+2+…N) ~ N^2&#x2F;2 ~ N^2,虽然最坏的情况也会比之前Quick-Find快，但是作为O(N^2)级别的时间复杂度，当数据量足够大也与Quick-Find差别不大。所以我们可以改变连接的方式，避免树链的出现。</p>
-<h4 id="Weighted-Quick-Union-实现"><a href="#Weighted-Quick-Union-实现" class="headerlink" title="Weighted Quick-Union 实现"></a>Weighted Quick-Union 实现</h4><p>先来看看这次的Union代码，Find实现没有变，这次我们增加了一个Weight的实现,即树的权重(以集合里面有多少个点来计算，如果有N个点，则Weight为N)，加权树有一个特点，它可以保证树的最大深度&lt;&#x3D;lgN，因为不可能有树链的情况产生，且保证较小的树是直接加到根上的，这样最多仅仅让树的深度 +1</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Union</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> pRoot = Find(p);</span><br><span class="line">    <span class="built_in">int</span> qRoot = Find(q);</span><br><span class="line">    <span class="keyword">if</span>(pRoot == qRoot) <span class="keyword">return</span> ;</span><br><span class="line">    <span class="keyword">if</span>(weight[pRoot] &lt; weight[qRoot]) </span><br><span class="line">    &#123;</span><br><span class="line">        parent[pRoot] = qRoot; </span><br><span class="line">        weight[qRoot] += weight[pRoot];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">    &#123;</span><br><span class="line">        parent[qRoot] = pRoot;</span><br><span class="line">        weight[pRoot] +=weight[qRoot];</span><br><span class="line">    &#125;</span><br><span class="line">    count--;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我们在这次Weighted Quick-Union做的改变就是尽可能地让小树直接连在大树的根上，这样子基本上不会出现有树链的情况。我们来证明一下，假设让小树直接连接在大树的根上，设两棵树的权重分别为 i ，j 且 i &lt;&#x3D; j，设 i+j &#x3D; k,大树本身所需要的遍历时间不变，而小树的最大遍历时间会增加 1 ,即最大遍历时间变为 1 + lgi &#x3D; lg(i+i) &lt;&#x3D; lg(i+j) &#x3D; lg(k)，即 lgk 最多可能等于 lgi + 1。所以可以保证最坏时间复杂度为 N*(2*lgN)即为O(NlgN)。</p>
-<p>我们可以更加极限一点，让每个点直接连着根，即路径压缩</p>
-<h4 id="Weighted-Quick-Union-with-Path-Compression-实现"><a href="#Weighted-Quick-Union-with-Path-Compression-实现" class="headerlink" title="Weighted Quick-Union with Path Compression 实现"></a>Weighted Quick-Union with Path Compression 实现</h4><p>我们仅仅需要在Find中爬树的过程中将爬过的点直接附着在根上，这样可以保证树的深度在Find后很难超过2，使时间复杂度接近 1</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">Find</span>(<span class="params"><span class="built_in">int</span> p</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> root = p;</span><br><span class="line">    <span class="comment">//首先先找出根</span></span><br><span class="line">    <span class="keyword">while</span> (root != parent[root])</span><br><span class="line">        root = parent[root];</span><br><span class="line">    <span class="comment">//然后再次找根在遍历的过程中把每个节点直接附着在根上</span></span><br><span class="line">    <span class="keyword">while</span> (p != root)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">int</span> newp = parent[p];</span><br><span class="line">        parent[p] = root;</span><br><span class="line">        p = newp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Algorithm配套习题"><a href="#Algorithm配套习题" class="headerlink" title="Algorithm配套习题"></a>Algorithm配套习题</h3><p>由于配套习题实在是太多了，我们这里只看网站上提供的题目</p>
-<p><strong>1.5.8</strong> 给出反例来说明为什么这个quickFind中的Union方法是错误的</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">union</span>(<span class="params"><span class="built_in">int</span> p, <span class="built_in">int</span> q</span>)</span> &#123;</span><br><span class="line">   <span class="keyword">if</span> (connected(p, q)) <span class="keyword">return</span>;</span><br><span class="line">   <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; id.length; i++)</span><br><span class="line">      <span class="keyword">if</span> (id[i] == id[p]) id[i] = id[q];</span><br><span class="line">   count--;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*对比</span></span><br><span class="line"><span class="comment">public void Union(int p, int q)</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">    int pId = Find(p);</span></span><br><span class="line"><span class="comment">    int qId = Find(q);</span></span><br><span class="line"><span class="comment">    if(pID == qID) return ;</span></span><br><span class="line"><span class="comment">    for(int i=0; i &lt; id.Length; i++)</span></span><br><span class="line"><span class="comment">        if(id[i] == pId) </span></span><br><span class="line"><span class="comment">            id[i] = qId;</span></span><br><span class="line"><span class="comment">    count--;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
-
-<p>答：我们可以看到for循环中id[i] &#x3D;&#x3D; id[p]这里，在遍历中，我们可能改变了id[p]的值，比如(id[i] &#x3D;&#x3D; id[p],i&#x3D;&#x3D;p)，这样子当 i &gt; p 时，后面的都会失效。</p>
-<p><strong>1.5.10</strong> 在Weighted Quick-Union中，假设我们让id[rootp] &#x3D;&#x3D; q 来代替id[rootp]&#x3D;&#x3D;id[rootq].算法的结果会出错吗？</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Union</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> pRoot = Find(p);</span><br><span class="line">    <span class="built_in">int</span> qRoot = Find(q);</span><br><span class="line">    <span class="keyword">if</span>(pRoot == qRoot) <span class="keyword">return</span> ;</span><br><span class="line">    <span class="keyword">if</span>(weight[pRoot] &lt; weight[qRoot]) </span><br><span class="line">    &#123;</span><br><span class="line">        parent[pRoot] = qRoot; </span><br><span class="line">        <span class="comment">//parent[pRoot] = q;</span></span><br><span class="line">        weight[qRoot] += weight[pRoot];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">    &#123;</span><br><span class="line">        parent[qRoot] = pRoot;</span><br><span class="line">        weight[pRoot] +=weight[qRoot];</span><br><span class="line">    &#125;</span><br><span class="line">    count--;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>答：不会.但是这样子不能让小树直接附着在大树的根上，这样时间复杂度并不能达到我们想要的效果。</p>
-<h4 id="算法网址及Github代码"><a href="#算法网址及Github代码" class="headerlink" title="算法网址及Github代码"></a>算法网址及Github代码</h4><p>有一些部分题目是写代码，直接放在github中了，可以看看网址，有图助于理解</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://algs4.cs.princeton.edu/15uf/">https://algs4.cs.princeton.edu/15uf/</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/talentstream/Algorithm-4th-Practice-/tree/main/Union-Find">https://github.com/talentstream/Algorithm-4th-Practice-/tree/main/Union-Find</a></li>
-</ul>
 
       
     </div>
@@ -2079,128 +2180,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/28/Blender-%E7%94%9C%E7%94%9C%E5%9C%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88Blender-Guru%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="talentstream">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="南有青鸟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/05/28/Blender-%E7%94%9C%E7%94%9C%E5%9C%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88Blender-Guru%EF%BC%89/" class="post-title-link" itemprop="url">Blender 甜甜圈学习笔记（Blender Guru）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-05-28 11:12:49" itemprop="dateCreated datePublished" datetime="2022-05-28T11:12:49+08:00">2022-05-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-06 11:30:30" itemprop="dateModified" datetime="2022-08-06T11:30:30+08:00">2022-08-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%BE%E8%AE%A1/" itemprop="url" rel="index"><span itemprop="name">设计</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>许久未学习Blender，已经忘得差不多了，为了作业不得不捡回来，这次学习的是Youtube上的Blender Guru的Donuts（Blender版本3.0），算是很多人推荐的教程，可以学到很多。至此边学习便记录以便复习。</p>
-<h4 id="Part-1：Beginner-Tutorial"><a href="#Part-1：Beginner-Tutorial" class="headerlink" title="Part 1：Beginner Tutorial"></a>Part 1：Beginner Tutorial</h4><p>第一部分算是对Blender进行一个基本认知，界面UI的了解，根据80&#x2F;20原理，我们只需要认真学20%的知识，就能完成80%的任务，一开始对于复杂的UI界面会感到惊慌失措，无所适从，Just following，就能做出一个很好的3D模型，并且对于Blender有一个更深层次的认知。</p>
-<p>对于3D建模软件来说，记住hotkey是十分重要的，一开始有太多的hotkey，当学到新的知识就会重复用到老的知识点，所以只要跟着教程做就可以记住，不必当心一下子就忘记了。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/BlenderLearn/20220806113005.png" alt="img"></p>
-<p>1.快速认识3d viewport，主要是装着3D模型的界面（除去右边的和上面的界面）</p>
-<p>2.如果想看到渲染后的图片，可以在顶部导航栏点击Render，然后点击Render Image或者按下<strong>hotkey F12</strong></p>
-<p>3.<strong>移动物体</strong>，用鼠标左键选择物体，可以在3d viewport的左侧栏点击 移动键（长得像十字）这样会出现关于物体的XYZ坐标轴，值得注意的是这里的 Z 坐标是高度（与Unity不同，Unity Y是高度）。也可按下<strong>hotkey G</strong>来移动物体，按下G的同时按下鼠标中键可以跟着一根坐标轴移动，同样也可以G+X 、G+Y，G+Z来跟随坐标轴移动</p>
-<p>4.<strong>旋转或者放大放小物体</strong>。同样在左侧栏可以找到，不过我们仍然习惯用hotkey，分别是<strong>R（Rotate），S（Scale）</strong>，跟随坐标变化跟移动键相同</p>
-<p>5.旋转viewport的视角，按住鼠标中键</p>
-<p>6.对于鼠标按键的设置，不喜欢用中键的可以设置，laptop user without middle mouse button (Edit&gt;Preferences&gt;Input&gt;Enable Emulate 3 Button Mouse, hold ALT + left click to orbiting)</p>
-<p>7.根据喜好改变用户界面的大小（Edit&gt;Preferences&gt;Interface&gt;Resolution Scale)</p>
-<p>8.移动（panning）viewport的视角，用shift+<strong>中键</strong></p>
-<p>9.放大缩小viewport，用<strong>中键滚轮</strong></p>
-<p>10.快速调整视角有三种方法，1.用数字小键盘 2.按住 <strong>hotkey ~</strong> ，然后选择视角 3.在显示ObjectMode的旁边有一个View按钮，View&gt;ViewPoint&gt;选择想要的视角（不推荐）4.用ALT+鼠标中键</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/BlenderLearn/20220806112954.png" alt="img"></p>
-<p>11.右上的界面是这个文件里有多少东西，右下的是这个物体的属性，不过太多了，边用边学，现在不必了解。</p>
-<p>12.删除物体，选择物体后有<strong>两个hotkey，一个是X，一个是Delete</strong>，凭借自己爱好使用。</p>
-<p>13.复制物体，<strong>hotkey shift+D</strong> 拖到想要的位置鼠标左键为确定，鼠标右键为取消该次操作</p>
-<h4 id="Part-2：Object-Editing-Tutorial"><a href="#Part-2：Object-Editing-Tutorial" class="headerlink" title="Part 2：Object Editing Tutorial"></a>Part 2：Object Editing Tutorial</h4><p>这一Part主要是关于 Object 模式和 Editing 模式的介绍，没有介绍的那么详细，但是好用的功能基本是有了。</p>
-<p>1.添加物体，<strong>hotkey shift +A</strong> ,或者是Viewport界面左上有一个Add按钮。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/BlenderLearn/20220806112858.png" alt="img"></p>
-<p>2.本教程做的是donut，我们选择Torus，然后会弹出一个初始化Torus选项的菜单 <strong>hotkey F9</strong>或者删掉重新建一个会出来菜单（一旦进行操作后不能修改）</p>
-<p>3.快速弹出选择的物体的属性栏 <strong>hotkey N</strong> 或者直接点击右上方的 ← 箭头，可以直接拉回去，也可以用hotkey。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/BlenderLearn/20220806112913.png" alt="img"></p>
-<p>4.初始化属性参数，除了Dimensions，Location，Rotation以及Scale是可以初始化参数的，假设你变大了，用 <strong>hotkey Ctrl+A to apply &gt; Scale</strong> ，可以使Scale重新变为（1，1，1）</p>
-<p>5.在创建球体，环圈等带有弧线的物体，会出现锯齿线，只需要选择物体后 点击鼠标右键 弹出shade smooth&#x2F;shade flat ，选择shade smooth，就可以变得较为光滑</p>
-<p>6.即使shade smooth之后，边界也没有那么光滑，这时我们为其添加变形器,选择subdivision surface，他是可以增加表面的UV数，只看边界,两点构成一条直线，如果在其中间再加一个点，使其变得更像一条弧线。subdivision surface 就是做这个的，参数越高，越来越顺滑，不过基本3就够用了。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/BlenderLearn/20220806112928.png" alt="img"></p>
-<p>7.稍微讲解了Object模式的部分组件，接下来转到了编辑模式，编辑模式是只编辑你选择的物体。有几种方式可以快速调到Edit 模式（1.hotkey Tab 2.在左上方Object Mode的地方可以选择 3.<strong>Ctrl+Tab</strong>可以选择所有模式。）</p>
-<p>8.开始调整上面的UV点，按住<strong>shift+左键</strong>可以多选，按G去移动点。</p>
-<p>9.比例编辑，<strong>hotkey O</strong>可以转为比例编辑模式，比例编辑模式按G与普通模式按G的区别是：比例模式相当于牵一发而动全身，而普通模式只动选择的部分。开启比例编辑模式通常会出现一个圈来调整范围大小。</p>
-<p>10.伸缩功能(shrink and flatten)在左侧可以选，<strong>hotkey Alt+S</strong>,即是让物体沿着正常路线移动</p>
-<p>11.随机选择，左上角Select -&gt; Select Random</p>
-<p>12.在比例模式按钮旁边可以选择比例模式的类型（可以随便尝试一下）</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/BlenderLearn/20220806112939.png" alt="img"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2272,7 +2251,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -2321,12 +2300,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">126k</span>
+    <span title="站点总字数">128k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:55</span>
+    <span title="站点阅读时长">1:56</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
