@@ -160,146 +160,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/15/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="talentstream">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="南有青鸟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/11/15/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">计网：自顶向下方法-第一章 学习笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-11-15 21:30:29 / 修改时间：21:44:26" itemprop="dateCreated datePublished" datetime="2022-11-15T21:30:29+08:00">2022-11-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>9.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>9 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Computer-Networks-and-the-Internet"><a href="#Computer-Networks-and-the-Internet" class="headerlink" title="Computer Networks and the Internet"></a>Computer Networks and the Internet</h3><h4 id="1-1-What-is-the-internet"><a href="#1-1-What-is-the-internet" class="headerlink" title="1.1 What is the internet"></a>1.1 What is the internet</h4><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152132118.png" alt="img"></p>
-<h5 id="1-1-1-A-Nuts-and-Bolts-Description"><a href="#1-1-1-A-Nuts-and-Bolts-Description" class="headerlink" title="1.1.1 A Nuts-and-Bolts Description"></a>1.1.1 A Nuts-and-Bolts Description</h5><p><strong>End systems</strong> are connected together by a network of <strong>communication links</strong>(which are made of different types of physical media, including coaxial cable, copper wire, optical fiber, and radio spectrum) and <strong>packet switches</strong>(A packet switch takes a packet arriving on one of its incoming communication links and forwards that packet on one of its outgoing communication links. Two most prominent types : routers and link-layer switches). </p>
-<p><strong>End systems</strong> access the Internet through <strong>Internet Service Providers(ISPs)</strong>, including residential ISPs, university ISPs, cellular data ISPs.</p>
-<p>End systems, packet switches, and other pieces of the Internet run protocols that control the sending and receiving of information within the Internet.<br>[TCP&#x2F;IP] <strong>The Transmission Control Protocol(TCP)</strong> and <strong>the Internet Protocol(IP)</strong> are two most important protocols in the Internet. The IP protocol specifies the format of the packets that are sent and received among routers and end systems . </p>
-<p><strong>Requests for comments(RFCs)</strong> define protocols such as TCP, IP, HTTP(for the Web), and SMTP(for e-mail).</p>
-<h5 id="1-1-2-A-Services-Description"><a href="#1-1-2-A-Services-Description" class="headerlink" title="1.1.2 A Services Description"></a>1.1.2 A Services Description</h5><p>End systems attached to the Internet provide a <strong>socket interface</strong> that specifies how a program running on one end system asks the Internet infrastructure to deliver data to a specific destination program running on another end system.</p>
-<h5 id="1-1-3-What-is-a-Protocol"><a href="#1-1-3-What-is-a-Protocol" class="headerlink" title="1.1.3 What is a Protocol"></a>1.1.3 What is a Protocol</h5><p>A network protocol, the entities exchanging messages and taking actions are hardware or software components of some device.</p>
-<p>A protocol defines the format and the order of messages exchanged between two or more communicating entities, as well as the actions taken on the transmission and&#x2F;or receipt of a message or other event</p>
-<h4 id="1-2-The-Network-Edge"><a href="#1-2-The-Network-Edge" class="headerlink" title="1.2 The Network Edge"></a>1.2 The Network Edge</h4><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152135365.png"></p>
-<p>The applications and end systems are the “edge of the network”</p>
-<h5 id="1-2-1-Access-Networks"><a href="#1-2-1-Access-Networks" class="headerlink" title="1.2.1 Access Networks"></a>1.2.1 Access Networks</h5><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152135243.png"></p>
-<p>DSL, Cable, FTTH, 5G Fixed Wireless<br>Two most prevalent types of broadband residential access are digital subscriber line(DSL) and cable.</p>
-<h5 id="1-2-2-Physical-Media"><a href="#1-2-2-Physical-Media" class="headerlink" title="1.2.2 Physical Media"></a>1.2.2 Physical Media</h5><p>Guided media : Twisted-pair copper wire (双绞线) Coaxial Cable(同轴电缆) Fiber Optics(光纤) </p>
-<p>Terrestrial Radio Channels(地面无线电)</p>
-<p>Satellite Radio Channels : geostationary satellites(对地静止卫星) low-earth orbiting (LEO) satellites(近地轨道卫星)</p>
-<h4 id="1-3-The-Network-Core"><a href="#1-3-The-Network-Core" class="headerlink" title="1.3 The Network Core"></a>1.3 The Network Core</h4><p>The mesh of packet switches and links that interconnects the Internet’s end systems.</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152136626.png"></p>
-<h5 id="1-3-1-Packet-Switching"><a href="#1-3-1-Packet-Switching" class="headerlink" title="1.3.1 Packet Switching"></a>1.3.1 Packet Switching</h5><p><strong>Store-and-Forward Transmission</strong> : it means that the packet switch must receive the entire packet before it can begin to transmit the first bit of the packet onto the outbound link.</p>
-<p><strong>Queuing Delays</strong> :  If an arriving packet needs to be transmitted onto a link but finds the link busy with the transmission of another packet, the arriving packet must wait in the output buffer. </p>
-<p><strong>Packet Loss</strong> : Since the amount of buffer space is finite, an arriving packet may find that the buffer is completely full with other packets waiting for transmission. In this case, packet loss will occur—either the arriving packet or one of the already-queued packets will be dropped.</p>
-<p><strong>Forwarding Tables</strong> : maps destination addresses(or portions of the destination addresses) to the router’s outbound links.</p>
-<p><strong>Routing Protocols</strong> : are used to automatically set the forwarding tables. For example , determine the shortest path from each router to each destination and use the shortest path results to configure the forwarding tables in the routers.</p>
-<h5 id="1-3-2-Circuit-Switching"><a href="#1-3-2-Circuit-Switching" class="headerlink" title="1.3.2 Circuit Switching"></a>1.3.2 Circuit Switching</h5><p>In <strong>circuit-switched</strong> networks, the resources needed along a path(buffers, link transmission rate) to provide for communication between the end systems are reserved for the duration of the communication session between the end systems.</p>
-<p>Frequency-division multiplexing(FDM) : With FDM, the frequency spectrum of a link is divided up among the connections established across the link.</p>
-<p>Time-division multiplexing(TDM) : For a TDM link, time is divided into frames of fixed duration, and each frame is divided into a fixed number of time slots. </p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152137772.png"></p>
-<p><strong>Packet Switching vs Circuit Switching</strong> : Proponents of packet switching : 1.it offers better sharing of transmission capacity than circuit switching 2.it is simpler, more efficient, and less costly to implement than circuit switching.</p>
-<h5 id="1-3-3-A-Network-of-Networks"><a href="#1-3-3-A-Network-of-Networks" class="headerlink" title="1.3.3 A Network of Networks"></a>1.3.3 A Network of Networks</h5><p>Today’s Internet - a network of networks - is complex, consisting of a dozen or so tier-1 ISPs and hundreds of thousands of lower-tier ISPs.</p>
-<ul>
-<li><strong>Network Structure 1</strong>, interconnects all of the access ISPs with a single global transit ISP. The access ISP is customer and the global transit ISP is provider.</li>
-<li><strong>Network Structure 2</strong>, which consists of the hundreds of thousands of access ISPs and multiple global transit ISPs. The global transit ISPs themselves must interconnect: Otherwise access ISPs connected to one of the global transit providers would not be able to communicate with access ISPs connected to the other global transit providers. <strong>Network Structure 2</strong>, is a two-tier hierarchy with global transit providers residing at the top tier and access ISPs at the bottom tier.</li>
-<li><strong>Network Structure 3</strong>, consist of regional ISPs, access ISPs, tier-1 ISPs.</li>
-<li><strong>Network Structure 4</strong>, add points of presence(PoPs), multi-homing, peering, and Internet exchange points(IXPs). 1.<strong>PoPs</strong> exist in all levels of the hierarchy, except for the bottom (access ISP) level. A Pop is simply a group of one or more routers in the provider’s network where customer ISPs can connect into the provider ISP. 2.Any ISP(expect for tier-1 ISPs) may choose to <strong>multi-home</strong>, that is, to connect to two or more provider ISPs. 3. To reduce the costs, a pair of nearby ISPs at the same level of the hierarchy can peer, that is, they can directly connect their networks together so that all the traffice between them passes over the direct connection rather than through upstream intermediaries. 4.a third-party company can create an <strong>Internet Exchange Point (IXP)</strong>, which is a meeting point where multiple ISPs can peer together. </li>
-<li><strong>Network Structures 5</strong>, add content-provider network.</li>
-</ul>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152139045.png"></p>
-<h4 id="1-4-Delay-Loss-and-Throughput-in-Packet-Switched-Networks"><a href="#1-4-Delay-Loss-and-Throughput-in-Packet-Switched-Networks" class="headerlink" title="1.4 Delay, Loss and Throughput in Packet-Switched Networks"></a>1.4 Delay, Loss and Throughput in Packet-Switched Networks</h4><h5 id="1-4-1-Overview-of-Delay-in-Packet-Switched-Networks"><a href="#1-4-1-Overview-of-Delay-in-Packet-Switched-Networks" class="headerlink" title="1.4.1 Overview of Delay in Packet-Switched Networks"></a>1.4.1 Overview of Delay in Packet-Switched Networks</h5><p><strong>Processing Delay</strong> : The time required to examine the packet’s header and determine where to direct the packet is part of the processing delay. The processing delay can also include other factors, such as the time needed to check for bit-level errors in the packet that occurred in transmitting the packet’s bits from the upstream node to router A.<br><strong>Queuing Delay</strong> : it waits to be transmitted onto the link. Depend on number of earlier-arriving packets that are queued and waiting for transmission onto the link.<br>Transmission<br><strong>Transmission Delay</strong> : Denote the length of the packet by L bits, and denote the transmission rate of the link from router A to router B by R bits&#x2F;sec. The transmission delay is L&#x2F;R.<br><strong>Propagation Delay</strong> : Once a bit is pushed into the link, it needs to propagate to router B. The time required to propagate from the beginning of the link to router B is the propagation delay.The propagation speed depends on the physical medium of the link (that is, fiber optics, twisted-pair copper wire, and so on)</p>
-<p>The transmission delay is the amount of time required for the router to push out the packet; it is a function of the packet’s length and the transmission rate of the link, but has nothing to do with the distance between the two routers. The propagation delay, on the other hand, is the time it takes a bit to propagate from one router to the next; it is a function of the distance between the two routers, but has nothing to do with the packet’s length or the transmission rate of the link.</p>
-<h5 id="1-4-2-Queuing-Delay-and-Packet-Loss"><a href="#1-4-2-Queuing-Delay-and-Packet-Loss" class="headerlink" title="1.4.2 Queuing Delay and Packet Loss"></a>1.4.2 Queuing Delay and Packet Loss</h5><p>Design your system so that the <strong>traffic intensity</strong> is no greater than 1</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152141817.png"></p>
-<p>The fraction of lost packets increases as the traffic intensity increases. </p>
-<h5 id="1-4-3-End-to-End-Delay"><a href="#1-4-3-End-to-End-Delay" class="headerlink" title="1.4.3 End-to-End Delay"></a>1.4.3 End-to-End Delay</h5><p>When the user specifies a destination hostname, the program in the source host sends multiple, special packets toward that destination. As these packets work their way toward the destination, they pass through a series of routers. When a router receives one of these special packets, it sends back to the source a short message that contains the name and address of the router.</p>
-<h5 id="1-4-4-Throughput-in-Computer-Networks"><a href="#1-4-4-Throughput-in-Computer-Networks" class="headerlink" title="1.4.4 Throughput in Computer Networks"></a>1.4.4 Throughput in Computer Networks</h5><p>The instantaneous <strong>throughput</strong> at any instant of time is the rate (in bits&#x2F;sec) at which Host B is receiving the file. </p>
-<p>We saw that when there is no other intervening traffic, the <strong>throughput</strong> can simply be approximated as the minimum transmission rate along the path between source and destination.<br>The example shows that more generally the throughput depends not only on the transmission rates of the links along the path, but also on the intervening traffic. In particular, a link with a high transmission rate may nonetheless be the bottleneck link for a file transfer if many other data flows are also passing through that link.</p>
-<h4 id="1-5-Protocol-Layers-and-Their-Service-Models"><a href="#1-5-Protocol-Layers-and-Their-Service-Models" class="headerlink" title="1.5 Protocol Layers and Their Service Models"></a>1.5 Protocol Layers and Their Service Models</h4><h5 id="1-5-1-Layered-Architecture"><a href="#1-5-1-Layered-Architecture" class="headerlink" title="1.5.1 Layered Architecture"></a>1.5.1 Layered Architecture</h5><ul>
-<li><strong>Application-layer protocols</strong> — such as HTTP and SMTP—are almost always implemented in software in the end systems</li>
-<li><strong>Transport-layer protocols</strong> also.</li>
-<li><strong>Physical layer and Data link layers</strong> are responsible for handling communication over a specific link, they are typically implemented in a network interface card (for example, Ethernet or WiFi interface cards) associated with a given link.</li>
-<li><strong>The network layer</strong> is often a mixed implementation of hardware and software.</li>
-</ul>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152143019.png"></p>
-<p>Advantage : layering provides a structured way to discuss system components. Modularity makes it easier to update system components<br>Drawbacks : 1.many protocol stacks provide error recovery on both a per-link basis and an end-to-end basis. 2. functionality at one layer may need information (for example, a timestamp value) that is present only in another layer; this violates the goal of separation of layers.</p>
-<p><strong>Application Layer</strong> : includes HTTP(which provides for Web document request and transfer), SMTP (which provides for the transfer of e-mail messages), and FTP (which provides for the transfer of files between two end systems). The translation of human-friendly names for Internet end systems with the help of a specific application-layer protocol, namely, the domain name system (DNS).</p>
-<p><strong>Transport Layer</strong> : TCP , UDP , either of which can transport application-layer messages.<br>TCP provides a connection-oriented service to its applications. This service includes guaranteed delivery of application-layer messages to the destination and flow control.TCP also breaks long messages into shorter segments and provides a congestion-control mechanism, so that a source throttles its transmission rate when the network is congested.<br>UDP provides a connectionless service to its applications.This is a no-frills service that provides no reliability, no flow control, and no congestion control. </p>
-<p><strong>Network Layer</strong> : is responsible for moving network-layer packets known as datagrams from one host to another.<br>IP defines the fields in the datagram as well as how the end systems and routers act on these fields.</p>
-<p><strong>Link Layer</strong> : In particular, at each node, the network layer passes the datagram down to the link layer, which delivers the datagram to the next node along the route. At this next node, the link layer passes the datagram up to the network layer.</p>
-<p><strong>Physical Layer</strong> : the job of the physical layer is to move the individual bits within the frame from one node to the next.</p>
-<h5 id="1-5-2-Encapsulation"><a href="#1-5-2-Encapsulation" class="headerlink" title="1.5.2 Encapsulation"></a>1.5.2 Encapsulation</h5><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152144983.png"></p>
-<h4 id="1-6-Networks-Under-Attack"><a href="#1-6-Networks-Under-Attack" class="headerlink" title="1.6 Networks Under Attack"></a>1.6 Networks Under Attack</h4><p>Malware<br>Denial-of-service(DoS) attacks : 1.Vulnerability attack 2. Bandwidth flooding 3.Connection flooding<br>Sniff Packets(抓包)<br>Masquerade as Someone you trust</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/14/OSTEP-Persistence-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -331,7 +191,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-15 10:35:52" itemprop="dateModified" datetime="2022-11-15T10:35:52+08:00">2022-11-15</time>
+                <time title="修改时间：2022-11-15 21:49:29" itemprop="dateModified" datetime="2022-11-15T21:49:29+08:00">2022-11-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -475,6 +335,146 @@
 <p>Stored checksum (read), computed checksum(compute) , if they equal , the data has likely not been corrupted , and thus can be safely returned to the user .If they do not match , this implies the data has changed since the time it was stored . In this case , we have a corruption , which our checksum has helped us to detect . </p>
 <p>Problems :<br>    - Misdirected writes : write the data to disk correctly  but wrong location .<br>    Use PID . For example, if the stored information now contains the checksum C(D) and both the disk and sector numbers of the block, it is easy for the client to determine whether the correct information resides within a particular locale .<br>    - Lost writes : occurs when the device when the device informs the upper layer that a write has completed but in fact it never is persisted ; thus , what remains is the old contents of the block rather than the updated new contents .<br>    Perform a write verify or read-after-write ; by immediately reading back the data after a write, a system can ensure that the data indeed reached the disk surface .</p>
 <p>Overheads : space and time<br>    - Space : 1. each stored checksum takes up room on the disk , which can no longer be used for user data . 2. When accessing data , there must now be room in memory for the checksums and then discards it one done .<br>    - Time : 1. CPU must compute the checksum over each block , both when the data is stored and when it is accessed . One approach is to combine data copying and checksumming into one streamlined activity . 2. When checksums are stored distinctly from the data , and for any extra I&#x2F;O needed for background scrubbing . </p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/15/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="talentstream">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="南有青鸟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/11/15/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">计网：自顶向下方法-第一章 学习笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-11-15 21:30:29 / 修改时间：21:49:04" itemprop="dateCreated datePublished" datetime="2022-11-15T21:30:29+08:00">2022-11-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Computer-Networks-and-the-Internet"><a href="#Computer-Networks-and-the-Internet" class="headerlink" title="Computer Networks and the Internet"></a>Computer Networks and the Internet</h3><h4 id="1-1-What-is-the-internet"><a href="#1-1-What-is-the-internet" class="headerlink" title="1.1 What is the internet"></a>1.1 What is the internet</h4><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152132118.png" alt="img"></p>
+<h5 id="1-1-1-A-Nuts-and-Bolts-Description"><a href="#1-1-1-A-Nuts-and-Bolts-Description" class="headerlink" title="1.1.1 A Nuts-and-Bolts Description"></a>1.1.1 A Nuts-and-Bolts Description</h5><p><strong>End systems</strong> are connected together by a network of <strong>communication links</strong>(which are made of different types of physical media, including coaxial cable, copper wire, optical fiber, and radio spectrum) and <strong>packet switches</strong>(A packet switch takes a packet arriving on one of its incoming communication links and forwards that packet on one of its outgoing communication links. Two most prominent types : routers and link-layer switches). </p>
+<p><strong>End systems</strong> access the Internet through <strong>Internet Service Providers(ISPs)</strong>, including residential ISPs, university ISPs, cellular data ISPs.</p>
+<p>End systems, packet switches, and other pieces of the Internet run protocols that control the sending and receiving of information within the Internet.<br>[TCP&#x2F;IP] <strong>The Transmission Control Protocol(TCP)</strong> and <strong>the Internet Protocol(IP)</strong> are two most important protocols in the Internet. The IP protocol specifies the format of the packets that are sent and received among routers and end systems . </p>
+<p><strong>Requests for comments(RFCs)</strong> define protocols such as TCP, IP, HTTP(for the Web), and SMTP(for e-mail).</p>
+<h5 id="1-1-2-A-Services-Description"><a href="#1-1-2-A-Services-Description" class="headerlink" title="1.1.2 A Services Description"></a>1.1.2 A Services Description</h5><p>End systems attached to the Internet provide a <strong>socket interface</strong> that specifies how a program running on one end system asks the Internet infrastructure to deliver data to a specific destination program running on another end system.</p>
+<h5 id="1-1-3-What-is-a-Protocol"><a href="#1-1-3-What-is-a-Protocol" class="headerlink" title="1.1.3 What is a Protocol"></a>1.1.3 What is a Protocol</h5><p>A network protocol, the entities exchanging messages and taking actions are hardware or software components of some device.</p>
+<p>A protocol defines the format and the order of messages exchanged between two or more communicating entities, as well as the actions taken on the transmission and&#x2F;or receipt of a message or other event</p>
+<h4 id="1-2-The-Network-Edge"><a href="#1-2-The-Network-Edge" class="headerlink" title="1.2 The Network Edge"></a>1.2 The Network Edge</h4><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152135365.png"></p>
+<p>The applications and end systems are the “edge of the network”</p>
+<h5 id="1-2-1-Access-Networks"><a href="#1-2-1-Access-Networks" class="headerlink" title="1.2.1 Access Networks"></a>1.2.1 Access Networks</h5><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152135243.png"></p>
+<p>DSL, Cable, FTTH, 5G Fixed Wireless<br>Two most prevalent types of broadband residential access are digital subscriber line(DSL) and cable.</p>
+<h5 id="1-2-2-Physical-Media"><a href="#1-2-2-Physical-Media" class="headerlink" title="1.2.2 Physical Media"></a>1.2.2 Physical Media</h5><p>Guided media : Twisted-pair copper wire (双绞线) Coaxial Cable(同轴电缆) Fiber Optics(光纤) </p>
+<p>Terrestrial Radio Channels(地面无线电)</p>
+<p>Satellite Radio Channels : geostationary satellites(对地静止卫星) low-earth orbiting (LEO) satellites(近地轨道卫星)</p>
+<h4 id="1-3-The-Network-Core"><a href="#1-3-The-Network-Core" class="headerlink" title="1.3 The Network Core"></a>1.3 The Network Core</h4><p>The mesh of packet switches and links that interconnects the Internet’s end systems.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152136626.png"></p>
+<h5 id="1-3-1-Packet-Switching"><a href="#1-3-1-Packet-Switching" class="headerlink" title="1.3.1 Packet Switching"></a>1.3.1 Packet Switching</h5><p><strong>Store-and-Forward Transmission</strong> : it means that the packet switch must receive the entire packet before it can begin to transmit the first bit of the packet onto the outbound link.</p>
+<p><strong>Queuing Delays</strong> :  If an arriving packet needs to be transmitted onto a link but finds the link busy with the transmission of another packet, the arriving packet must wait in the output buffer. </p>
+<p><strong>Packet Loss</strong> : Since the amount of buffer space is finite, an arriving packet may find that the buffer is completely full with other packets waiting for transmission. In this case, packet loss will occur—either the arriving packet or one of the already-queued packets will be dropped.</p>
+<p><strong>Forwarding Tables</strong> : maps destination addresses(or portions of the destination addresses) to the router’s outbound links.</p>
+<p><strong>Routing Protocols</strong> : are used to automatically set the forwarding tables. For example , determine the shortest path from each router to each destination and use the shortest path results to configure the forwarding tables in the routers.</p>
+<h5 id="1-3-2-Circuit-Switching"><a href="#1-3-2-Circuit-Switching" class="headerlink" title="1.3.2 Circuit Switching"></a>1.3.2 Circuit Switching</h5><p>In <strong>circuit-switched</strong> networks, the resources needed along a path(buffers, link transmission rate) to provide for communication between the end systems are reserved for the duration of the communication session between the end systems.</p>
+<p>Frequency-division multiplexing(FDM) : With FDM, the frequency spectrum of a link is divided up among the connections established across the link.</p>
+<p>Time-division multiplexing(TDM) : For a TDM link, time is divided into frames of fixed duration, and each frame is divided into a fixed number of time slots. </p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152137772.png"></p>
+<p><strong>Packet Switching vs Circuit Switching</strong> : Proponents of packet switching : 1.it offers better sharing of transmission capacity than circuit switching 2.it is simpler, more efficient, and less costly to implement than circuit switching.</p>
+<h5 id="1-3-3-A-Network-of-Networks"><a href="#1-3-3-A-Network-of-Networks" class="headerlink" title="1.3.3 A Network of Networks"></a>1.3.3 A Network of Networks</h5><p>Today’s Internet - a network of networks - is complex, consisting of a dozen or so tier-1 ISPs and hundreds of thousands of lower-tier ISPs.</p>
+<ul>
+<li><strong>Network Structure 1</strong>, interconnects all of the access ISPs with a single global transit ISP. The access ISP is customer and the global transit ISP is provider.</li>
+<li><strong>Network Structure 2</strong>, which consists of the hundreds of thousands of access ISPs and multiple global transit ISPs. The global transit ISPs themselves must interconnect: Otherwise access ISPs connected to one of the global transit providers would not be able to communicate with access ISPs connected to the other global transit providers. <strong>Network Structure 2</strong>, is a two-tier hierarchy with global transit providers residing at the top tier and access ISPs at the bottom tier.</li>
+<li><strong>Network Structure 3</strong>, consist of regional ISPs, access ISPs, tier-1 ISPs.</li>
+<li><strong>Network Structure 4</strong>, add points of presence(PoPs), multi-homing, peering, and Internet exchange points(IXPs). 1.<strong>PoPs</strong> exist in all levels of the hierarchy, except for the bottom (access ISP) level. A Pop is simply a group of one or more routers in the provider’s network where customer ISPs can connect into the provider ISP. 2.Any ISP(expect for tier-1 ISPs) may choose to <strong>multi-home</strong>, that is, to connect to two or more provider ISPs. 3. To reduce the costs, a pair of nearby ISPs at the same level of the hierarchy can peer, that is, they can directly connect their networks together so that all the traffice between them passes over the direct connection rather than through upstream intermediaries. 4.a third-party company can create an <strong>Internet Exchange Point (IXP)</strong>, which is a meeting point where multiple ISPs can peer together. </li>
+<li><strong>Network Structures 5</strong>, add content-provider network.</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152139045.png"></p>
+<h4 id="1-4-Delay-Loss-and-Throughput-in-Packet-Switched-Networks"><a href="#1-4-Delay-Loss-and-Throughput-in-Packet-Switched-Networks" class="headerlink" title="1.4 Delay, Loss and Throughput in Packet-Switched Networks"></a>1.4 Delay, Loss and Throughput in Packet-Switched Networks</h4><h5 id="1-4-1-Overview-of-Delay-in-Packet-Switched-Networks"><a href="#1-4-1-Overview-of-Delay-in-Packet-Switched-Networks" class="headerlink" title="1.4.1 Overview of Delay in Packet-Switched Networks"></a>1.4.1 Overview of Delay in Packet-Switched Networks</h5><p><strong>Processing Delay</strong> : The time required to examine the packet’s header and determine where to direct the packet is part of the processing delay. The processing delay can also include other factors, such as the time needed to check for bit-level errors in the packet that occurred in transmitting the packet’s bits from the upstream node to router A.<br><strong>Queuing Delay</strong> : it waits to be transmitted onto the link. Depend on number of earlier-arriving packets that are queued and waiting for transmission onto the link.<br>Transmission<br><strong>Transmission Delay</strong> : Denote the length of the packet by L bits, and denote the transmission rate of the link from router A to router B by R bits&#x2F;sec. The transmission delay is L&#x2F;R.<br><strong>Propagation Delay</strong> : Once a bit is pushed into the link, it needs to propagate to router B. The time required to propagate from the beginning of the link to router B is the propagation delay.The propagation speed depends on the physical medium of the link (that is, fiber optics, twisted-pair copper wire, and so on)</p>
+<p>The transmission delay is the amount of time required for the router to push out the packet; it is a function of the packet’s length and the transmission rate of the link, but has nothing to do with the distance between the two routers. The propagation delay, on the other hand, is the time it takes a bit to propagate from one router to the next; it is a function of the distance between the two routers, but has nothing to do with the packet’s length or the transmission rate of the link.</p>
+<h5 id="1-4-2-Queuing-Delay-and-Packet-Loss"><a href="#1-4-2-Queuing-Delay-and-Packet-Loss" class="headerlink" title="1.4.2 Queuing Delay and Packet Loss"></a>1.4.2 Queuing Delay and Packet Loss</h5><p>Design your system so that the <strong>traffic intensity</strong> is no greater than 1</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152141817.png"></p>
+<p>The fraction of lost packets increases as the traffic intensity increases. </p>
+<h5 id="1-4-3-End-to-End-Delay"><a href="#1-4-3-End-to-End-Delay" class="headerlink" title="1.4.3 End-to-End Delay"></a>1.4.3 End-to-End Delay</h5><p>When the user specifies a destination hostname, the program in the source host sends multiple, special packets toward that destination. As these packets work their way toward the destination, they pass through a series of routers. When a router receives one of these special packets, it sends back to the source a short message that contains the name and address of the router.</p>
+<h5 id="1-4-4-Throughput-in-Computer-Networks"><a href="#1-4-4-Throughput-in-Computer-Networks" class="headerlink" title="1.4.4 Throughput in Computer Networks"></a>1.4.4 Throughput in Computer Networks</h5><p>The instantaneous <strong>throughput</strong> at any instant of time is the rate (in bits&#x2F;sec) at which Host B is receiving the file. </p>
+<p>We saw that when there is no other intervening traffic, the <strong>throughput</strong> can simply be approximated as the minimum transmission rate along the path between source and destination.<br>The example shows that more generally the throughput depends not only on the transmission rates of the links along the path, but also on the intervening traffic. In particular, a link with a high transmission rate may nonetheless be the bottleneck link for a file transfer if many other data flows are also passing through that link.</p>
+<h4 id="1-5-Protocol-Layers-and-Their-Service-Models"><a href="#1-5-Protocol-Layers-and-Their-Service-Models" class="headerlink" title="1.5 Protocol Layers and Their Service Models"></a>1.5 Protocol Layers and Their Service Models</h4><h5 id="1-5-1-Layered-Architecture"><a href="#1-5-1-Layered-Architecture" class="headerlink" title="1.5.1 Layered Architecture"></a>1.5.1 Layered Architecture</h5><ul>
+<li><strong>Application-layer protocols</strong> — such as HTTP and SMTP—are almost always implemented in software in the end systems</li>
+<li><strong>Transport-layer protocols</strong> also.</li>
+<li><strong>Physical layer and Data link layers</strong> are responsible for handling communication over a specific link, they are typically implemented in a network interface card (for example, Ethernet or WiFi interface cards) associated with a given link.</li>
+<li><strong>The network layer</strong> is often a mixed implementation of hardware and software.</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152143019.png"></p>
+<p>Advantage : layering provides a structured way to discuss system components. Modularity makes it easier to update system components<br>Drawbacks : 1.many protocol stacks provide error recovery on both a per-link basis and an end-to-end basis. 2. functionality at one layer may need information (for example, a timestamp value) that is present only in another layer; this violates the goal of separation of layers.</p>
+<p><strong>Application Layer</strong> : includes HTTP(which provides for Web document request and transfer), SMTP (which provides for the transfer of e-mail messages), and FTP (which provides for the transfer of files between two end systems). The translation of human-friendly names for Internet end systems with the help of a specific application-layer protocol, namely, the domain name system (DNS).</p>
+<p><strong>Transport Layer</strong> : TCP , UDP , either of which can transport application-layer messages.<br>TCP provides a connection-oriented service to its applications. This service includes guaranteed delivery of application-layer messages to the destination and flow control.TCP also breaks long messages into shorter segments and provides a congestion-control mechanism, so that a source throttles its transmission rate when the network is congested.<br>UDP provides a connectionless service to its applications.This is a no-frills service that provides no reliability, no flow control, and no congestion control. </p>
+<p><strong>Network Layer</strong> : is responsible for moving network-layer packets known as datagrams from one host to another.<br>IP defines the fields in the datagram as well as how the end systems and routers act on these fields.</p>
+<p><strong>Link Layer</strong> : In particular, at each node, the network layer passes the datagram down to the link layer, which delivers the datagram to the next node along the route. At this next node, the link layer passes the datagram up to the network layer.</p>
+<p><strong>Physical Layer</strong> : the job of the physical layer is to move the individual bits within the frame from one node to the next.</p>
+<h5 id="1-5-2-Encapsulation"><a href="#1-5-2-Encapsulation" class="headerlink" title="1.5.2 Encapsulation"></a>1.5.2 Encapsulation</h5><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152144983.png"></p>
+<h4 id="1-6-Networks-Under-Attack"><a href="#1-6-Networks-Under-Attack" class="headerlink" title="1.6 Networks Under Attack"></a>1.6 Networks Under Attack</h4><p>Malware<br>Denial-of-service(DoS) attacks : 1.Vulnerability attack 2. Bandwidth flooding 3.Connection flooding<br>Sniff Packets(抓包)<br>Masquerade as Someone you trust</p>
 
       
     </div>
@@ -2339,7 +2339,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
