@@ -160,6 +160,200 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/14/OSTEP-Persistence-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="talentstream">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="南有青鸟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/11/14/OSTEP-Persistence-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">OSTEP-Persistence 学习笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-11-14 09:58:26" itemprop="dateCreated datePublished" datetime="2022-11-14T09:58:26+08:00">2022-11-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-11-15 10:17:02" itemprop="dateModified" datetime="2022-11-15T10:17:02+08:00">2022-11-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>16k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>14 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>OSTEP大致算是读完了，现在打算以一种新的方式进行学习，在OneNote上也做了许多学习的笔记，以后试着边学边做点笔记，然后将笔记直接放在博客上，以减少写博客的负担。OSTEP的Virtualization和Concurrency还没有这样做，后面会补的。<br>OneNote大部分都是以英文记录的，不过我会制作思维导图，以便阅读，我认为理清知识点之间的关系和理解知识本身是同等重要的。</p>
+<p>2022-11-14</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/107797951">基于Flash的SSD - 知乎 (zhihu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/56681882">持久化（9）：基于闪存的SSD（Flash-based SSDs） - 知乎 (zhihu.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1AP411p7WL/?share_source=copy_web&vd_source=8277fbbcfe9cfbff0708d41552ef71ab">读写磁盘时发生了什么？</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1u14y1Y7e2/?share_source=copy_web">(Linux)读写文件时发生了什么？</a></p>
+<h3 id="36-I-x2F-O-Devices-CRUX-How-to-integrate-I-x2F-O-into-systems"><a href="#36-I-x2F-O-Devices-CRUX-How-to-integrate-I-x2F-O-into-systems" class="headerlink" title="#36 I&#x2F;O Devices - CRUX : How to integrate I&#x2F;O into systems"></a>#36 I&#x2F;O Devices - CRUX : How to integrate I&#x2F;O into systems</h3><p>System Architecture<br>Canonical Device<br>Canonical Protocol -&gt; polling -&gt; CRUX : How to avoid the costs of polling<br>Interrupt - not always better than polling</p>
+<p>DMA(Direct Memory Access) - CRUX : How to lower PIO overheads(开销) </p>
+<p>Device Interaction  - CRUX : How to communicate with devices<br>1.have explicit I&#x2F;O instructions<br>2.memory-mapped I&#x2F;O</p>
+<p>The Device Driver - CRUX : How to build a device-neutral OS</p>
+<p>Simple IDE Disk Driver:<br>Base protocol:<br>    - Wait for drive to be ready<br>    - Write parameters to command registers<br>    - Start the I&#x2F;O<br>    - Data transfer(for writes)<br>    - Handle interrupts<br>Error handling</p>
+<h3 id="37-Hard-Disk-Drives-CRUX-How-to-store-and-access-on-disk"><a href="#37-Hard-Disk-Drives-CRUX-How-to-store-and-access-on-disk" class="headerlink" title="#37 Hard Disk Drives - CRUX : How to store and access on disk"></a>#37 Hard Disk Drives - CRUX : How to store and access on disk</h3><p>Sector spindle track platter</p>
+<p>The rotation Delay<br>Seek Time </p>
+<p>Time(I&#x2F;O) &#x3D; Time(Seek) + Time(Rotation) + Time (Transfer)</p>
+<p>Disk Scheduling<br><strong>1.SSTF(Shortest seek time first)</strong><br>Disadvantages :<br>first<br>    - not available to the host OS<br>    .NBF(nearest-block-first)  can fix it<br>    .schedules the request with the nearest block address next.<br>second<br>    -  starvation -&gt; CRUX : How to handle disk starvation</p>
+<p><strong>2.SCAN</strong><br>    Scan every tracks in order<br><strong>3.SPTF</strong><br>    It depends seek time &amp; rotation time</p>
+<h3 id="38-Redundant-Arrays-of-Inexpensive-Disks-RAIDs-CRUX-How-to-make-a-large-fast-reliable-disk"><a href="#38-Redundant-Arrays-of-Inexpensive-Disks-RAIDs-CRUX-How-to-make-a-large-fast-reliable-disk" class="headerlink" title="#38 Redundant Arrays of Inexpensive Disks(RAIDs) - CRUX : How to make a large , fast , reliable disk"></a>#38 Redundant Arrays of Inexpensive Disks(RAIDs) - CRUX : How to make a large , fast , reliable disk</h3><p>RAIDs ‘ advantages :<br>    - Performance , using multiple disks in parallel can greatly speed up I&#x2F;O times<br>    - Capacity , large data sets demand large disks<br>    - Reliability  , spreading data across multiple disks makes the data vulnerable to the loss of a single disk.</p>
+<p>Interface : mirrored RAID system<br>Fault Model : Fail-stop model - working or failed . With a working disk, all blocks can be read or written. In contrast , when a disk has failed , we assume it is permanently lost.</p>
+<p><strong>RAID_0</strong> :Striping(即将磁盘分为多个虚拟磁盘，同时每一行都算一个条带).<br>Larger chunk sizes reduce positioning time.</p>
+<p><strong>RAID_1</strong>:Mirroring.<br>With a mirrored system , we simply make  more than one copy of each block in the system ; each copy should be placed on a separate disk , of course . By doing so , we can tolerate disk failures.</p>
+<p><strong>RAID_4</strong>:Saving Space with Parity(用异或思想计算奇偶校验位来压缩冗余信息)</p>
+<p>P(new) &#x3D; ( C(old) xor C(new) ) xor P(old) </p>
+<p><strong>RAID_5</strong>:Roatating Parity(即把每个奇偶校验码分布在每一个磁盘里)</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211151006411.png"></p>
+<h3 id="39-Files-and-Directories-CRUX-How-to-manage-a-persistent-device"><a href="#39-Files-and-Directories-CRUX-How-to-manage-a-persistent-device" class="headerlink" title="#39 Files and Directories - CRUX : How to manage a persistent device"></a>#39 Files and Directories - CRUX : How to manage a persistent device</h3><p><strong>File</strong> is an array of bytes which can be created , read , written , and deleted . It has a low-level name that refers to it uniquely. The low-level name is often called an i-number.</p>
+<p><strong>Dictionary</strong> is a collection of tuples , each of which contains a human-readable name and low-level name to which it maps.</p>
+<p><strong>A directory tree or directory hierarchy</strong> organizes all files and directories into a large tree, starting at the root.</p>
+<h3 id="40-File-System-Implementation-CRUX-How-to-implement-a-simple-file-system"><a href="#40-File-System-Implementation-CRUX-How-to-implement-a-simple-file-system" class="headerlink" title="#40 File System Implementation - CRUX : How to implement a simple file system"></a>#40 File System Implementation - CRUX : How to implement a simple file system</h3><p>Two aspects of file system : 1.data structures  2.access methods</p>
+<p>Overall organization : data region , data blocks(D) , inode(I) , inode bitmap(i) , data bitmap(d) , superblock(S) - contains information about this particular file system , including , how many inodes and data blocks , where the inode table begins .</p>
+<p>When mounting a file system , the OS will read the superblock first , to initialize various parameters and then attach the volume to the file-system tree . When files within the volume are accessed , the system will thus know exactly where to look for the needed on-disk structures.</p>
+<p>Inode(is shot for index node) :  </p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211151007429.png"></p>
+<p>Each pointer refers to one disk block  ,flexible but use a large amount of metadata per file.<br>Extents(区间 ) less flexible but more compact</p>
+<p>Linked list , one point to the first block of the file , another pointer at the end of that data block.</p>
+<p>Read &amp; Write : understand Reading a file from disk &amp; Write a file to disk.<br>CURX :How to reduce file system I&#x2F;O costs</p>
+<p>Caching &amp; Buffering</p>
+<h3 id="41-Fast-File-System-CRUX-How-to-organize-on-disk-data-to-improve-performance"><a href="#41-Fast-File-System-CRUX-How-to-organize-on-disk-data-to-improve-performance" class="headerlink" title="#41 Fast File System - CRUX : How to organize on-disk data to improve performance"></a>#41 Fast File System - CRUX : How to organize on-disk data to improve performance</h3><p>FFS by keeping the same interface to the file system but changing the internal implementation.</p>
+<p>The Cylinder Group(即把整块磁盘的File System 分割成一个一个组)</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211151007636.png"></p>
+<p>FFS keeps a copy of the S in each group for reliability reasons.(每个组都有一个总的superlock)<br>A per-group ib and db serve this role for inodes and data blocks in each group.<br>The inode and data block regions are just like before</p>
+<p>Allocate Files and Directories ‘ Policies : keep related stuff together </p>
+<p>For directories : find the cylinder group with a low number of allocated directories and a high number of free inodes , and put the directory data and inode in that group.<br>For Files : first , it makes sure to allocate the data blocks of a file in the same group as its inode , thus preventing long seeks between inode and data . Second , it places all files that are in the same directory in the cylinder group of the directory they are in.</p>
+<p>Large-File Exception : After some number of blocks are allocated into the first block group , FFS places the next “large” chunk of the file in another block group. Then , the next chunk of the file is placed in yet another different block group , and so on.</p>
+<p>Innovation :<br>First , FFS solve  internal fragmentation .  Sub-blocks which are 512-byte little blocks that the file system could allocate to files. As the file grew , the file system will continue allocating 512-byte blocks to it until it acquires a full 4KB of data. (即先将512byte的小文件存起来，等到4kb时再一次性写进去）</p>
+<p>Second , change disk layout to avoid full rotation read 1 after read 0.<br>简单来说，就是正常读完 0 之后，然后在准备读 1 的时候有可能指针已经已经过了 1 了 ，这样子可能要浪费时间转一圈再到 1 ，而更改布局可能会让刚好就读到 1 而不用转一圈)</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211151009782.png"></p>
+<p>FFS was the first file system to allow for long file names.</p>
+<h3 id="42-FSCK-and-Journaling-CRUX-How-to-update-the-disk-despite-crashes"><a href="#42-FSCK-and-Journaling-CRUX-How-to-update-the-disk-despite-crashes" class="headerlink" title="#42 FSCK and Journaling - CRUX : How to update the disk despite crashes"></a>#42 FSCK and Journaling - CRUX : How to update the disk despite crashes</h3><p>Crash scenarios :<br>    - Just the data block is written to disk<br>    - Just the updated inode is written to desk<br>    - Just the updated bitmap is written to disk<br>    - The inode and bitmap are written to disk , but not data<br>    - The inode and the data block are written , but not the bitmap<br>    - The bitmap and data block are written , but not the inode</p>
+<p>Solution#1 : FSCK - File system checker<br>    - Superblock : fsck first checks if the superblock looks reasonable<br>    - Free blocks : next , fsck scans the inodes , indirect blocks , double indirect blocks , etc.<br>    - Inode state : Each inode is checked for corruption or other problems.<br>    - Inode links : fsck also verifies the link count of each allocated inode.<br>    - Duplicates : fsck also checks for duplicate pointers<br>    - Bad blocks : A check for bad block pointers is also performed while scanning through the list of all pointers.<br>    - Directory checks : fsck does not understand the contents of user files; however, directories hold specifically formatted information created by the file system itself.</p>
+<p>Fsck is too slow , it useful but wasteful. </p>
+<p>Solution#2 : Journaling<br>When updating the disk , before overwriting the structures in place , first write down a little note describing what you are about to do . </p>
+<p>By writing the note to disk , you are guaranteeing that if a crash takes places during the update of the structures you are updating , you can go back and look at the note you made and  try again ; thus , you will know exactly what to fix after a crash , instead of having to scan the entire disk.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211151009082.png"></p>
+<p>Data Journaling :</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211151009898.png"></p>
+<p>onsist of : TxB(头) , inode , bitmap , data block , TxE(尾)<br>Sequence of operations : 1.Journal write 2.Checkpoint (先写日志，如果没问题再更新数据） </p>
+<p>Write Journal(five blocks write at once) is simple but slow . And need to improve</p>
+<p>Problem : if disk loses power when write block , and maybe lose data block . </p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211151010283.png"></p>
+<p>To avoid this problem , the file system issues the transactional write in two steps . Frist , it writes all blocks except the TxE block to the journal , issuing these writes all at once . When those complete , the file system issues the write of the TxE block , thus leaving the journal in this final , safe state.</p>
+<p>Current protocol : 1.Journal write 2. Journal commit 3. Checkpoint(先写日志，然后确认日志是否合格，即判断是否丢失数据，如果丢失数据，不计入这一次日记，如果没丢失数据，则正常更新数据）</p>
+<p>Journal log problems : When the log becomes full , two problems arises . First , the larger the log , the longer recovery will take . Second , when the log is full , no further transactions can be committed to the disk. </p>
+<p>Circular log</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211151010574.png"></p>
+<p>Now four steps to journal protocol : 1. Journal write 2. Journal commit 3. Checkpoint 4. Free （多了一步释放步骤）</p>
+<p>To reduce double-write cost , the data block , previously written to the log , would instead be written to the file system proper , avoiding the extra write. </p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211151010966.png"></p>
+<p>New protocol : 1.Data write 2. Journal metadata write 3. Journal commit 4. Checkpoint metadata 5. Free</p>
+<p>Solution #3 - Other Approach : 1. copy-on-write 2.backpointer-based consistency 3. optimistic crash consistency </p>
+<h3 id="43-Log-structed-File-System-CRUX-How-to-make-all-writes-sequential-writes"><a href="#43-Log-structed-File-System-CRUX-How-to-make-all-writes-sequential-writes" class="headerlink" title="#43 Log-structed File System - CRUX : How to make all writes sequential writes"></a>#43 Log-structed File System - CRUX : How to make all writes sequential writes</h3><p>Writing to disk sequentially is not enough to guarantee efficient writes.</p>
+<p>Write buffering : before writing to the disk , LFS keeps track of updates in memory ; when it has received a sufficient number of updates , it writes them to disk all at once , thus ensuring efficient use of the disk . </p>
+<p>Finding an inode given an inode number in LFS is difficult.<br>Inode map : The imap is a structure that takes an inode number as input and produces the disk address of the most recent version of the inode. Imap needs to be kept presistent , it could not live on a fixed part of the disk . Instead , LFS places chunks of the indoe map right next to where it is writing all of the other new information .</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211151010185.png"></p>
+<p>The Checkpoint Region : how we find the inode map ? LFS has just a fixed place on disk , known as the checkpoint region . It contains pointers to the latest pieces of the inode map , and thus the inode map pieces can be found by reading the CR first . Note the CR is only updated periodically ( say every 30 seconds or so) , and thus performance is not ill-affected.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211151011034.png"></p>
+<p>Garbage Collection : LFS must periodically find these old dead versions of file data , inodes , and other structures , and clean them ; cleaning should thus make blocks on disk free again for use in subsequent writes .<br>The LFS cleaner works on a segment-by-segment basis , thus clearing up large chunks of space for subsequent writing .<br>Periodically , the LFS cleaner reads in a number of old segments , determines which blocks are live within these segments , and then write out a new set of segments with just the live blocks within them , freeing up the old ones for writing . </p>
+<p>Now we are left with two problems . First , how can LFS tell which blocks within a segment are live , and which are dead ? Second , how often should the cleaner run , and which segments should it pick to clean ?</p>
+<p>Determining Block Liveness : 对于在地址A的块D，先获取inode number 和 offset 然后在imap中查找 inode number 所在的位置并从磁盘中读取。最后，用offset来查看inode来看文件的offset算出来的块的位置。如果这个位置在地址A上，则segment是alive状态，否则是dead状态，这时候就可以回收。</p>
+<p>Which Blocks to clean and when ?  Either periodically , during idle time , or when you have to because the disk is full .<br>Segregate hot and cold segments . A hot segment is one in which the contents are being frequently over-written ; for such a segment, the best policy is to wait a long time before cleaning it, as more and more blocks are getting over-written (in new segments) and thus being freed for use . A cold segment, in contrast, may have a few dead blocks but the rest of its contents are relatively stable.</p>
+<p>Crash recovery and the log </p>
+<p>Write to the CR : 确保CR更新发生，在磁盘首尾各存有一个CR ， 交替更新它们。</p>
+<p>Write to a segment : 因为LFS 30 秒写一次CR，file syste上一次一致的快照可能会很老。重启时可能会丢掉几秒的更新。利用回滚方法，从最后一个CR开始，找到Log，用日志来读取下一个segment并检查是否有有效更新，如果有的话，LFS会进行相应的更新同时恢复自上次CR写入的data和meadata</p>
+<h3 id="44-Flash-based-SSDs-CRUX-how-to-build-a-flash-based-SSD"><a href="#44-Flash-based-SSDs-CRUX-how-to-build-a-flash-based-SSD" class="headerlink" title="#44 Flash-based SSDs - CRUX : how to build a flash-based SSD"></a>#44 Flash-based SSDs - CRUX : how to build a flash-based SSD</h3><p>Flash chips level of storage : 1. single-level cell(SLC) , one single bit (1 or 0)<br>2.multi-level cell(MLC) , two bits (00,01,10,11)<br>3.triple-level cell(TLC) ,  three bits<br>Overall , SLC chips achieve higher performance and are more expensive . </p>
+<p>Flash chips are organized into banks. A banks is accessed in two different sized units : blocks (size 128 KB or 256 KB) , pages ( a few KB in size , 4KB) . Within each bank there are a large number of blocks ; within each block , there are a large number of pages.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211151011571.png"></p>
+<p>asic Flash Operations : 1. Read(a page) 2. Erase(a block) 3. Program(a page) 即先读page，然后再擦除page对应的block ，同时确保擦除前block中其他page被复制保存到其他地方去，最后再写入page</p>
+<p>Flash Performance : Read is quick , however , write is expensive . To get good write performance , you will have to make use of multiple flash chips in parallel.<br>Flash Reliability : 1.wear out 2.disturbance , read disturbs or program disturbs.</p>
+<p>Internal Logic : an SSD consists of some amount of flash chips , also contains some amount of volatile memory ; such memory is useful for caching and buffering of data . Contains control logic to orchestrate device operation .</p>
+<p>One of the essential functions of this control logic is to satisfy client reads and writes, turning them into internal flash operations as need be. Flash translation layer(FTL) , takes read and write requests on logical blocks and turns them into low-level read , erase , and program commands on the underlying physical blocks and physical pages .<br>One key will be to utilize multiple flash chips in parallel . Another performance goal will be to reduce write amplification . </p>
+<p>High reliability , to solve wear out . FTL should try to spread writes across the blocks of the flash as evenly as possible, ensuring that all of the blocks of the device wear out at roughly the same time; doing so is called wear leveling and is an essential part of any modern FTL.<br>To solve program disturbance . FTL will commonly program pages within an erased block in order, from low page to high page. This sequential-programming approach minimizes disturbance and is widely utilized.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211151012062.png"></p>
+<p>Log-Structured FTL : Upon a write to logical block N , the device appends the write to the next free spot in the currently-being-written-to block ; we call this style of writing logging . To allow for subsequent reads of block N , the device keeps a mapping table ; this table stores the physical address of each logical block in the system . (即无脑按顺序写入，用表记录映射关系，尽管都对100进行修改，比如100 -&gt; 0 之后再来个 100-&gt;4 ，也只是会在block1上的04page上写一个，同时映射也会改，但会带来垃圾回收的问题，毕竟block 0 的01，就没用了）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211151013312.png"><br><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211151013848.png"></p>
+<p>Garbage Collection - process : find a block that contains one or more garbage pages , read in the live pages from the block , write out those live pages to the log , and reclaim the entire block for use in writing .<br>As you see , garbage collection can be expensive , requiring reading and rewriting of live data . The ideal candidate for reclamation is a block that consists of only dead pages.</p>
+<p>Mapping Table Size : The first cost is read , erase and write . And the second  cost is large mapping tables.<br>One approach to reduce the costs of mapping is to only keep a pointer per block(instead of page)of the device . But small write cause significant performance problems.</p>
+<p>Better Approach is hybrid mapping . With this , the FTL keeps a few blocks erased and directs all writes to them ; these are called log blocks .<br>The key to the hybrid mapping strategy is keeping the number of log blocks(i.e. page FTL) small .  The FTL has to periodically examine log blocks and switch them into blocks that can be pointed to by only a single block pointer .<br>Three Condition : Switch merge , partial merge , full merge (from best to worst)</p>
+<p>Some simple ways to reduce the memory load of the complexity of hybrid approach above , the simplest is just to cache only the active parts of the FTL in memory , thus reducing the amount of memory need .</p>
+<p>Wear Leveling : the FTL must periodically read all the live data out of such blocks and re-write it elsewhere, thus making the block available for writing again.This process of wear leveling increases the write amplification of the SSD, and thus decreases performance as extra I&#x2F;O is required to ensure that all blocks wear at roughly the same rate. </p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211151013865.png"></p>
+<h3 id="45-Data-Integrity-and-Protection-CRUX-How-to-ensure-data-integrity"><a href="#45-Data-Integrity-and-Protection-CRUX-How-to-ensure-data-integrity" class="headerlink" title="#45 Data Integrity and Protection - CRUX : How to ensure data integrity"></a>#45 Data Integrity and Protection - CRUX : How to ensure data integrity</h3><p>Latent-sector errors(LSEs) : arise when a disk sector has been damaged in some way . For example , if the disk head touches the surface for some reason , it may damage the surface , making the bits unreadable . </p>
+<p>Block corruption : a disk block becomes corrupt in a way not detectable by the disk itself . For example , buggy disk firmware may write a block to the wrong location ; in such a case , the disk ECC indicates the block contents are fine , but from the client’s perspective the wrong block is returned when subsequently accessed .<br>Similarly , a block may get corrupted when it is transferred from the host to the disk across a faulty bus ; the resulting corrupt data is stored by the disk , but it is not what the client desire.</p>
+<p>Handling Latent Sector Errors : When a storage system tries to access a block, and the disk returns an error, the storage system should simply use whatever redundancy mechanism it has to return the correct data.</p>
+<p>Checksum : a checksum is simply the result of a function that takes a chunk of data as input and computes a function over said data , producing a small summary of the contents of the data.</p>
+<p>Checksum Functions :<br>    - XOR : With XOR-based checksums, the checksum is computed by XOR’ing each chunk of the data block being checksummed, thus producing a single value that represents the XOR of the entire block.<br>    Limitation : two bits in the same position within each checksummed unit change, the checksum will not detect the corruption.<br>    - Addition<br>    - Fletch checksum<br>    - Cyclic redundancy check(CRC)</p>
+<p>Stored checksum (read), computed checksum(compute) , if they equal , the data has likely not been corrupted , and thus can be safely returned to the user .If they do not match , this implies the data has changed since the time it was stored . In this case , we have a corruption , which our checksum has helped us to detect . </p>
+<p>Problems :<br>    - Misdirected writes : write the data to disk correctly  but wrong location .<br>    Use PID . For example, if the stored information now contains the checksum C(D) and both the disk and sector numbers of the block, it is easy for the client to determine whether the correct information resides within a particular locale .<br>    - Lost writes : occurs when the device when the device informs the upper layer that a write has completed but in fact it never is persisted ; thus , what remains is the old contents of the block rather than the updated new contents .<br>    Perform a write verify or read-after-write ; by immediately reading back the data after a write, a system can ensure that the data indeed reached the disk surface .</p>
+<p>Overheads : space and time<br>    - Space : 1. each stored checksum takes up room on the disk , which can no longer be used for user data . 2. When accessing data , there must now be room in memory for the checksums and then discards it one done .<br>    - Time : 1. CPU must compute the checksum over each block , both when the data is stored and when it is accessed . One approach is to combine data copying and checksumming into one streamlined activity . 2. When checksums are stored distinctly from the data , and for any extra I&#x2F;O needed for background scrubbing . </p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/02/Algorithm%204th_Sort/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2061,125 +2255,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/07/c-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86-%E7%9F%A5%E8%AF%86%E5%B0%8F%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="talentstream">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="南有青鸟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/05/07/c-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86-%E7%9F%A5%E8%AF%86%E5%B0%8F%E8%AE%B0/" class="post-title-link" itemprop="url">c# 异常处理 知识小记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-05-07 14:56:20" itemprop="dateCreated datePublished" datetime="2022-05-07T14:56:20+08:00">2022-05-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-06 15:05:59" itemprop="dateModified" datetime="2022-08-06T15:05:59+08:00">2022-08-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>最近在系统学习c#的知识点，有一些知识点比较散且使用频率不高，现在此记录，便于复习。</p>
-<h4 id="关于c-的异常处理"><a href="#关于c-的异常处理" class="headerlink" title="关于c#的异常处理"></a>关于c#的异常处理</h4><p>一句话概括，异常是程序执行期间出现的问题，异常处理的目的是为了维护程序的健壮性和稳定性。举个栗子，比如说除以0，用户输入的数据与预设数据类型不符，数组越界，栈溢出等等。c#给我们提供了一些易于使用的解决方法。主要由四个关键词组成（当然还有其他）： <strong>try，catch，throw，finally</strong></p>
-<ul>
-<li><strong>try</strong>：用于存放可能会出现问题的语句，后面可以跟多个catch</li>
-<li><strong>catch</strong>：用于捕捉异常，通常跟在try后面</li>
-<li><strong>throw</strong>：用于抛出异常，是的，你没看错，比如说为了限制输入范围，限制输入的数字为1~10之间，主要用于自定义的限制</li>
-<li><strong>finally</strong>：不管是否有异常，里面的代码块必定执行，通常跟try一起。</li>
-</ul>
-<p>在菜鸟教程中，有一个易于理解的伪代码</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span></span><br><span class="line">&#123;</span><br><span class="line">   <span class="comment">// 引起异常的语句</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>( ExceptionName e1 )</span><br><span class="line">&#123;</span><br><span class="line">   <span class="comment">// 错误处理代码</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>( ExceptionName e2 )</span><br><span class="line">&#123;</span><br><span class="line">   <span class="comment">// 错误处理代码</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>( ExceptionName eN )</span><br><span class="line">&#123;</span><br><span class="line">   <span class="comment">// 错误处理代码</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">finally</span></span><br><span class="line">&#123;</span><br><span class="line">   <span class="comment">// 要执行的语句</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="c-中的异常类"><a href="#c-中的异常类" class="headerlink" title="c#中的异常类"></a>c#中的异常类</h4><p>C# 异常是使用类来表示的。C# 中的异常类主要是直接或间接地派生于 System.Exception 类。</p>
-<p>System.ApplicationException 和 System.SystemException 类是派生于 System.Exception 类的异常类。</p>
-<p>System.ApplicationException 类支持由应用程序生成的异常。所以程序员定义的异常都应派生自该类。</p>
-<p>System.SystemException 类是所有预定义的系统异常的基类。</p>
-<p>下表列出了一些派生自 System.SystemException 类的预定义的异常类：</p>
-<!-- wp:table -->
-<figure class="wp-block-table"><table><thead><tr><th>异常类</th><th>描述</th></tr></thead><tbody><tr><td>System.IO.IOException</td><td>处理 I/O 错误。</td></tr><tr><td>System.IndexOutOfRangeException</td><td>处理当方法指向超出范围的数组索引时生成的错误。</td></tr><tr><td>System.ArrayTypeMismatchException</td><td>处理当数组类型不匹配时生成的错误。</td></tr><tr><td>System.NullReferenceException</td><td>处理当依从一个空对象时生成的错误。</td></tr><tr><td>System.DivideByZeroException</td><td>处理当除以零时生成的错误。</td></tr><tr><td>System.InvalidCastException</td><td>处理在类型转换期间生成的错误。</td></tr><tr><td>System.OutOfMemoryException</td><td>处理空闲内存不足生成的错误。</td></tr><tr><td>System.StackOverflowException</td><td>处理栈溢出生成的错误。</td></tr></tbody></table></figure>
-<!-- /wp:table -->
-
-<h4 id="通过代码来学习简单的异常处理"><a href="#通过代码来学习简单的异常处理" class="headerlink" title="通过代码来学习简单的异常处理"></a>通过代码来学习简单的异常处理</h4><p>第一个是关于除以0的例子</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title">ErrorHandlingApplication</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">DivNumbers</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">int</span> result;</span><br><span class="line">        DivNumbers()</span><br><span class="line">        &#123;</span><br><span class="line">            result = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">division</span>(<span class="params"><span class="built_in">int</span> num1, <span class="built_in">int</span> num2</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//用于防止可能出现异常的代码块</span></span><br><span class="line">            <span class="keyword">try</span></span><br><span class="line">            &#123;</span><br><span class="line">                result = num1 / num2;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//用于捕捉异常，有多种写法</span></span><br><span class="line">            <span class="comment">//1. catch （系统自带异常 e）比如下面的DivideByZeroException</span></span><br><span class="line">            <span class="comment">//2. catch  (Exception e) 常规所有异常</span></span><br><span class="line">            <span class="comment">//3. catch 可以省略括号，等同于第二种写法，但是有时候要用的参数，根据情况使用</span></span><br><span class="line">            <span class="comment">//4. catch （程序员自定义异常 e) &lt;-需要注意的是，e只是一个参数名，不必过于纠结-&gt;</span></span><br><span class="line">            <span class="keyword">catch</span> (DivideByZeroException e)</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(<span class="string">&quot;Exception caught: &#123;0&#125;&quot;</span>, e);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//不管是否有错误，始终运行的代码</span></span><br><span class="line">            <span class="keyword">finally</span></span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(<span class="string">&quot;Result: &#123;0&#125;&quot;</span>, result);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            DivNumbers d = <span class="keyword">new</span> DivNumbers();</span><br><span class="line">            d.division(<span class="number">25</span>, <span class="number">0</span>);</span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>第二个例子，程序员自定义异常类型</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">ConsoleApp3</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">int</span> age;</span><br><span class="line">            <span class="keyword">try</span></span><br><span class="line">            &#123;</span><br><span class="line">                age = <span class="built_in">int</span>.Parse(Console.ReadLine());</span><br><span class="line">                <span class="keyword">if</span> (age &lt; <span class="number">18</span> || age &gt; <span class="number">45</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> AgeException(<span class="string">&quot;年龄必须在18到45岁之间！&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    Console.WriteLine(age);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span> (AgeException e)</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(e);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span> (Exception e)</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(e);</span><br><span class="line">                Console.WriteLine();</span><br><span class="line">                Console.WriteLine(<span class="string">&quot;输入数据错误&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">finally</span></span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine();</span><br><span class="line">                Console.WriteLine(<span class="string">&quot;HELLO&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">AgeException</span>: <span class="title">ApplicationException</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AgeException</span>(<span class="params"><span class="built_in">string</span> message</span>) : <span class="title">base</span>(<span class="params">message</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="关于catch的小知识点"><a href="#关于catch的小知识点" class="headerlink" title="关于catch的小知识点"></a>关于catch的小知识点</h4><p>不管是程序员自定义的异常类型，还是系统自带的异常类型，都继承于 System.Execption 类。catch的规则是执行完第一个符合异常的 catch 后面就不会再执行了，所以说越具体的要放在越前面。</p>
-<h4 id="学习参考"><a href="#学习参考" class="headerlink" title="学习参考"></a>学习参考</h4><ul>
-<li>菜鸟教程 - <a target="_blank" rel="noopener" href="https://www.runoob.com/csharp/csharp-exception-handling.html">https://www.runoob.com/csharp/csharp-exception-handling.html</a></li>
-<li>微软官方doc - <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/fundamentals/exceptions/">https://docs.microsoft.com/zh-cn/dotnet/csharp/fundamentals/exceptions/</a></li>
-<li>《visual c#从入门到精通》- 第六章</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2251,7 +2326,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -2300,12 +2375,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">128k</span>
+    <span title="站点总字数">144k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:56</span>
+    <span title="站点阅读时长">2:11</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
