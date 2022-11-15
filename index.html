@@ -160,6 +160,146 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/15/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="talentstream">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="南有青鸟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/11/15/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">计网：自顶向下方法-第一章 学习笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-11-15 21:30:29 / 修改时间：21:44:26" itemprop="dateCreated datePublished" datetime="2022-11-15T21:30:29+08:00">2022-11-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Computer-Networks-and-the-Internet"><a href="#Computer-Networks-and-the-Internet" class="headerlink" title="Computer Networks and the Internet"></a>Computer Networks and the Internet</h3><h4 id="1-1-What-is-the-internet"><a href="#1-1-What-is-the-internet" class="headerlink" title="1.1 What is the internet"></a>1.1 What is the internet</h4><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152132118.png" alt="img"></p>
+<h5 id="1-1-1-A-Nuts-and-Bolts-Description"><a href="#1-1-1-A-Nuts-and-Bolts-Description" class="headerlink" title="1.1.1 A Nuts-and-Bolts Description"></a>1.1.1 A Nuts-and-Bolts Description</h5><p><strong>End systems</strong> are connected together by a network of <strong>communication links</strong>(which are made of different types of physical media, including coaxial cable, copper wire, optical fiber, and radio spectrum) and <strong>packet switches</strong>(A packet switch takes a packet arriving on one of its incoming communication links and forwards that packet on one of its outgoing communication links. Two most prominent types : routers and link-layer switches). </p>
+<p><strong>End systems</strong> access the Internet through <strong>Internet Service Providers(ISPs)</strong>, including residential ISPs, university ISPs, cellular data ISPs.</p>
+<p>End systems, packet switches, and other pieces of the Internet run protocols that control the sending and receiving of information within the Internet.<br>[TCP&#x2F;IP] <strong>The Transmission Control Protocol(TCP)</strong> and <strong>the Internet Protocol(IP)</strong> are two most important protocols in the Internet. The IP protocol specifies the format of the packets that are sent and received among routers and end systems . </p>
+<p><strong>Requests for comments(RFCs)</strong> define protocols such as TCP, IP, HTTP(for the Web), and SMTP(for e-mail).</p>
+<h5 id="1-1-2-A-Services-Description"><a href="#1-1-2-A-Services-Description" class="headerlink" title="1.1.2 A Services Description"></a>1.1.2 A Services Description</h5><p>End systems attached to the Internet provide a <strong>socket interface</strong> that specifies how a program running on one end system asks the Internet infrastructure to deliver data to a specific destination program running on another end system.</p>
+<h5 id="1-1-3-What-is-a-Protocol"><a href="#1-1-3-What-is-a-Protocol" class="headerlink" title="1.1.3 What is a Protocol"></a>1.1.3 What is a Protocol</h5><p>A network protocol, the entities exchanging messages and taking actions are hardware or software components of some device.</p>
+<p>A protocol defines the format and the order of messages exchanged between two or more communicating entities, as well as the actions taken on the transmission and&#x2F;or receipt of a message or other event</p>
+<h4 id="1-2-The-Network-Edge"><a href="#1-2-The-Network-Edge" class="headerlink" title="1.2 The Network Edge"></a>1.2 The Network Edge</h4><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152135365.png"></p>
+<p>The applications and end systems are the “edge of the network”</p>
+<h5 id="1-2-1-Access-Networks"><a href="#1-2-1-Access-Networks" class="headerlink" title="1.2.1 Access Networks"></a>1.2.1 Access Networks</h5><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152135243.png"></p>
+<p>DSL, Cable, FTTH, 5G Fixed Wireless<br>Two most prevalent types of broadband residential access are digital subscriber line(DSL) and cable.</p>
+<h5 id="1-2-2-Physical-Media"><a href="#1-2-2-Physical-Media" class="headerlink" title="1.2.2 Physical Media"></a>1.2.2 Physical Media</h5><p>Guided media : Twisted-pair copper wire (双绞线) Coaxial Cable(同轴电缆) Fiber Optics(光纤) </p>
+<p>Terrestrial Radio Channels(地面无线电)</p>
+<p>Satellite Radio Channels : geostationary satellites(对地静止卫星) low-earth orbiting (LEO) satellites(近地轨道卫星)</p>
+<h4 id="1-3-The-Network-Core"><a href="#1-3-The-Network-Core" class="headerlink" title="1.3 The Network Core"></a>1.3 The Network Core</h4><p>The mesh of packet switches and links that interconnects the Internet’s end systems.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152136626.png"></p>
+<h5 id="1-3-1-Packet-Switching"><a href="#1-3-1-Packet-Switching" class="headerlink" title="1.3.1 Packet Switching"></a>1.3.1 Packet Switching</h5><p><strong>Store-and-Forward Transmission</strong> : it means that the packet switch must receive the entire packet before it can begin to transmit the first bit of the packet onto the outbound link.</p>
+<p><strong>Queuing Delays</strong> :  If an arriving packet needs to be transmitted onto a link but finds the link busy with the transmission of another packet, the arriving packet must wait in the output buffer. </p>
+<p><strong>Packet Loss</strong> : Since the amount of buffer space is finite, an arriving packet may find that the buffer is completely full with other packets waiting for transmission. In this case, packet loss will occur—either the arriving packet or one of the already-queued packets will be dropped.</p>
+<p><strong>Forwarding Tables</strong> : maps destination addresses(or portions of the destination addresses) to the router’s outbound links.</p>
+<p><strong>Routing Protocols</strong> : are used to automatically set the forwarding tables. For example , determine the shortest path from each router to each destination and use the shortest path results to configure the forwarding tables in the routers.</p>
+<h5 id="1-3-2-Circuit-Switching"><a href="#1-3-2-Circuit-Switching" class="headerlink" title="1.3.2 Circuit Switching"></a>1.3.2 Circuit Switching</h5><p>In <strong>circuit-switched</strong> networks, the resources needed along a path(buffers, link transmission rate) to provide for communication between the end systems are reserved for the duration of the communication session between the end systems.</p>
+<p>Frequency-division multiplexing(FDM) : With FDM, the frequency spectrum of a link is divided up among the connections established across the link.</p>
+<p>Time-division multiplexing(TDM) : For a TDM link, time is divided into frames of fixed duration, and each frame is divided into a fixed number of time slots. </p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152137772.png"></p>
+<p><strong>Packet Switching vs Circuit Switching</strong> : Proponents of packet switching : 1.it offers better sharing of transmission capacity than circuit switching 2.it is simpler, more efficient, and less costly to implement than circuit switching.</p>
+<h5 id="1-3-3-A-Network-of-Networks"><a href="#1-3-3-A-Network-of-Networks" class="headerlink" title="1.3.3 A Network of Networks"></a>1.3.3 A Network of Networks</h5><p>Today’s Internet - a network of networks - is complex, consisting of a dozen or so tier-1 ISPs and hundreds of thousands of lower-tier ISPs.</p>
+<ul>
+<li><strong>Network Structure 1</strong>, interconnects all of the access ISPs with a single global transit ISP. The access ISP is customer and the global transit ISP is provider.</li>
+<li><strong>Network Structure 2</strong>, which consists of the hundreds of thousands of access ISPs and multiple global transit ISPs. The global transit ISPs themselves must interconnect: Otherwise access ISPs connected to one of the global transit providers would not be able to communicate with access ISPs connected to the other global transit providers. <strong>Network Structure 2</strong>, is a two-tier hierarchy with global transit providers residing at the top tier and access ISPs at the bottom tier.</li>
+<li><strong>Network Structure 3</strong>, consist of regional ISPs, access ISPs, tier-1 ISPs.</li>
+<li><strong>Network Structure 4</strong>, add points of presence(PoPs), multi-homing, peering, and Internet exchange points(IXPs). 1.<strong>PoPs</strong> exist in all levels of the hierarchy, except for the bottom (access ISP) level. A Pop is simply a group of one or more routers in the provider’s network where customer ISPs can connect into the provider ISP. 2.Any ISP(expect for tier-1 ISPs) may choose to <strong>multi-home</strong>, that is, to connect to two or more provider ISPs. 3. To reduce the costs, a pair of nearby ISPs at the same level of the hierarchy can peer, that is, they can directly connect their networks together so that all the traffice between them passes over the direct connection rather than through upstream intermediaries. 4.a third-party company can create an <strong>Internet Exchange Point (IXP)</strong>, which is a meeting point where multiple ISPs can peer together. </li>
+<li><strong>Network Structures 5</strong>, add content-provider network.</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152139045.png"></p>
+<h4 id="1-4-Delay-Loss-and-Throughput-in-Packet-Switched-Networks"><a href="#1-4-Delay-Loss-and-Throughput-in-Packet-Switched-Networks" class="headerlink" title="1.4 Delay, Loss and Throughput in Packet-Switched Networks"></a>1.4 Delay, Loss and Throughput in Packet-Switched Networks</h4><h5 id="1-4-1-Overview-of-Delay-in-Packet-Switched-Networks"><a href="#1-4-1-Overview-of-Delay-in-Packet-Switched-Networks" class="headerlink" title="1.4.1 Overview of Delay in Packet-Switched Networks"></a>1.4.1 Overview of Delay in Packet-Switched Networks</h5><p><strong>Processing Delay</strong> : The time required to examine the packet’s header and determine where to direct the packet is part of the processing delay. The processing delay can also include other factors, such as the time needed to check for bit-level errors in the packet that occurred in transmitting the packet’s bits from the upstream node to router A.<br><strong>Queuing Delay</strong> : it waits to be transmitted onto the link. Depend on number of earlier-arriving packets that are queued and waiting for transmission onto the link.<br>Transmission<br><strong>Transmission Delay</strong> : Denote the length of the packet by L bits, and denote the transmission rate of the link from router A to router B by R bits&#x2F;sec. The transmission delay is L&#x2F;R.<br><strong>Propagation Delay</strong> : Once a bit is pushed into the link, it needs to propagate to router B. The time required to propagate from the beginning of the link to router B is the propagation delay.The propagation speed depends on the physical medium of the link (that is, fiber optics, twisted-pair copper wire, and so on)</p>
+<p>The transmission delay is the amount of time required for the router to push out the packet; it is a function of the packet’s length and the transmission rate of the link, but has nothing to do with the distance between the two routers. The propagation delay, on the other hand, is the time it takes a bit to propagate from one router to the next; it is a function of the distance between the two routers, but has nothing to do with the packet’s length or the transmission rate of the link.</p>
+<h5 id="1-4-2-Queuing-Delay-and-Packet-Loss"><a href="#1-4-2-Queuing-Delay-and-Packet-Loss" class="headerlink" title="1.4.2 Queuing Delay and Packet Loss"></a>1.4.2 Queuing Delay and Packet Loss</h5><p>Design your system so that the <strong>traffic intensity</strong> is no greater than 1</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152141817.png"></p>
+<p>The fraction of lost packets increases as the traffic intensity increases. </p>
+<h5 id="1-4-3-End-to-End-Delay"><a href="#1-4-3-End-to-End-Delay" class="headerlink" title="1.4.3 End-to-End Delay"></a>1.4.3 End-to-End Delay</h5><p>When the user specifies a destination hostname, the program in the source host sends multiple, special packets toward that destination. As these packets work their way toward the destination, they pass through a series of routers. When a router receives one of these special packets, it sends back to the source a short message that contains the name and address of the router.</p>
+<h5 id="1-4-4-Throughput-in-Computer-Networks"><a href="#1-4-4-Throughput-in-Computer-Networks" class="headerlink" title="1.4.4 Throughput in Computer Networks"></a>1.4.4 Throughput in Computer Networks</h5><p>The instantaneous <strong>throughput</strong> at any instant of time is the rate (in bits&#x2F;sec) at which Host B is receiving the file. </p>
+<p>We saw that when there is no other intervening traffic, the <strong>throughput</strong> can simply be approximated as the minimum transmission rate along the path between source and destination.<br>The example shows that more generally the throughput depends not only on the transmission rates of the links along the path, but also on the intervening traffic. In particular, a link with a high transmission rate may nonetheless be the bottleneck link for a file transfer if many other data flows are also passing through that link.</p>
+<h4 id="1-5-Protocol-Layers-and-Their-Service-Models"><a href="#1-5-Protocol-Layers-and-Their-Service-Models" class="headerlink" title="1.5 Protocol Layers and Their Service Models"></a>1.5 Protocol Layers and Their Service Models</h4><h5 id="1-5-1-Layered-Architecture"><a href="#1-5-1-Layered-Architecture" class="headerlink" title="1.5.1 Layered Architecture"></a>1.5.1 Layered Architecture</h5><ul>
+<li><strong>Application-layer protocols</strong> — such as HTTP and SMTP—are almost always implemented in software in the end systems</li>
+<li><strong>Transport-layer protocols</strong> also.</li>
+<li><strong>Physical layer and Data link layers</strong> are responsible for handling communication over a specific link, they are typically implemented in a network interface card (for example, Ethernet or WiFi interface cards) associated with a given link.</li>
+<li><strong>The network layer</strong> is often a mixed implementation of hardware and software.</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152143019.png"></p>
+<p>Advantage : layering provides a structured way to discuss system components. Modularity makes it easier to update system components<br>Drawbacks : 1.many protocol stacks provide error recovery on both a per-link basis and an end-to-end basis. 2. functionality at one layer may need information (for example, a timestamp value) that is present only in another layer; this violates the goal of separation of layers.</p>
+<p><strong>Application Layer</strong> : includes HTTP(which provides for Web document request and transfer), SMTP (which provides for the transfer of e-mail messages), and FTP (which provides for the transfer of files between two end systems). The translation of human-friendly names for Internet end systems with the help of a specific application-layer protocol, namely, the domain name system (DNS).</p>
+<p><strong>Transport Layer</strong> : TCP , UDP , either of which can transport application-layer messages.<br>TCP provides a connection-oriented service to its applications. This service includes guaranteed delivery of application-layer messages to the destination and flow control.TCP also breaks long messages into shorter segments and provides a congestion-control mechanism, so that a source throttles its transmission rate when the network is congested.<br>UDP provides a connectionless service to its applications.This is a no-frills service that provides no reliability, no flow control, and no congestion control. </p>
+<p><strong>Network Layer</strong> : is responsible for moving network-layer packets known as datagrams from one host to another.<br>IP defines the fields in the datagram as well as how the end systems and routers act on these fields.</p>
+<p><strong>Link Layer</strong> : In particular, at each node, the network layer passes the datagram down to the link layer, which delivers the datagram to the next node along the route. At this next node, the link layer passes the datagram up to the network layer.</p>
+<p><strong>Physical Layer</strong> : the job of the physical layer is to move the individual bits within the frame from one node to the next.</p>
+<h5 id="1-5-2-Encapsulation"><a href="#1-5-2-Encapsulation" class="headerlink" title="1.5.2 Encapsulation"></a>1.5.2 Encapsulation</h5><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211152144983.png"></p>
+<h4 id="1-6-Networks-Under-Attack"><a href="#1-6-Networks-Under-Attack" class="headerlink" title="1.6 Networks Under Attack"></a>1.6 Networks Under Attack</h4><p>Malware<br>Denial-of-service(DoS) attacks : 1.Vulnerability attack 2. Bandwidth flooding 3.Connection flooding<br>Sniff Packets(抓包)<br>Masquerade as Someone you trust</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/14/OSTEP-Persistence-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2115,146 +2255,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/02/c-%E6%8E%A5%E5%8F%A3%E5%92%8C%E6%8A%BD%E8%B1%A1%E7%B1%BB-%E7%9F%A5%E8%AF%86%E5%B0%8F%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="talentstream">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="南有青鸟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/06/02/c-%E6%8E%A5%E5%8F%A3%E5%92%8C%E6%8A%BD%E8%B1%A1%E7%B1%BB-%E7%9F%A5%E8%AF%86%E5%B0%8F%E8%AE%B0/" class="post-title-link" itemprop="url">c# 接口和抽象类 知识小记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-06-02 23:06:42" itemprop="dateCreated datePublished" datetime="2022-06-02T23:06:42+08:00">2022-06-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-06 15:16:06" itemprop="dateModified" datetime="2022-08-06T15:16:06+08:00">2022-08-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>之所以把接口和抽象类放在一起说，是因为它们的含义相近但又有不同。相同的地方是，我们需要利用接口和抽象类来定义<strong>有什么</strong>，而让<strong>做什么</strong>放在更细分的类里。</p>
-<ul>
-<li><p>在抽象类中，我们可以创造需要由派生类实现的功能。</p>
-</li>
-<li><p>在接口中，我们定义功能，但无法实现。派生类可以可以拓展接口并实现函数。</p>
-</li>
-</ul>
-<p>听起来感觉差不多，但是我们明确一下，抽象类是<strong>对类本质的抽象</strong>，表达的是 is 的关系，比如：SUV is a Car。接口是对<strong>行为的抽象</strong>，表达的是 like 的关系，比如：<strong>SUV like a Aircraft(假设SUV会飞）</strong>，但是<strong>本质上</strong>还是 SUV is a Car.接口的核心是<strong>定义行为</strong>，对于实现主题是谁、是如何实现的，接口并不关心。</p>
-<!-- wp:table -->
-<figure class="wp-block-table"><table><tbody><tr><th>比较项</th><th>接口</th><th>抽象类</th></tr><tr><td>访问修饰符(Access Specifier)</td><td>不能为接口的方法指定访问<a href="https://www.zhihu.com/search?q=%E4%BF%AE%E9%A5%B0%E7%AC%A6&amp;search_source=Entity&amp;hybrid_search_source=Entity&amp;hybrid_search_extra=%7B%22sourceType%22%3A%22article%22%2C%22sourceId%22%3A%22463345426%22%7D" target="_blank" rel="noreferrer noopener">修饰符</a>。默认为public</td><td>可以为每个方法指定访问修饰符。Public，private，protect ...</td></tr><tr><td>实现(Implementation)</td><td>接口定义的方法只能包含声明，不能包含任何的实现</td><td>抽象类可以为方法提供完整的实现，也可以仅仅定义抽象方法由派生类实现。</td></tr><tr><td>速度(Speed)</td><td>相比较而言接口稍慢</td><td>抽象类快一些</td></tr><tr><td>实例化(Instantiate)</td><td>不可实例化</td><td>不可实例化</td></tr><tr><td>字段(Fields)</td><td>不能定义字段</td><td>可以定义字段</td></tr><tr><td>属性(Properties)</td><td>可以定义属性，但一般没有实现。<br>从C# 8.0开始可以由默认实现</td><td>可以定义属性并由可以有完整实现</td></tr><tr><td>继承(Inherits)</td><td>一个派生类可以继承一个或者多个接口</td><td>一个派生类仅能继承一个抽象类</td></tr><tr><td>构造函数(Constructor)</td><td>接口不能包含构造函数</td><td>抽象类可以包含并实现构造函数</td></tr><tr><td>一般用来定义</td><td>接口一般用来定义一个类的外部的能力</td><td>抽象类用于定义类的实际标识，并将其用作对象或相同类型</td></tr><tr><td>添加新方法</td><td>如果将新方法添加到接口，你需要跟踪所有接口的实现位置并添加该方法的实现</td><td>如果将新方法添加到抽象类，你可以添加一个默认实现，其他地方的代码不需要改变就可以正常工作。</td></tr></tbody></table></figure>
-<!-- /wp:table -->
-
-<p>接下来看一下具体讲解和代码示范，一看便知道大概是怎么用的了，但是具体使用还是根据项目经验来</p>
-<h4 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h4><p>接口有一些小细节和规则</p>
-<ul>
-<li>方法名和返回类型完全匹配</li>
-<li>所有参数（包括ref和out关键字修饰符）都完全匹配</li>
-<li>用于实现接口的所有隐式实现方法都必须具有public可访问性、但使用显示接口实现则不应该添加访问修饰符</li>
-<li>不能在接口中定义任何字段。字段本质上是类或结构的实现细节</li>
-<li>不能定义任何构造器和析构器，即构造函数和析构函数</li>
-<li>不能为任何方法指定访问修饰符。接口所有方法都隐式为公共方法</li>
-<li>不能再接口中嵌套任何类型（例如枚举、结构、类或其他接口)</li>
-<li>接口可以继承另一个接口，但不允许从结构或类继承。</li>
-</ul>
-<p>主程序代码：</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title">ConsoleApp1</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            Book book = <span class="keyword">new</span> Book();<span class="comment">//实例化一个Book类</span></span><br><span class="line">            IBook bookDetail = book;<span class="comment">//通过接口来引用类，就跟基类变量能引用派生类对象一样</span></span><br><span class="line">            bookDetail.ID = <span class="number">1001</span>;</span><br><span class="line">            bookDetail.Name = <span class="string">&quot;tynam&quot;</span>;</span><br><span class="line">            bookDetail.Price = <span class="number">60</span>;</span><br><span class="line"></span><br><span class="line">            Console.WriteLine(<span class="string">&quot;id：&#123;0&#125;&quot;</span>, bookDetail.ID);</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;书名：&#123;0&#125;&quot;</span>, bookDetail.Name);</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;定价：&#123;0&#125;&quot;</span>, bookDetail.Price);</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;售卖价：&#123;0&#125;&quot;</span>, bookDetail.SalePrice(<span class="number">8</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Book类代码：</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Text;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title">ConsoleApp1</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Book</span> : <span class="title">IBook</span><span class="comment">//拓展IBook接口</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">int</span> IBook.ID &#123; <span class="keyword">get</span>;<span class="keyword">set</span>; &#125;<span class="comment">//显示实现接口</span></span><br><span class="line">        <span class="built_in">string</span> IBook.Name &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">        <span class="keyword">public</span> <span class="built_in">double</span> Price &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;<span class="comment">//隐式实现接口，但是必须要加public</span></span><br><span class="line"></span><br><span class="line">        <span class="built_in">double</span> IBook.SalePrice(<span class="built_in">int</span> discount)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">double</span> salePrice = Price * discount * <span class="number">0.1</span>;</span><br><span class="line">            <span class="keyword">return</span> salePrice;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>IBook接口代码：</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Text;</span><br><span class="line"><span class="keyword">namespace</span> <span class="title">ConsoleApp1</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">interface</span> <span class="title">IBook</span><span class="comment">//仅仅有，没得实现</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">int</span> ID &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">        <span class="built_in">string</span> Name &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">        <span class="built_in">double</span> Price &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">        <span class="function"><span class="built_in">double</span> <span class="title">SalePrice</span>(<span class="params"><span class="built_in">int</span> discount</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h4><p>抽象类同样也有一些小细节和规则</p>
-<ul>
-<li>抽象类只作声明，而不包含实现，抽象方法旨在继承后实现，所以不能用private修饰</li>
-<li>抽象类不能被直接实例化</li>
-<li>抽象类可以没有抽象方法，但是有了抽象方法就一定是要声明类为抽象类</li>
-<li>抽象类的派生类不是抽象类，必须重写抽象类的所有抽象方法</li>
-</ul>
-<p>主程序代码：</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">ConsoleApp2</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            Human human = <span class="keyword">new</span> Human();</span><br><span class="line">            human.Eat();</span><br><span class="line">            human.Walk();</span><br><span class="line">            human.Speak();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>BaseClass抽象类代码：</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Text;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">ConsoleApp2</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">BaseClass</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">Eat</span>()</span>;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">Walk</span>()</span>;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">Speak</span>()</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Human类代码:</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Text;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">ConsoleApp2</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Human</span> : <span class="title">BaseClass</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Eat</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;I can eat&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Walk</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;I can eat&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Speak</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;I can eat&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="学习参考"><a href="#学习参考" class="headerlink" title="学习参考"></a>学习参考</h4><ul>
-<li>zhuanlan.zhihu.com&#x2F;p&#x2F;51977526</li>
-<li>《visual c#从入门到精通》- 第十三章</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2326,7 +2326,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -2339,7 +2339,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -2375,12 +2375,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">144k</span>
+    <span title="站点总字数">153k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:11</span>
+    <span title="站点阅读时长">2:19</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
