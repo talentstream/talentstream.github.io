@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="参考视频链接2.7 Socket programming Application Layer2.1 Principles of Network ApplicationsAt the core of network application development is writing programs that run on different end systems and communicate">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计网：自顶向下方法 第二章 学习笔记">
+<meta property="og:url" content="http://example.com/2022/11/17/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="南有青鸟">
+<meta property="og:description" content="参考视频链接2.7 Socket programming Application Layer2.1 Principles of Network ApplicationsAt the core of network application development is writing programs that run on different end systems and communicate">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171559042.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171601966.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171602793.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171605050.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171606019.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171607702.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171608352.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171611298.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171612615.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171613821.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171613302.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171613016.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171614326.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171614645.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171616269.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171617116.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171617538.png">
+<meta property="article:published_time" content="2022-11-17T07:53:29.000Z">
+<meta property="article:modified_time" content="2022-11-17T08:17:57.394Z">
+<meta property="article:author" content="talentstream">
+<meta property="article:tag" content="英文">
+<meta property="article:tag" content="计网">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171559042.png">
+
+<link rel="canonical" href="http://example.com/2022/11/17/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>计网：自顶向下方法 第二章 学习笔记 | 南有青鸟</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">南有青鸟</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/17/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="talentstream">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="南有青鸟">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          计网：自顶向下方法 第二章 学习笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-11-17 15:53:29 / 修改时间：16:17:57" itemprop="dateCreated datePublished" datetime="2022-11-17T15:53:29+08:00">2022-11-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>12k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>11 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="参考视频链接"><a href="#参考视频链接" class="headerlink" title="参考视频链接"></a>参考视频链接</h3><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV15T411w79y/?p=17&share_source=copy_web&vd_source=8277fbbcfe9cfbff0708d41552ef71ab">2.7 Socket programming</a></p>
+<h3 id="Application-Layer"><a href="#Application-Layer" class="headerlink" title="Application Layer"></a>Application Layer</h3><h4 id="2-1-Principles-of-Network-Applications"><a href="#2-1-Principles-of-Network-Applications" class="headerlink" title="2.1 Principles of Network Applications"></a>2.1 Principles of Network Applications</h4><p>At the core of network application development is writing programs that run on different end systems and communicate with each other over the network.</p>
+<h5 id="2-1-1-Network-Application-Architectures"><a href="#2-1-1-Network-Application-Architectures" class="headerlink" title="2.1.1 Network Application Architectures"></a>2.1.1 Network Application Architectures</h5><p><strong>Client-server architecture</strong> : there is an always-on host, called the server, which services requests from many other hosts, called clients.<br>With the client-server architecture, clients do not directly communicate with each other<br>Server has a fixed, well-known address, called an IP address</p>
+<p>Often in a client-server application, a single-server host is incapable of keeping up with all the requests from clients. For this reason, a data center, housing a large number of hosts, is often used to create a powerful virtual server.<br>A data center can have hundreds of thousands of servers, which must be powered and maintained. Additionally, the service providers must pay recurring interconnection and bandwidth costs for sending data from their data centers.</p>
+<p><strong>P2P architecture</strong> : the application exploits direct communication between pairs of intermittently connected hosts, called peers.<br>the peers communicate without passing through a dedicated server, the architecture is called peer-to-peer.</p>
+<p><strong>P2P features - Self-scalability</strong> : in a P2P file-sharing application, although each peer generates workload by requesting files, each peer also adds service capacity to the system by distributing files to other peers.<br>P2P architectures are also cost effective, since they normally don’t require significant server infrastructure and server bandwidth.<br>P2P applications face challenges of security, performance, and reliability due to their highly decentralized structure.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171559042.png"></p>
+<h5 id="2-1-2-Processes-Communicating"><a href="#2-1-2-Processes-Communicating" class="headerlink" title="2.1.2 Processes Communicating"></a>2.1.2 Processes Communicating</h5><p>In the Web application a client browser process exchanges messages with a Web server process. In a P2P file-sharing system, a file is transferred from a process in one peer to a process in another peer.<br>The process that initiates the communication is labeled as the <strong>client</strong>. The process that waits to be contacted to begin the session is the <strong>server</strong>.</p>
+<p>A process sends messages into, and receives messages from, the network through a software interface called a <strong>socket</strong>.</p>
+<p>The only control that the application developer has on the transport-layer side is - 1.the choice of the transport protocol 2. the ability to fix a few transport-layer parameters such as maximum buffer and maximum segment sizes.</p>
+<p>To identify the receiving process, two pieces of information need to be specified: 1.the address of the host 2.an identifier that specifies the receiving process in the destination host.</p>
+<p>The host is identified by its <strong>IP address</strong>.<br>In addition to knowing the address of the host to which a message is destined, the sending process must also identify the <strong>receiving process</strong> (more specifically, the receiving socket) running in the host.(<strong>Port number</strong> 端口号)</p>
+<h5 id="2-1-3-Transport-Services-Available-to-Applications"><a href="#2-1-3-Transport-Services-Available-to-Applications" class="headerlink" title="2.1.3 Transport Services Available to Applications"></a>2.1.3 Transport Services Available to Applications</h5><p>Four dimension : <strong>reliable data transfer, throughput, timing, security</strong>.</p>
+<p>If a protocol provides such a guaranteed data delivery service, it is said to provide reliable <strong>data transfer</strong>. When a transport protocol provides this service, the sending process can just pass its data into the socket and know with complete confidence that the data will arrive without errors at the receiving process.<br>When a transport-layer protocol doesn’t provide reliable data transfer, some of the data sent by the sending process may never arrive at the receiving process. This may be acceptable for <strong>loss-tolerant applications</strong>, most notably multimedia applications such as conversational audio&#x2F;video that can tolerate some amount of data loss. </p>
+<p><strong>bandwidth-sensitive applications</strong> : many multimedia applications<br>elastic applications : e-mail, file transfer, Web transfer</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171601966.png"></p>
+<h5 id="2-1-4-Transport-Services-Provided-by-the-Internet"><a href="#2-1-4-Transport-Services-Provided-by-the-Internet" class="headerlink" title="2.1.4 Transport Services Provided by the Internet"></a>2.1.4 Transport Services Provided by the Internet</h5><p>TCP : </p>
+<ul>
+<li>Connection-oriented service</li>
+<li>Reliable data transfer service</li>
+</ul>
+<p>UDP :  is a no-frills, lightweight transport protocol, providing minimal services.</p>
+<ul>
+<li>Connectionless, there is no handshaking before the two processes start to communicate</li>
+<li>Unreliable data transfer service, that is, no guarantee that the message will ever reach the receiving process. Message that arrive may out of order.</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171602793.png"></p>
+<h5 id="2-1-5-Application-Layer-Protocols"><a href="#2-1-5-Application-Layer-Protocols" class="headerlink" title="2.1.5 Application-Layer Protocols"></a>2.1.5 Application-Layer Protocols</h5><p>2.1.5 Application-Layer Protocols</p>
+<p>An application-layer protocol defines :</p>
+<ul>
+<li>The types of messages exchanged, for example, request messages and response messages</li>
+<li>The syntax of the various message types, such as the fields in the message and how the fields are delineated </li>
+<li>The semantics of the fields, that is, the meaning of the information in the fields</li>
+<li>Rules for determining when and how a process sends messages and responds to messages</li>
+</ul>
+<h4 id="2-2-The-Web-and-HTTP"><a href="#2-2-The-Web-and-HTTP" class="headerlink" title="2.2 The Web and HTTP"></a>2.2 The Web and HTTP</h4><h5 id="2-2-1-Overview-of-HTTP"><a href="#2-2-1-Overview-of-HTTP" class="headerlink" title="2.2.1 Overview of HTTP"></a>2.2.1 Overview of HTTP</h5><p><strong>HyperText Transfer Protocol (HTTP)</strong> defines  the structure of these messages and how the client and server exchange the messages. HTTP defines how Web clients request Web pages from Web servers and how servers transfer Web pages to clients.<br>When a user requests a Web page, the browser sends HTTP request messages for the objects in the page to the server. The server receives the requests and responds with HTTP response messages that contain the objects.<br>HTTP uses TCP as its underlying transport protocol.<br>HTTP need not worry about lost data or the details of how TCP recovers from loss or reordering of data within the network.<br>It is important to note that <strong>the server sends requested files to clients without storing any state information about the client</strong>. That means if client ask twice in a few seconds, the server resends the object.</p>
+<h5 id="2-2-2-Non-Persistent-and-Persistent-Connections"><a href="#2-2-2-Non-Persistent-and-Persistent-Connections" class="headerlink" title="2.2.2 Non-Persistent and Persistent Connections"></a>2.2.2 Non-Persistent and Persistent Connections</h5><p><strong>HTTP with Non-Persistent Connections</strong> :<br>Each TCP connection is closed after the server sends the object.<br>Each non-persistent TCP connection transports exactly one request message and one response message.<br><strong>Round-trip time(RTT)</strong> is the time it takes for a small packet to travel from client to server and then back to the client. Includes packet-propagation delays, packet-queuing delays in intermediate routers and switches, and packet-processing delays.<br><strong>“Three-way handshake”</strong> : the client sends a small TCP segment to the server, the server acknowledges and responds with a small TCP segment, and finally, the client acknowledges back to the server.</p>
+<p>Shortcomings : 1. a brand-new connection must be established and maintained for each requested object.2. each object suffers a delivery delay of two RTTs - one RTT to establish the TCP connection and one RTT to request and receive an object.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171605050.png"></p>
+<p><strong>HTTP with Persistent Connections</strong> : the server leaves the TCP connection open after sending a response. Subsequent requests and responses between the same client and server can be sent over the same connection.</p>
+<h5 id="2-2-3-HTTP-Message-Format"><a href="#2-2-3-HTTP-Message-Format" class="headerlink" title="2.2.3 HTTP Message Format"></a>2.2.3 HTTP Message Format</h5><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171606019.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171607702.png"></p>
+<p>Some common status codes and associated phrases include:</p>
+<ul>
+<li><strong>200 OK</strong> : Request succeeded and the information is returned in the response.</li>
+<li><strong>300 Moved Permanently</strong> : Requested object has been permanently moved; the new URL is specified in Location: header of the response message. The client software will automatically retrieve the new URL.</li>
+<li><strong>400 Bad Request</strong> : This is a generic error code indicating that the request could not be understood by the server.</li>
+<li><strong>404 Not Found</strong> : The requested document does not exist on this server.</li>
+<li><strong>505 HTTP Version Not Supported</strong> : The requested HTTP protocol version is not supported by the server.</li>
+</ul>
+<h5 id="2-2-4-User-Server-Interaction-Cookies"><a href="#2-2-4-User-Server-Interaction-Cookies" class="headerlink" title="2.2.4 User-Server Interaction: Cookies"></a>2.2.4 User-Server Interaction: Cookies</h5><p>It is often desirable for a Web site to identify users, either because the server wishes to restrict user access or because it wants to serve content as a function of the user identity.<br>HTTP use <strong>Cookies</strong>, which allow sites to keep track of users.</p>
+<p>Cookie has four components : 1.a cookie header line in the HTTP response message 2.a cookie header line in the HTTP request message 3.a cookie file kept on the user’s end system and managed by the user’s browser 4.a back-end database at the Web site.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171608352.png"></p>
+<h5 id="2-2-5-Web-Caching"><a href="#2-2-5-Web-Caching" class="headerlink" title="2.2.5 Web Caching"></a>2.2.5 Web Caching</h5><p><strong>Web cache(proxy server)</strong> is a network entity that satisfies HTTP requests on the behalf of an origin Web server. The Web cache has its own disk storge and keeps copies of recently requested objects in this storage.</p>
+<p>1.A Web cache can substantially reduce the response time for a client request<br>2.Web cache can substantially reduce traffic on an institution’s access link to the Internet.</p>
+<p>Although caching can reduce user-perceived response times, it introduces a new problem—the copy of an object residing in the cache may be stale. <strong>Conditional GET</strong> verifies its objects are up to date.</p>
+<h5 id="2-2-6-HTTP-x2F-2"><a href="#2-2-6-HTTP-x2F-2" class="headerlink" title="2.2.6 HTTP&#x2F;2"></a>2.2.6 HTTP&#x2F;2</h5><p>The primary goals for HTTP&#x2F;2 are to reduce perceived latency by enabling request and response multiplexing over a single TCP connection, provide request prioritization and server push, and provide efficient compression of HTTP header fields.<br>HTTP&#x2F;2 changes how the data is formatted and transported between the client and server.</p>
+<p>Sending all the objects in a Web page over a single TCP connection has a <strong>Head of Line (HOL) blocking</strong> problem.<br>TCP congestion control provides browsers an unintended incentive to use multiple parallel TCP connections rather than a single persistent connection. Many HTTP&#x2F;1.1 browsersopen up to six parallel TCP connections not only to circumvent HOL blocking but also to obtain more bandwidth.</p>
+<p>One of the primary goals of HTTP&#x2F;2 is to get rid of (or at least reduce the number of) parallel TCP connections for transporting a single Web page. This not only reduces the number of sockets that need to be open and maintained at servers, but also allows TCP congestion control to operate as intended.</p>
+<p>The HTTP&#x2F;2 solution for HOL blocking is to <strong>break each message into small frames</strong>, and interleave the request and response messages on the same TCP connection.<br>In addition to breaking down each HTTP message into independent frames, the framing sublayer also <strong>binary encodes the frames</strong>. Binary protocols are more efficient to parse, lead to slightly smaller frames, and are less error-prone.</p>
+<p><strong>Message prioritization</strong> allows developers to customize the relative priority of requests to better optimize application performance.<br>Another feature of HTTP&#x2F;2 is the ability for a server to <strong>send multiple responses for a single client request</strong>.</p>
+<h4 id="2-3-Electronic-Mail-in-the-Internet"><a href="#2-3-Electronic-Mail-in-the-Internet" class="headerlink" title="2.3 Electronic Mail in the Internet"></a>2.3 Electronic Mail in the Internet</h4><p><strong>User agents</strong> : allow users to read, reply to, forward, save, and compose messages.<br><strong>Mail servers</strong> : where the message is placed in the mail server’s outgoing message queue.<br><strong>Simple Mail Transfer Protocol(SMTP)</strong> : it uses the reliable data transfer service of TCP to transfer mail from the sender’s mail server to the recipient’s mail server. It has two sides:a client side, which executes on the sender’s mail server, and a server side, which executes on the recipient’s mail server.</p>
+<h5 id="2-3-1-SMTP"><a href="#2-3-1-SMTP" class="headerlink" title="2.3.1 SMTP"></a>2.3.1 SMTP</h5><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171611298.png"></p>
+<h5 id="2-3-2-Mail-Message-Formats"><a href="#2-3-2-Mail-Message-Formats" class="headerlink" title="2.3.2 Mail Message Formats"></a>2.3.2 Mail Message Formats</h5><p>RFC 5322</p>
+<h5 id="2-3-3-Mail-Access-Protocols"><a href="#2-3-3-Mail-Access-Protocols" class="headerlink" title="2.3.3 Mail Access Protocols"></a>2.3.3 Mail Access Protocols</h5><p><strong>Internet Mail Access Protocol(IMAP)</strong></p>
+<p>Both the HTTP and IMAP approaches allow Bob to manage folders, maintained in Bob’s mail server. Bob can move messages into the folders he creates, delete messages, mark messages as important, and so on.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171612615.png"></p>
+<h4 id="2-4-DNS—The-Internet’s-Directory-Service"><a href="#2-4-DNS—The-Internet’s-Directory-Service" class="headerlink" title="2.4 DNS—The Internet’s Directory Service"></a>2.4 DNS—The Internet’s Directory Service</h4><p>One identifier for a host is its <strong>hostname</strong><br>Another is <strong>IP addresses</strong></p>
+<h5 id="2-4-1-Services-Provided-by-DNS"><a href="#2-4-1-Services-Provided-by-DNS" class="headerlink" title="2.4.1 Services Provided by DNS"></a>2.4.1 Services Provided by DNS</h5><p>In order to reconcile these preferences(hostname &amp; IP), we need a directory service that <strong>translates hostnames to IP addresses</strong> .<br><strong>Domain name system(DNS)</strong> : 1.a distributed database implemented in a hierarchy of DNS servers 2.an application-layer protocol that allows hosts to query the distributed database.</p>
+<p>DNS provides services:</p>
+<ul>
+<li>Translate hostname to IP address</li>
+<li>Host aliasing</li>
+<li>Mail server aliasing</li>
+<li>Load distribution</li>
+</ul>
+<h5 id="2-4-2-Overview-of-How-DNS-Works"><a href="#2-4-2-Overview-of-How-DNS-Works" class="headerlink" title="2.4.2 Overview of How DNS Works"></a>2.4.2 Overview of How DNS Works</h5><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171613821.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171613302.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171613016.png"></p>
+<p><strong>DNS caching</strong> : improve the delay performance and to reduce the number of DNS messages ricocheting around the Internet. In a query chain, when a DNS server receives a DNS reply, it can cache the mapping in its local memory.</p>
+<h5 id="2-4-3-DNS-Records-and-Messages"><a href="#2-4-3-DNS-Records-and-Messages" class="headerlink" title="2.4.3 DNS Records and Messages"></a>2.4.3 DNS Records and Messages</h5><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171614326.png"></p>
+<h4 id="2-5-Peer-to-Peer-File-Distribution"><a href="#2-5-Peer-to-Peer-File-Distribution" class="headerlink" title="2.5 Peer-to-Peer File Distribution"></a>2.5 Peer-to-Peer File Distribution</h4><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171614645.png"></p>
+<h4 id="2-6-Video-Streaming-and-Content-Distribution-Networks"><a href="#2-6-Video-Streaming-and-Content-Distribution-Networks" class="headerlink" title="2.6 Video Streaming and Content Distribution Networks"></a>2.6 Video Streaming and Content Distribution Networks</h4><h5 id="2-6-1-Internet-Video"><a href="#2-6-1-Internet-Video" class="headerlink" title="2.6.1 Internet Video"></a>2.6.1 Internet Video</h5><p>An important characteristic of video is that it can be compressed, thereby trading off video quality with bit rate.<br>In order to provide continuous playout, the network must provide an average throughput to the streaming application that is at least as large as the bit rate of the compressed video.</p>
+<h5 id="2-6-2-HTTP-Streaming-and-DASH"><a href="#2-6-2-HTTP-Streaming-and-DASH" class="headerlink" title="2.6.2 HTTP Streaming and DASH"></a>2.6.2 HTTP Streaming and DASH</h5><p><strong>Dynamic Adaptive Streaming over HTTP (DASH)</strong> : 感觉是根据网速自动选画质</p>
+<h5 id="2-6-3-Content-Distribution-Networks"><a href="#2-6-3-Content-Distribution-Networks" class="headerlink" title="2.6.3 Content Distribution Networks"></a>2.6.3 Content Distribution Networks</h5><p>The most straightforward approach to providing streaming video service is to build a single massive data center, store all of its videos in the data center, and stream the videos directly from the data center to clients worldwide. Three problems : 1. if the client is far from the data center, server-to-client packets will cross many communication links and likely pass through many ISPs, with some of the ISPs possibly located on different continents. If one of these links provides a throughput that is less than the video consumption rate, the end-to-end throughput will also be below the consumption rate, resulting in annoying freezing delays for the user. 2.a popular video will likely be sent many times over the same communication links.Not only does this waste network bandwidth, but the Internet video company itself will be paying its provider ISP (connected to the data center) for sending the same bytes into the Internet over and over again 3. a single data center represents a single point of failure—if the data center or its links to the Internet goes down, it would not be able to distribute any video streams</p>
+<p><strong>Content Distribution Networks(CDNs)</strong> : 1.Enter Deep 2.Bring Home</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171616269.png"></p>
+<p><strong>Cluster selection strategy(CDN’s core)</strong> : dynamically directing clients to a server cluster or a data center within the CDN.<br>One simple way is <strong>geographically closest</strong></p>
+<h5 id="2-7-Socket-Programming-Creating-Network-Applications"><a href="#2-7-Socket-Programming-Creating-Network-Applications" class="headerlink" title="2.7 Socket Programming: Creating Network Applications"></a>2.7 Socket Programming: Creating Network Applications</h5><p>There are two types of network applications. One type is an implementation whose operation is specified in a protocol standard. The other type of network application is a proprietary network application.</p>
+<ol>
+<li>The client reads a line of characters (data) from its keyboard and sends the data to the server. </li>
+<li>The server receives the data and converts the characters to uppercase. </li>
+<li>The server sends the modified data to the client. </li>
+<li>The client receives the modified data and displays the line on its screen.</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171617116.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211171617538.png"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%8B%B1%E6%96%87/" rel="tag"># 英文</a>
+              <a href="/tags/%E8%AE%A1%E7%BD%91/" rel="tag"># 计网</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/11/16/github%E5%B7%A5%E4%BD%9C%E6%B5%81/" rel="prev" title="github工作流">
+      <i class="fa fa-chevron-left"></i> github工作流
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%A7%86%E9%A2%91%E9%93%BE%E6%8E%A5"><span class="nav-number">1.</span> <span class="nav-text">参考视频链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Application-Layer"><span class="nav-number">2.</span> <span class="nav-text">Application Layer</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-Principles-of-Network-Applications"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Principles of Network Applications</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-1-Network-Application-Architectures"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1 Network Application Architectures</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-2-Processes-Communicating"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2 Processes Communicating</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-3-Transport-Services-Available-to-Applications"><span class="nav-number">2.1.3.</span> <span class="nav-text">2.1.3 Transport Services Available to Applications</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-4-Transport-Services-Provided-by-the-Internet"><span class="nav-number">2.1.4.</span> <span class="nav-text">2.1.4 Transport Services Provided by the Internet</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-5-Application-Layer-Protocols"><span class="nav-number">2.1.5.</span> <span class="nav-text">2.1.5 Application-Layer Protocols</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-The-Web-and-HTTP"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 The Web and HTTP</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1-Overview-of-HTTP"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 Overview of HTTP</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-2-Non-Persistent-and-Persistent-Connections"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2 Non-Persistent and Persistent Connections</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-3-HTTP-Message-Format"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.2.3 HTTP Message Format</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-4-User-Server-Interaction-Cookies"><span class="nav-number">2.2.4.</span> <span class="nav-text">2.2.4 User-Server Interaction: Cookies</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-5-Web-Caching"><span class="nav-number">2.2.5.</span> <span class="nav-text">2.2.5 Web Caching</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-6-HTTP-x2F-2"><span class="nav-number">2.2.6.</span> <span class="nav-text">2.2.6 HTTP&#x2F;2</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-Electronic-Mail-in-the-Internet"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 Electronic Mail in the Internet</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-1-SMTP"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 SMTP</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-2-Mail-Message-Formats"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.3.2 Mail Message Formats</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-3-Mail-Access-Protocols"><span class="nav-number">2.3.3.</span> <span class="nav-text">2.3.3 Mail Access Protocols</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-DNS%E2%80%94The-Internet%E2%80%99s-Directory-Service"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 DNS—The Internet’s Directory Service</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-4-1-Services-Provided-by-DNS"><span class="nav-number">2.4.1.</span> <span class="nav-text">2.4.1 Services Provided by DNS</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-4-2-Overview-of-How-DNS-Works"><span class="nav-number">2.4.2.</span> <span class="nav-text">2.4.2 Overview of How DNS Works</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-4-3-DNS-Records-and-Messages"><span class="nav-number">2.4.3.</span> <span class="nav-text">2.4.3 DNS Records and Messages</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-Peer-to-Peer-File-Distribution"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 Peer-to-Peer File Distribution</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-Video-Streaming-and-Content-Distribution-Networks"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 Video Streaming and Content Distribution Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-6-1-Internet-Video"><span class="nav-number">2.6.1.</span> <span class="nav-text">2.6.1 Internet Video</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-6-2-HTTP-Streaming-and-DASH"><span class="nav-number">2.6.2.</span> <span class="nav-text">2.6.2 HTTP Streaming and DASH</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-6-3-Content-Distribution-Networks"><span class="nav-number">2.6.3.</span> <span class="nav-text">2.6.3 Content Distribution Networks</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-7-Socket-Programming-Creating-Network-Applications"><span class="nav-number">2.6.4.</span> <span class="nav-text">2.7 Socket Programming: Creating Network Applications</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="talentstream"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">talentstream</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022-08 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">talentstream</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">166k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:31</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
