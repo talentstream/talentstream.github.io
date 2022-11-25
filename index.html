@@ -160,6 +160,236 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/25/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="talentstream">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="南有青鸟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/11/25/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">计网：自顶向下方法-第三章 学习笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-11-25 13:08:36 / 修改时间：13:29:58" itemprop="dateCreated datePublished" datetime="2022-11-25T13:08:36+08:00">2022-11-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>13k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>12 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a target="_blank" rel="noopener" href="https://andrewpqc.github.io/2018/07/20/tcp-pipeline/">TCP的流水机制</a><br><a target="_blank" rel="noopener" href="https://andrewpqc.github.io/2018/07/17/tcp-connection-manage/">TCP连接的建立与断开</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/37b36d8655e3">TCP Congestion Control</a><br><a target="_blank" rel="noopener" href="https://www.misaka-9982.com/2022/03/04/Wireshark-Lab5/">TCP lab 参考</a><br><a target="_blank" rel="noopener" href="https://www.misaka-9982.com/2022/03/04/Wireshark-Lab4/">UDP lab 参考</a></p>
+<h3 id="3-Transport-Layer"><a href="#3-Transport-Layer" class="headerlink" title="3 Transport Layer"></a>3 Transport Layer</h3><p>Two problems:1.how two entities can communicate reliably over a medium that may lose corrupt data.<br>2.controlling the transmission rate of transport-layer entities in order to avoid, or recover from, congestion within the network.</p>
+<h4 id="3-1-Introduction-and-Transport-Layer-Services"><a href="#3-1-Introduction-and-Transport-Layer-Services" class="headerlink" title="3.1 Introduction and Transport-Layer Services"></a>3.1 Introduction and Transport-Layer Services</h4><p>The transport layer provides logical rather than physical communication between application processes</p>
+<h5 id="3-1-1-Relationship-Between-Transport-and-Network-Layers"><a href="#3-1-1-Relationship-Between-Transport-and-Network-Layers" class="headerlink" title="3.1.1 Relationship Between Transport and Network Layers"></a>3.1.1 Relationship Between Transport and Network Layers</h5><p>Within an end system, a transport protocol moves messages from application processes to the network edge and vice versa, but it doesn’t have any say about how the messages are moved within the network core.</p>
+<p>A transport protocol can offer reliable data transfer service to an application even when the underlying network protocol is unreliable, that is, even when the network protocol loses, garbles, or duplicates packets. </p>
+<p>A transport protocol can use encryption to guarantee that application messages are not read by intruders, even when the network layer cannot guarantee the confidentiality of transport-layer segments.</p>
+<h5 id="3-1-2-Overview-of-the-Transport-Layer-in-the-Internet"><a href="#3-1-2-Overview-of-the-Transport-Layer-in-the-Internet" class="headerlink" title="3.1.2 Overview of the Transport Layer in the Internet"></a>3.1.2 Overview of the Transport Layer in the Internet</h5><p><strong>UDP(User Datagram Protocol)</strong>, provides an unreliable, connectionless service to the invoking application.<br><strong>TCP(Transmission Control Protocol)</strong>, provides a reliable, connection-oriented service to the invoking application.</p>
+<p>The most fundamental responsibility of UDP and TCP is to extend IP’s delivery service between two end systems to a delivery service between two processes running on the end systems.<br>Extending host-to-host delivery to process-to-process delivery is called <strong>transport-layer multiplexing and demultiplexing</strong>.</p>
+<h4 id="3-2-Multiplexing-and-Demultiplexing"><a href="#3-2-Multiplexing-and-Demultiplexing" class="headerlink" title="3.2 Multiplexing and Demultiplexing"></a>3.2 Multiplexing and Demultiplexing</h4><p><strong>Demultiplexing</strong> : delivering the data in a transport-layer segment to the correct socket.<br><strong>Multiplexing</strong> : gathering data chunks at the source host from different sockets, encapsulating each data chunk with header information to create segments, and passing the segments to the network layer.</p>
+<p>Transport-layer multiplexing requires : 1. sockets have unique identifiers <strong>(source port number field)</strong> 2.each segment have special fields that indicate the socket to which the segment is to be delivered <strong>(destination port number field)</strong></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251312966.png"></p>
+<p><strong>How the transport layer could implement the demultiplexing service</strong> : Each socket in the host could be assigned a port number, and when a segment arrives at the host, the transport layer examines the destination port number in the segment and directs the segment to the corresponding socket. The segment’s data then passes through the socket into the attached process. </p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251314091.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251314379.png"></p>
+<h4 id="3-3-Connectionless-Transport-UDP"><a href="#3-3-Connectionless-Transport-UDP" class="headerlink" title="3.3 Connectionless Transport: UDP"></a>3.3 Connectionless Transport: UDP</h4><p><strong>UDP</strong> takes messages from the application process, attaches source and destination port number fields for the multiplexing&#x2F;demultiplexing service, adds two other small fields, and passes the resulting segment to the network layer.<br>Note that with UDP there is <strong>no handshaking</strong> between sending and receiving transport-layer entities before sending a segment.</p>
+<p><strong>Some reasons use UDP :</strong></p>
+<ul>
+<li>Finer application-level control over what data is sent, and when.</li>
+<li>No connection establishment.</li>
+<li>No connection state.</li>
+<li>Small packet header overhead.</li>
+</ul>
+<h5 id="3-3-1-UDP-Segment-Structure"><a href="#3-3-1-UDP-Segment-Structure" class="headerlink" title="3.3.1 UDP Segment Structure"></a>3.3.1 UDP Segment Structure</h5><p>The UDP header has only four fields, each consisting of two bytes.</p>
+<p>The <strong>port numbers</strong> allow the destination host to pass the application data to the correct process running on the destination end system<br><strong>An explicit length value</strong> is needed since the size of the data field may differ from one UDP segment to the next.<br>The checksum is used by the receiving host to check whether errors have been introduced into the segment.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251315558.png"></p>
+<h5 id="3-3-2-UDP-Checksum"><a href="#3-3-2-UDP-Checksum" class="headerlink" title="3.3.2 UDP Checksum"></a>3.3.2 UDP Checksum</h5><p>Given that neither link-by-link reliability nor in-memory error detection is guaranteed, UDP must provide error detection at the transport layer, on an end-end basis, if the end-end data transfer service is to provide error detection.<br>Although UDP provides error checking, it does not do anything to recover from an error.</p>
+<h4 id="3-4-Principles-of-Reliable-Data-Transfer"><a href="#3-4-Principles-of-Reliable-Data-Transfer" class="headerlink" title="3.4 Principles of Reliable Data Transfer"></a>3.4 Principles of Reliable Data Transfer</h4><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251315287.png"></p>
+<h5 id="3-4-1-Building-a-Reliable-Data-Transfer-Protocol"><a href="#3-4-1-Building-a-Reliable-Data-Transfer-Protocol" class="headerlink" title="3.4.1 Building a Reliable Data Transfer Protocol"></a>3.4.1 Building a Reliable Data Transfer Protocol</h5><p>Reliable Data Transfer over a Perfectly Reliable Channel - <strong>Rdt1.0</strong> :</p>
+<ul>
+<li><strong>Sending side</strong> : 1. simply accepts data from the upper layer via the rdt_send(data) event, 2. creates a packet containing the data (via the action make_pkt(data)) and 3. sends the packet into the channel.</li>
+<li><strong>Receiving side</strong> : 1. receives a packet from the underlying channel via the rdt_rcv(packet) event, 2. removes the data from the packet (via the action extract (packet, data)) and 3. passes the data up to the upper layer (via the action deliver_data(data)).</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251316580.png"></p>
+<p>Reliable Data Transfer over a Channel with Bit Errors - <strong>rdt2.0</strong> : </p>
+<p><strong>ARQ(Automatic Repeat reQuest) protocols</strong> : 1. Error detection 2. Receiver feedback 3. Retrasmission</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251316447.png"></p>
+<p>Rdt2.0 has a fatal flaw.In particular, we haven’t accounted for the possibility that the ACK or NAK packet could be corrupted!(没有考虑ACK或NAK发生错误)</p>
+<p>A simple solution to this new problem is to add a new field to the data packet and have the sender number its data packets by putting a sequence number into this field.The receiver then need only check this sequence number to determine whether or not the received packet is a retransmission.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251317937.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251317030.png"></p>
+<p>One subtle change between rtdt2.1 and rdt2.2 is that the receiver must now include the sequence number of the packet being acknowledged by an ACK message (this is done by including the ACK, 0 or ACK, 1 argument in make_pkt() in the receiver FSM), and the sender must now check the sequence number of the packet being acknowledged by a received ACK message (this is done by including the 0 or 1 argument in isACK() in the sender FSM).</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251317955.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251317607.png"></p>
+<p><strong>Reliable Data Transfer over a Lossy Channel with Bit Errors: rdt3.0</strong> :</p>
+<p>If the sender is willing to wait long enough so that it is certain that a packet has been lost, it can simply retransmit the data packet.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251318972.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251318791.png"></p>
+<h4 id="3-4-2-Pipelined-Reliable-Data-Transfer-Protocols"><a href="#3-4-2-Pipelined-Reliable-Data-Transfer-Protocols" class="headerlink" title="3.4.2 Pipelined Reliable Data Transfer Protocols"></a>3.4.2 Pipelined Reliable Data Transfer Protocols</h4><p>A stop-and-wait protocol inn operation ‘s performance is poor.</p>
+<p>The solution to this particular performance problem is simple: Rather than operate in a stop-and-wait manner, the sender is allowed to send multiple packets without waiting for acknowledgments.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251318279.png"></p>
+<p>Pipelining has the following consequences for reliable data transfer protocols :</p>
+<ul>
+<li>The range of sequence numbers must be increased, since each in-transit packet must have a unique sequence number and there may be multiple, in-transit, unacknowledged packets.</li>
+<li>The sender and receiver sides of the protocols may have to buffer more than one packet. Minimally, the sender will have to buffer packets that have been transmitted but not yet acknowledged. Buffering of correctly received packets may also be needed at the receiver, as discussed below.</li>
+</ul>
+<h5 id="3-4-3-Go-Back-N-GBN"><a href="#3-4-3-Go-Back-N-GBN" class="headerlink" title="3.4.3 Go-Back-N (GBN)"></a>3.4.3 Go-Back-N (GBN)</h5><p>In a <strong>Go-Back-N (GBN) protocol</strong>, the sender is allowed to transmit multiple packets (when available) without waiting for an acknowledgment, but is constrained to have no more than some maximum allowable number, N, of unacknowledged packets in the pipeline. </p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251318949.png"></p>
+<p>Sequence numbers in the interval [0,base-1] correspond to packets that have already been transmitted and acknowledged.<br>The interval [base,nextseqnum-1] corresponds to packets that have been sent but not yet acknowledged.<br>Sequence numbers in the interval [nextseqnum,base+N-1] can be used for packets that can be sent immediately, should data arrive from the upper layer.<br>Finally, sequence numbers greater than or equal to base+N cannot be used until an unacknowledged packet currently in the pipeline has been acknowledged.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251319994.png"></p>
+<p>The GBN sender must respond to three types of events:</p>
+<ul>
+<li>Invocation from above.</li>
+<li>Receipt of an ACK.</li>
+<li>A timeout event.</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251319257.png"></p>
+<h5 id="3-4-4-Selective-Repeat-SR"><a href="#3-4-4-Selective-Repeat-SR" class="headerlink" title="3.4.4 Selective Repeat (SR)"></a>3.4.4 Selective Repeat (SR)</h5><p><strong>Selective-repeat protocols</strong> avoid unnecessary retransmissions by having the sender retransmit only those packets that it suspects were received in error (that is, were lost or corrupted) at the receiver. </p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251320799.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251320865.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251320839.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251320985.png"></p>
+<h4 id="3-5-Connection-Oriented-Transport-TCP"><a href="#3-5-Connection-Oriented-Transport-TCP" class="headerlink" title="3.5 Connection-Oriented Transport: TCP"></a>3.5 Connection-Oriented Transport: TCP</h4><h5 id="3-5-1-The-TCP-Connection"><a href="#3-5-1-The-TCP-Connection" class="headerlink" title="3.5.1 The TCP Connection"></a>3.5.1 The TCP Connection</h5><p>A TCP connection provides a full-duplex service.<br>A TCP connection is also always point-to-point.<br>A TCP connection consists of buffers, variables, and a socket connection to a process in one host, and another set of buffers, variables, and a socket connection to a process in another host. </p>
+<h5 id="3-5-2-TCP-Segment-Structure"><a href="#3-5-2-TCP-Segment-Structure" class="headerlink" title="3.5.2 TCP Segment Structure"></a>3.5.2 TCP Segment Structure</h5><ul>
+<li><strong>Source and destination port numbers</strong>, which are used for multiplexing&#x2F; demultiplexing data from&#x2F;to upper-layer applications.</li>
+<li>The 32-bit <strong>sequence number</strong> field and the 32-bit acknowledgment number field are used by the TCP sender and receiver in implementing a reliable data transfer service</li>
+<li>The 16-bit <strong>receive window</strong> field is used for flow control.</li>
+<li>The 4-bit <strong>header length</strong> field specifies the length of the TCP header in 32-bit words.</li>
+<li>The optional and variable-length <strong>options</strong> field is used when a sender and receiver negotiate the maximum segment size (MSS) or as a window scaling factor for use in high-speed networks.</li>
+<li>The <strong>ACK</strong> bit is used to indicate that the value carried in the acknowledgment field is valid.</li>
+<li>The <strong>RST, SYN, and FIN</strong> bits are used for connection setup and teardown.</li>
+<li>The <strong>CWR and ECE</strong> bits are used in explicit congestion notification.</li>
+<li>The <strong>PSH</strong> bit indicates that the receiver should pass the data to the upper layer immediately.</li>
+<li>The <strong>URG</strong> bit is used to indicate that there is data in this segment that the sending-side upperlayer entity has marked as “urgent.”</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251321872.png"></p>
+<h5 id="3-5-3-Round-Trip-Time-Estimation-and-Timeout"><a href="#3-5-3-Round-Trip-Time-Estimation-and-Timeout" class="headerlink" title="3.5.3 Round-Trip Time Estimation and Timeout"></a>3.5.3 Round-Trip Time Estimation and Timeout</h5><p>EstimatedRTT &#x3D; (1 – α) * EstimatedRTT + α * SampleRTT</p>
+<p>The formula above is written in the form of a programming-language statement—the new value of EstimatedRTT is a weighted combination of the previous value of EstimatedRTT and the new value for SampleRTT. The recommended value of α is α &#x3D; 0.125</p>
+<h5 id="3-5-4-Reliable-Data-Transfer"><a href="#3-5-4-Reliable-Data-Transfer" class="headerlink" title="3.5.4 Reliable Data Transfer"></a>3.5.4 Reliable Data Transfer</h5><p>How TCP provides reliable data transfer in two incremental steps. </p>
+<p>1.(simple) A TCP sender that uses only timeouts to recover from lost segments.</p>
+<ul>
+<li>Data received from application above : TCP receives data from the application, encapsulates the data in a segment, and passes the segment to IP.</li>
+<li>Timer timeout : TCP responds to the timeout event by retransmitting the segment that caused the timeout. TCP then restarts the timer.</li>
+<li>ACK receipt : TCP compares the ACK value y with its variable SendBase.</li>
+</ul>
+<p>2.(more complete) Use duplicate acknowledgments in addition to timeouts.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251322443.png"></p>
+<h5 id="3-5-5-Flow-Control"><a href="#3-5-5-Flow-Control" class="headerlink" title="3.5.5 Flow Control"></a>3.5.5 Flow Control</h5><p>TCP provides a flow-control service to its applications to eliminate the possibility of the sender overflowing the receiver’s buffer. </p>
+<h5 id="3-5-6-TCP-Connection-Management"><a href="#3-5-6-TCP-Connection-Management" class="headerlink" title="3.5.6 TCP Connection Management"></a>3.5.6 TCP Connection Management</h5><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251322083.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251323562.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251323248.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251323309.png"></p>
+<h4 id="3-6-Principles-of-Congestion-Control"><a href="#3-6-Principles-of-Congestion-Control" class="headerlink" title="3.6 Principles of Congestion Control"></a>3.6 Principles of Congestion Control</h4><h5 id="3-6-1-The-Causes-and-the-Costs-of-Congestion"><a href="#3-6-1-The-Causes-and-the-Costs-of-Congestion" class="headerlink" title="3.6.1 The Causes and the Costs of Congestion"></a>3.6.1 The Causes and the Costs of Congestion</h5><p><strong>Scenario 1 - Two Senders, a Router with Infinite Buffers</strong> :</p>
+<p>Two hosts (A and B) each have a connection that shares a single hop between source and destination</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251323685.png"></p>
+<p>Even in this (extremely) idealized scenario, we’ve already found one cost of a congested network—large queuing delays are experienced as the packet-arrival rate nears the link capacity.</p>
+<p><strong>Scenario 2 - Two Senders and a Router with Finite Buffers</strong> : </p>
+<p>First, the amount of router buffering is assumed to be finite.<br>Second, we assume that each connection is reliable.</p>
+<ul>
+<li>a. Whether or not a buffer is free in the router and thus sends a packet only when a buffer is free.</li>
+<li>b. The sender retransmits only when a packet is known for certain to be lost.</li>
+<li>c. The sender may time out prematurely and retransmit a packet that has been delayed in the queue but not yet lost.</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251324445.png"></p>
+<p><strong>Scenario 3 - Four Senders, Routers with Finite Buffers, and Multihop Paths</strong> :</p>
+<p>Four hosts transmit packets, each over overlapping two-hop paths, we again assume that each host uses a timeout&#x2F;retransmission mechanism to implement a reliable data transfer service, that all hosts have the same value of lin, and that all router links have capacity R bytes&#x2F;sec. </p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251324746.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251324567.png"></p>
+<h5 id="3-6-2-Approaches-to-Congestion-Control"><a href="#3-6-2-Approaches-to-Congestion-Control" class="headerlink" title="3.6.2 Approaches to Congestion Control"></a>3.6.2 Approaches to Congestion Control</h5><pre><code>- End-to-end congestion control
+- Network-assisted congestion control
+</code></pre>
+<h4 id="3-7-TCP-Congestion-Control"><a href="#3-7-TCP-Congestion-Control" class="headerlink" title="3.7 TCP Congestion Control"></a>3.7 TCP Congestion Control</h4><h5 id="3-7-1-Classic-TCP-Congestion-Control"><a href="#3-7-1-Classic-TCP-Congestion-Control" class="headerlink" title="3.7.1 Classic TCP Congestion Control"></a>3.7.1 Classic TCP Congestion Control</h5><p>The approach taken by TCP is to <strong>have each sender limit the rate</strong> at which it sends traffic into its connection as a function of perceived network congestion.<br>But raises three questions : </p>
+<p>Q1. How does a TCP sender limit the rate at which it sends traffic into its connection?<br>Q2. How does a TCP sender perceive that there is congestion on the path between itself and the destination?<br>Q3. What algorithm should the sender use to change its send rate as a function of perceived end-to-end congestion?</p>
+<p>A1. <strong>Congestion window</strong>, denoted cwnd, imposes a constraint on the rate at which a TCP sender can send traffic into the network. The amount of unacknowledged data at a sender may not exceed the minimum of cwnd and rwnd.<br>LastByteSent – LastByteAcked … min{cwnd, rwnd}<br>Thus the sender’s send rate is roughly cwnd&#x2F;RTT bytes&#x2F;sec. By adjusting the value of cwnd, the sender can therefore adjust the rate at which it sends data into its connection.<br>A2.When there is excessive congestion, then one (or more) router buffers along the path overflows, causing a datagram (containing a TCP segment) to be dropped. The dropped datagram, in turn, results in a loss event at the sender—either a timeout or the receipt of three duplicate ACKs—which is taken by the sender to be an indication of congestion on the sender-to-receiver path.<br>A3.</p>
+<ul>
+<li>A lost segment implies congestion, and hence, the TCP sender’s rate should be decreased when a segment is lost. </li>
+<li>An acknowledged segment indicates that the network is delivering the sender’s segments to the receiver, and hence, the sender’s rate can be increased when an ACK arrives for a previously unacknowledged segment. </li>
+<li>Bandwidth probing</li>
+</ul>
+<p><strong>TCP congestion-control algorithm</strong> :</p>
+<p><strong>1.Slow Start</strong> : When a TCP connection begins, the value of cwnd is typically initialized to a small value of 1 MSS, resulting in an initial sending rate of roughly MSS&#x2F; RTT.The TCP send rate starts slow but grows exponentially during the slow start phase.<br>If there is a loss event indicated by a timeout, the TCP sender sets the value of cwnd to 1 and begins the slow start process anew.Slow start may end is directly tied to the value of ssthresh.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251326255.png"></p>
+<p><strong>2.Congestion Avoidance</strong> : </p>
+<p>On entry to the congestion-avoidance state, rather than doubling the value of cwnd every RTT, TCP adopts a more conservative approach and increases the value of cwnd by just <strong>a single MSS every RTT</strong>.</p>
+<p><strong>3.Fast Recovery</strong> : </p>
+<p>In fast recovery, the value of cwnd is increased by 1 MSS for every duplicate ACK received for the missing segment that caused TCP to enter the fast-recovery state.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251326568.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251327105.png"></p>
+<p><strong>Additive-increase, multiplicative-decrease(AIMD)</strong> : linear(additive) increase in cwnd of 1MSS per RTT and then a halving(multiplicative decrease) of cwnd on a triple duplicate-ACK event.</p>
+<h5 id="3-7-2-Network-Assisted-Explicit-Congestion-Notification-and-Delayed-based-Congestion-Control"><a href="#3-7-2-Network-Assisted-Explicit-Congestion-Notification-and-Delayed-based-Congestion-Control" class="headerlink" title="3.7.2 Network-Assisted Explicit Congestion Notification and Delayed-based Congestion Control"></a>3.7.2 Network-Assisted Explicit Congestion Notification and Delayed-based Congestion Control</h5><p><strong>Explicit Congestion Notification</strong> : a congested router can set the congestion indication bit to signal congestion onset to senders before full buffers cause packets to be dropped at that router.<br>One setting of the ECN bits is used by a router to indicate that it (the router) is experiencing congestion.A second setting of the ECN bits is used by the sending host to inform routers that the sender and receiver are ECN-capable, and thus capable of taking action in response to ECN-indicated network congestion.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251327079.png"></p>
+<h5 id="3-7-3-Fairness"><a href="#3-7-3-Fairness" class="headerlink" title="3.7.3 Fairness"></a>3.7.3 Fairness</h5><p>If TCP is to share the link bandwidth equally between the two connections, then the realized throughput should fall along the 45-degree arrow (equal bandwidth share) emanating from the origin.</p>
+<h4 id="3-8-Evolution-of-Transport-Layer-Functionality"><a href="#3-8-Evolution-of-Transport-Layer-Functionality" class="headerlink" title="3.8 Evolution of Transport-Layer Functionality"></a>3.8 Evolution of Transport-Layer Functionality</h4><p><strong>QUIC - Quick UDP Internet Connections</strong> : is a new application-layer protocol designed from the ground up to improve the performance of transport-layer services for secure HTTP.</p>
+<ul>
+<li>Connection-Oriented and Secure.</li>
+<li>Streams.</li>
+<li>Reliable, TCP-friendly congestion-controlled data transfer.</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251328403.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202211251328540.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/17/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1288,203 +1518,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/30/Nand2Tetris-Part%20I%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="talentstream">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="南有青鸟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/08/30/Nand2Tetris-Part%20I%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">Nand2Tetris Part I 学习笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-08-30 18:53:32" itemprop="dateCreated datePublished" datetime="2022-08-30T18:53:32+08:00">2022-08-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-24 20:45:09" itemprop="dateModified" datetime="2022-09-24T20:45:09+08:00">2022-09-24</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>5.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>虽然坑开的很早，已经花了一周学完了Part I，但是两周过后还是没有写这篇博客，由于实在是太懒狗了。不过我也知道原因，毕竟学完一大部分再写博客总结，就会感觉到有好多东西要写，就没有动笔的勇气。这次算是填坑吧。以后尽量学一小部分就写一点，防止拖延。</p>
-<p>2022-08-30</p>
-<p>深感不能再摸，趁着翘课没事干把这坑填完吧，顺便权当复习。</p>
-<p>2022-9-23</p>
-<h3 id="Part-I-概述"><a href="#Part-I-概述" class="headerlink" title="Part I 概述"></a>Part I 概述</h3><p>Part I 主要讲的是硬件方面的内容，从最简单的原件Nand开始，然后到各种logic gates，再到更大的ALU和RAM到最后了解CPU，computer的构成。整体知识比较简单，也不需要门槛，只需要最基础的电路理解，即电源、开关、灯泡、并联、串联这些知识的理解就可以了。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220923140740.png" alt="img"></p>
-<p>上图应该就是全课程的大纲了。</p>
-<h3 id="Boolean-Logic"><a href="#Boolean-Logic" class="headerlink" title="Boolean Logic"></a>Boolean Logic</h3><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220923140837.png" alt="img"></p>
-<p>在第一节课，我们会快速学习基础的运算，比如Nand,And,Or,Not,Xor,还有一些And16等16位运算的，当然还有Mux,dMux等比较重要的逻辑。这门课的project就是用HDL语言去用除了本身的逻辑来推导逻辑。</p>
-<p>快速讲解一下各种逻辑吧。</p>
-<p><strong>And</strong> : 都为 1 结果为 1 ，否则为 0<br>即 if(a &#x3D;&#x3D; 1 &amp;&amp; b &#x3D;&#x3D; 1) out &#x3D; 1 else out &#x3D; 0</p>
-<p><strong>Or</strong> : 其中一位为 1 结果 为 1 , 否则为 0<br>即 if(a &#x3D;&#x3D; 1 || b &#x3D;&#x3D; 1 ) out &#x3D; 1 else out &#x3D; 0</p>
-<p><strong>Not</strong> : 取反，原为 1 ，则为 0 。 原为 0 ，则为 1</p>
-<p><strong>Nand</strong> : 与 And 反过来 即 a Nand b &#x3D; Not(a And b)</p>
-<p><strong>Xor</strong> : a 与 b 不相等时结果为 1 ， 否则为 0<br>即 if(a !&#x3D; b) out &#x3D; 1 else out &#x3D; 0</p>
-<p><strong>Mux</strong> : 翻译叫数据选择器，挺奇怪的，不过也差不多。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220923142113.png" alt="img"></p>
-<p>sel 作为参数，若为 0 ，则选前面的，为 1 则选后面的<br>即 if(sell &#x3D;&#x3D; 0) out &#x3D; a else out &#x3D; b</p>
-<p><strong>Dmux</strong> : 翻译叫多路输出器，不过我们就理解成反过来的Mux吧。</p>
-<p>if(sel &#x3D;&#x3D; 0 ) a &#x3D; in , b &#x3D; 0 else a &#x3D; 0 , b &#x3D; in </p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220923142600.png" alt="img"></p>
-<p>然后是多位的运算，Not16,And16,Or16,Mux16与之前没有差别。</p>
-<p><strong>Or8Way</strong> : 输入是in[8] out &#x3D; Or(in[0],in[1],..,in[7]) 即每一位相互Or一下得出的Out，可以用于判断这个数是不是 0 ，毕竟只要有一位是 1 的话结果一定是 1</p>
-<p><strong>Mux4Way16&amp;Mux8Way16</strong> : 更复杂的Mux，如果是4个数就由两个sel决定，8个数就由3个sel决定,即sel &#x3D; 000,001, or 111来决定out是 a~h</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220923142940.png" alt="img"></p>
-<p><strong>DMux4Way&amp;Dmux8Way</strong> : 更复杂的Dmux，原理与上一个一样</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220923143238.png" alt="img"></p>
-<p><strong>关于Project</strong> : 我会把解决方案放在github，同时网络上github有着各式各样的解决方案，并不唯一，这个project是让我们快速了解各种chip，如果看课没有看太明白，做完project可以基本明白。同时并不需要花太多脑子去想，大概了解一下，知道就可以了。</p>
-<h3 id="Boolean-Arithmetic"><a href="#Boolean-Arithmetic" class="headerlink" title="Boolean Arithmetic"></a>Boolean Arithmetic</h3><p>这一章大概讲的是关于Adder，即二进制加法的原理，以及ALU计算单元。二进制加法与十进制加法一模一样。</p>
-<p><strong>有符号的二进制</strong> : 最大位为1，计算法则即为-(2^n-视为无符号时二进制的结果)</p>
-<p>几条基本属性：1.范围处于 -2^n-1 到 2^n-1 - 1<br>2.正数最大位一定为 0<br>3.负数最大位一定为 1</p>
-<p><strong>Half-Adders</strong> : 半加器和全加器只考虑 1 位之间的运算，会得出当前位的结果和进位。</p>
-<p>a + b 后得到的二进制数，carry为最大位，sum为最小位，即carry为进位 </p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220923144324.png" alt="img"></p>
-<p><strong>Full-Adders</strong> : 全加器考虑了上一位算出的carry,原则还是一样的</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220923144707.png" alt="img"></p>
-<p><strong>Adder</strong> : 完整的加法，考虑每一位，可以用多个Full-Adders串联</p>
-<p><strong>Incrementer(Inc16)</strong> : 即类似i++的自增器 out &#x3D; in + 1</p>
-<p><strong>Arithmetic Logic Unit</strong> : ALU是CPU的计算单元，看起来还挺复杂的，不过我们只用了解一下就可以了，Project的时候我们可以边看边了解实现</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220923145011.png" alt="img"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220923145202.png" alt="img"></p>
-<p><strong>关于Project</strong> : 感觉也就只有ALU有点难度，需要花点时间考虑逻辑关系，不过慢慢细想看看参考就可以做出来，主要也只是熟练逻辑关系的建立，关于前面两章只是比较入门，了解就可以了的知识，后面的知识需要一些理解，不过Coursa上的老师讲的很细，做完project后基本上可以明白什么意思。</p>
-<h3 id="Memory"><a href="#Memory" class="headerlink" title="Memory"></a>Memory</h3><p>这一章大概就是讲一次tick-tock计算机时如何进行一次数据的变换，了解一些时序的chip就足够了。首先是了解最简单的data flip-flop(DFF)，这是所有记忆元件中最简单的组成，然后再了解一些registers，adrerssing,以及RAM的概念。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924150252.png" alt="img"></p>
-<p>前两章讲的是calssical logic，与时间不相关。但是存储离不开时间，所以这一章讲的是sequential logic。</p>
-<p><strong>DFF</strong> : out(t+1) &#x3D; in(t)</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924150550.png" alt="img"></p>
-<p><strong>Registers</strong> :if(load(t)) out(t+1) &#x3D; in(t) else out(t+1) &#x3D; out(t)<br>只进行一位字节运算的我们叫做bit，进行16位的我们叫做register，原理很简单，只要load(t)为真，那么下一次tick-tock存储的out就是这一次tick-tock的in</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924150921.png" alt="img"></p>
-<p><strong>RAMn(Random Access Memory)</strong> : 原理其实也很简单，其实就是由多个Register组成，最简单的RAM8是由8个Register组成，就是load为0则 out(t+1) &#x3D; out(t) 而load为1 则out(1) &#x3D; 其中一个Register的in(根据address)，如果做了作业的话理解会更清楚。从RAM8，到RAM64，RAM512，RAM4K都是一样的原理。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924151417.png" alt="img"></p>
-<p><strong>Counter（Program Counter)</strong> :Counter就是一个运算chip，要么自增，有么out(t+1) &#x3D; in(t)，同时尽管全为 1 ，它也只按照reset load inc 顺序进行判断，先到先得。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924151533.png" alt="img"></p>
-<p><strong>关于Project</strong> :其实RAM重复的比较多，而且整体比较简单，唯一难的可能是Counter吧，不过看下参考马上就能理解了，不用为project花费太多时间。</p>
-<h3 id="Machine-Language"><a href="#Machine-Language" class="headerlink" title="Machine Language"></a>Machine Language</h3><p>机器语言在这一Part可以不学，可以在Part II的时候学，不过对于Chapter 6 的作业学习是必要的，虽然不一定要编程完成一个简单编译器，但作为学cs的，还是写写比较好。这一章就是大概介绍hack machine language以及翻译成对应的01二进制。同时学习这个会对地址分配有一些更深的理解。</p>
-<h4 id="instructions"><a href="#instructions" class="headerlink" title="instructions"></a>instructions</h4><p><strong>Arithmetic and logical operations</strong> : 算术与逻辑运算即 + - And Or Not</p>
-<p><strong>Memory access</strong> : 内存访问，通常使用 address register 我们简称为A 。 如果我们打算RAM[17] &#x3D; 1, 即load A 17 ,load M 1讲到后面更详细的我们会理解这是什么意思的。</p>
-<p><strong>Flow control</strong> : 流控制，就不谈了，跟平常写代码一个逻辑</p>
-<p><strong>Symbols</strong> : 这里的符号我更愿意称为变量，道理感觉差不多</p>
-<h4 id="Hack-Machine-Language"><a href="#Hack-Machine-Language" class="headerlink" title="Hack Machine Language"></a>Hack Machine Language</h4><p><strong>Memory</strong> : Hack 使用两种记忆单元，data memory 和 instruction memory,前者存储二进制数据，后者存储程序指令，同样也是二进制 ，该二进制数以16位二进制表示。<br>data memory简称RAM，是一个可读可写的单元instruction memory简称ROM，是一个只读单元</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924153536.png" alt="img"></p>
-<p><strong>Registers</strong> : data register(D) , address register(A) , data memory register (M) , 这是机器语言比较重要的概念 。写明白程序应该要理解 D A M.<br>D 十分直白 ，寄存器，就是用来存储数据的，我认为他这是一个临时存储，就是为了来存入 M 或者存储从 M 中取出的数据。<br>A 存储地址。</p>
-<p><strong>Addressing</strong> : @xxx 让 A &#x3D; xxx 同时@xxx还有两种作用，第一，它使 M 此次选择的地址为xxx 即 M[xxx]。第二，它也是ROM指令所要操作的地址。、</p>
-<p><strong>Branching</strong> : 即分支，机器语言中没有if else 只能用loop 和goto模拟</p>
-<p><strong>Variables</strong> : 即变量 如果是 @count M &#x3D; M+1 那就是 RAM[count] &#x3D; RAM[count] + 1</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924155257.png" alt="img"></p>
-<p>@17 D &#x3D; A 是唯一获得常量的方法，这点是要特殊说明的，其他正常。还有一个 sum &#x3D; sum + x 需要说明，首先@sum D &#x3D; M 那么现在 D 存储的就是 RAM[sum] 然后再@x 这时 M 就是 RAM[x] 所以 D &#x3D; D + M 就是D &#x3D; D(RAM[sum]) + RAM[x] 然后再将D的数据存入RAM[sum]中</p>
-<p><strong>实现 1 加到 n</strong> :</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924155709.png" alt="img"></p>
-<p>里面有很多JMP,JGT什么的，这是属于C-instruction的东西，后面提及了再看这一个范例代码</p>
-<p><strong>hack instruction</strong> : 总的来说 ，机器语言分为两个主要instruction，一个是A- , 一个是 C- ,A以0为开头，C以111为开头，规则较多，个人认为随便看一下就可以了。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924155912.png" alt="img"></p>
-<p><strong>Symbols</strong> : 认识一些提前定义好的变量</p>
-<ul>
-<li>R0-R15 地址分别为0-15</li>
-<li>SP,LCL,ARG,THIS,THAT地址为0-4</li>
-<li>SCREEN，KBD分别为16384和24576</li>
-<li>Label symbols 使用了(xxx) xxx则为symbol</li>
-<li>Variable symbols 通常从地址16开始记</li>
-</ul>
-<p><strong>关于project</strong> : 作业就是写一些机器语言来实现简单功能，参考着例子基本上就能明白怎么写，我觉得难度甚至比前面几章还简单(</p>
-<h3 id="Computer-Architecture"><a href="#Computer-Architecture" class="headerlink" title="Computer Architecture"></a>Computer Architecture</h3><p>这章大概是过一下计组的框架，不会细讲，主要讲解冯诺伊曼架构以及具体实现。</p>
-<h4 id="von-Neumann-Architecture"><a href="#von-Neumann-Architecture" class="headerlink" title="von Neumann Architecture"></a>von Neumann Architecture</h4><p>下面这张图可以大概解释von-Neumann架构</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924200758.png" alt="img"></p>
-<p><strong>Memory</strong> : Memory就是之前花了一章来讲解的，主要分为Data memory 和 Instruction Memory ，在计算机中供CPU调用和存储</p>
-<p><strong>CPU</strong> : CPU 包含ALU，一堆registers和一个control units。</p>
-<p>然后我们来看看作为chip这些大的构件是如何运作的</p>
-<p><strong>CPU</strong> : CPU 从memory中读取inM(从RAM)和instruction(从ROM) 以及一个reset，if(reset &#x3D;&#x3D; 1) 重启程序 else 继续执行<br>然后会产生一系列结果, out address 和 write(给RAM), pc(给ROM)</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924201303.png" alt="img"></p>
-<p>如果instruction是A的话，CPU就会将instruction存进CPU中的A register里。如果是C-instruction的话，CPU就会让ALU进行计算，并且将结果写到(A,D,M)的子集中，如果C-instruction中其中一个dest是M的话，那么CPU的outM就为CPU中ALU的out，writeM则为 1 。否则 writeM 为 0 ,即不写入RAM中,outM任何结果都有可能。看了这段话可能并不知道CPU的内核时如何运行的。看着下图做完project就知道怎么运行的了。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202059.png" alt="img"></p>
-<p><strong>Instruction Memory</strong> : 看图应该很容易理解</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202202.png" alt="img"></p>
-<p><strong>Screen</strong> : screen 算是一个output设备，虽然现在还有很多output设备，但是我们只考虑简单方面</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202244.png" alt="img"></p>
-<p><strong>Keyboard</strong> : keyboard 也很简单，甚至没有图</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202359.png" alt="img"></p>
-<p><strong>Data Memory</strong> : 学习前面的Screen和keyboard几乎就铺垫完了，基本上只是对这个大chip进行排列组合</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202539.png" alt="img"></p>
-<p><strong>Computer</strong> : 到了最后计算机的组成，计算机这个chip就是用memory，cpu的chip组合而成</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202606.png" alt="img"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202704.png" alt="img"></p>
-<p><strong>关于project</strong> : 这一章的内容都比较简单，CPU的chip编写可能有些难点，看点参考就可以过了。而且算是一种浅科普吧，如果要对于计算机组成更了解的话可以看看CSAPP。</p>
-<h3 id="Assembler"><a href="#Assembler" class="headerlink" title="Assembler"></a>Assembler</h3><p>这一章大概就讲了下怎么从asm格式的机器语言转化为01十六位二进制。机器语言这里只包含一些要点，第一点是注意各种不同的instruction,A,C,L这三个，注意的是L的symbol地址位优先级是更高的。第二点是注意注释符号。第三点是注意静态变量的symbol。所以总结下来这里的程序运行是先扫一遍删除注释和增加L-instruction的symbol，然后再扫一遍将A-instruction和C-instruction翻译成01二进制</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>学的时候都是一些陌生的知识，需要一到两小时的适应，到后面才知道这些底层知识的好处。同时知识点不难，coursa上老师讲课也讲的好，虽然是看全英版本的，也能够听懂。基本上一个星期就能完成一个Part，不过我太鸽了，现在才着手写这篇blog，希望国庆前能完成Part II的blog</p>
-<p>2022-09-24</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1552,7 +1589,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1601,12 +1638,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">166k</span>
+    <span title="站点总字数">180k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:31</span>
+    <span title="站点阅读时长">2:43</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

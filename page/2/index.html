@@ -160,6 +160,199 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/30/Nand2Tetris-Part%20I%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="talentstream">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="南有青鸟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/30/Nand2Tetris-Part%20I%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">Nand2Tetris Part I 学习笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-30 18:53:32" itemprop="dateCreated datePublished" datetime="2022-08-30T18:53:32+08:00">2022-08-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-24 20:45:09" itemprop="dateModified" datetime="2022-09-24T20:45:09+08:00">2022-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>虽然坑开的很早，已经花了一周学完了Part I，但是两周过后还是没有写这篇博客，由于实在是太懒狗了。不过我也知道原因，毕竟学完一大部分再写博客总结，就会感觉到有好多东西要写，就没有动笔的勇气。这次算是填坑吧。以后尽量学一小部分就写一点，防止拖延。</p>
+<p>2022-08-30</p>
+<p>深感不能再摸，趁着翘课没事干把这坑填完吧，顺便权当复习。</p>
+<p>2022-9-23</p>
+<h3 id="Part-I-概述"><a href="#Part-I-概述" class="headerlink" title="Part I 概述"></a>Part I 概述</h3><p>Part I 主要讲的是硬件方面的内容，从最简单的原件Nand开始，然后到各种logic gates，再到更大的ALU和RAM到最后了解CPU，computer的构成。整体知识比较简单，也不需要门槛，只需要最基础的电路理解，即电源、开关、灯泡、并联、串联这些知识的理解就可以了。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220923140740.png" alt="img"></p>
+<p>上图应该就是全课程的大纲了。</p>
+<h3 id="Boolean-Logic"><a href="#Boolean-Logic" class="headerlink" title="Boolean Logic"></a>Boolean Logic</h3><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220923140837.png" alt="img"></p>
+<p>在第一节课，我们会快速学习基础的运算，比如Nand,And,Or,Not,Xor,还有一些And16等16位运算的，当然还有Mux,dMux等比较重要的逻辑。这门课的project就是用HDL语言去用除了本身的逻辑来推导逻辑。</p>
+<p>快速讲解一下各种逻辑吧。</p>
+<p><strong>And</strong> : 都为 1 结果为 1 ，否则为 0<br>即 if(a &#x3D;&#x3D; 1 &amp;&amp; b &#x3D;&#x3D; 1) out &#x3D; 1 else out &#x3D; 0</p>
+<p><strong>Or</strong> : 其中一位为 1 结果 为 1 , 否则为 0<br>即 if(a &#x3D;&#x3D; 1 || b &#x3D;&#x3D; 1 ) out &#x3D; 1 else out &#x3D; 0</p>
+<p><strong>Not</strong> : 取反，原为 1 ，则为 0 。 原为 0 ，则为 1</p>
+<p><strong>Nand</strong> : 与 And 反过来 即 a Nand b &#x3D; Not(a And b)</p>
+<p><strong>Xor</strong> : a 与 b 不相等时结果为 1 ， 否则为 0<br>即 if(a !&#x3D; b) out &#x3D; 1 else out &#x3D; 0</p>
+<p><strong>Mux</strong> : 翻译叫数据选择器，挺奇怪的，不过也差不多。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220923142113.png" alt="img"></p>
+<p>sel 作为参数，若为 0 ，则选前面的，为 1 则选后面的<br>即 if(sell &#x3D;&#x3D; 0) out &#x3D; a else out &#x3D; b</p>
+<p><strong>Dmux</strong> : 翻译叫多路输出器，不过我们就理解成反过来的Mux吧。</p>
+<p>if(sel &#x3D;&#x3D; 0 ) a &#x3D; in , b &#x3D; 0 else a &#x3D; 0 , b &#x3D; in </p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220923142600.png" alt="img"></p>
+<p>然后是多位的运算，Not16,And16,Or16,Mux16与之前没有差别。</p>
+<p><strong>Or8Way</strong> : 输入是in[8] out &#x3D; Or(in[0],in[1],..,in[7]) 即每一位相互Or一下得出的Out，可以用于判断这个数是不是 0 ，毕竟只要有一位是 1 的话结果一定是 1</p>
+<p><strong>Mux4Way16&amp;Mux8Way16</strong> : 更复杂的Mux，如果是4个数就由两个sel决定，8个数就由3个sel决定,即sel &#x3D; 000,001, or 111来决定out是 a~h</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220923142940.png" alt="img"></p>
+<p><strong>DMux4Way&amp;Dmux8Way</strong> : 更复杂的Dmux，原理与上一个一样</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220923143238.png" alt="img"></p>
+<p><strong>关于Project</strong> : 我会把解决方案放在github，同时网络上github有着各式各样的解决方案，并不唯一，这个project是让我们快速了解各种chip，如果看课没有看太明白，做完project可以基本明白。同时并不需要花太多脑子去想，大概了解一下，知道就可以了。</p>
+<h3 id="Boolean-Arithmetic"><a href="#Boolean-Arithmetic" class="headerlink" title="Boolean Arithmetic"></a>Boolean Arithmetic</h3><p>这一章大概讲的是关于Adder，即二进制加法的原理，以及ALU计算单元。二进制加法与十进制加法一模一样。</p>
+<p><strong>有符号的二进制</strong> : 最大位为1，计算法则即为-(2^n-视为无符号时二进制的结果)</p>
+<p>几条基本属性：1.范围处于 -2^n-1 到 2^n-1 - 1<br>2.正数最大位一定为 0<br>3.负数最大位一定为 1</p>
+<p><strong>Half-Adders</strong> : 半加器和全加器只考虑 1 位之间的运算，会得出当前位的结果和进位。</p>
+<p>a + b 后得到的二进制数，carry为最大位，sum为最小位，即carry为进位 </p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220923144324.png" alt="img"></p>
+<p><strong>Full-Adders</strong> : 全加器考虑了上一位算出的carry,原则还是一样的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220923144707.png" alt="img"></p>
+<p><strong>Adder</strong> : 完整的加法，考虑每一位，可以用多个Full-Adders串联</p>
+<p><strong>Incrementer(Inc16)</strong> : 即类似i++的自增器 out &#x3D; in + 1</p>
+<p><strong>Arithmetic Logic Unit</strong> : ALU是CPU的计算单元，看起来还挺复杂的，不过我们只用了解一下就可以了，Project的时候我们可以边看边了解实现</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220923145011.png" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220923145202.png" alt="img"></p>
+<p><strong>关于Project</strong> : 感觉也就只有ALU有点难度，需要花点时间考虑逻辑关系，不过慢慢细想看看参考就可以做出来，主要也只是熟练逻辑关系的建立，关于前面两章只是比较入门，了解就可以了的知识，后面的知识需要一些理解，不过Coursa上的老师讲的很细，做完project后基本上可以明白什么意思。</p>
+<h3 id="Memory"><a href="#Memory" class="headerlink" title="Memory"></a>Memory</h3><p>这一章大概就是讲一次tick-tock计算机时如何进行一次数据的变换，了解一些时序的chip就足够了。首先是了解最简单的data flip-flop(DFF)，这是所有记忆元件中最简单的组成，然后再了解一些registers，adrerssing,以及RAM的概念。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924150252.png" alt="img"></p>
+<p>前两章讲的是calssical logic，与时间不相关。但是存储离不开时间，所以这一章讲的是sequential logic。</p>
+<p><strong>DFF</strong> : out(t+1) &#x3D; in(t)</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924150550.png" alt="img"></p>
+<p><strong>Registers</strong> :if(load(t)) out(t+1) &#x3D; in(t) else out(t+1) &#x3D; out(t)<br>只进行一位字节运算的我们叫做bit，进行16位的我们叫做register，原理很简单，只要load(t)为真，那么下一次tick-tock存储的out就是这一次tick-tock的in</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924150921.png" alt="img"></p>
+<p><strong>RAMn(Random Access Memory)</strong> : 原理其实也很简单，其实就是由多个Register组成，最简单的RAM8是由8个Register组成，就是load为0则 out(t+1) &#x3D; out(t) 而load为1 则out(1) &#x3D; 其中一个Register的in(根据address)，如果做了作业的话理解会更清楚。从RAM8，到RAM64，RAM512，RAM4K都是一样的原理。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924151417.png" alt="img"></p>
+<p><strong>Counter（Program Counter)</strong> :Counter就是一个运算chip，要么自增，有么out(t+1) &#x3D; in(t)，同时尽管全为 1 ，它也只按照reset load inc 顺序进行判断，先到先得。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924151533.png" alt="img"></p>
+<p><strong>关于Project</strong> :其实RAM重复的比较多，而且整体比较简单，唯一难的可能是Counter吧，不过看下参考马上就能理解了，不用为project花费太多时间。</p>
+<h3 id="Machine-Language"><a href="#Machine-Language" class="headerlink" title="Machine Language"></a>Machine Language</h3><p>机器语言在这一Part可以不学，可以在Part II的时候学，不过对于Chapter 6 的作业学习是必要的，虽然不一定要编程完成一个简单编译器，但作为学cs的，还是写写比较好。这一章就是大概介绍hack machine language以及翻译成对应的01二进制。同时学习这个会对地址分配有一些更深的理解。</p>
+<h4 id="instructions"><a href="#instructions" class="headerlink" title="instructions"></a>instructions</h4><p><strong>Arithmetic and logical operations</strong> : 算术与逻辑运算即 + - And Or Not</p>
+<p><strong>Memory access</strong> : 内存访问，通常使用 address register 我们简称为A 。 如果我们打算RAM[17] &#x3D; 1, 即load A 17 ,load M 1讲到后面更详细的我们会理解这是什么意思的。</p>
+<p><strong>Flow control</strong> : 流控制，就不谈了，跟平常写代码一个逻辑</p>
+<p><strong>Symbols</strong> : 这里的符号我更愿意称为变量，道理感觉差不多</p>
+<h4 id="Hack-Machine-Language"><a href="#Hack-Machine-Language" class="headerlink" title="Hack Machine Language"></a>Hack Machine Language</h4><p><strong>Memory</strong> : Hack 使用两种记忆单元，data memory 和 instruction memory,前者存储二进制数据，后者存储程序指令，同样也是二进制 ，该二进制数以16位二进制表示。<br>data memory简称RAM，是一个可读可写的单元instruction memory简称ROM，是一个只读单元</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924153536.png" alt="img"></p>
+<p><strong>Registers</strong> : data register(D) , address register(A) , data memory register (M) , 这是机器语言比较重要的概念 。写明白程序应该要理解 D A M.<br>D 十分直白 ，寄存器，就是用来存储数据的，我认为他这是一个临时存储，就是为了来存入 M 或者存储从 M 中取出的数据。<br>A 存储地址。</p>
+<p><strong>Addressing</strong> : @xxx 让 A &#x3D; xxx 同时@xxx还有两种作用，第一，它使 M 此次选择的地址为xxx 即 M[xxx]。第二，它也是ROM指令所要操作的地址。、</p>
+<p><strong>Branching</strong> : 即分支，机器语言中没有if else 只能用loop 和goto模拟</p>
+<p><strong>Variables</strong> : 即变量 如果是 @count M &#x3D; M+1 那就是 RAM[count] &#x3D; RAM[count] + 1</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924155257.png" alt="img"></p>
+<p>@17 D &#x3D; A 是唯一获得常量的方法，这点是要特殊说明的，其他正常。还有一个 sum &#x3D; sum + x 需要说明，首先@sum D &#x3D; M 那么现在 D 存储的就是 RAM[sum] 然后再@x 这时 M 就是 RAM[x] 所以 D &#x3D; D + M 就是D &#x3D; D(RAM[sum]) + RAM[x] 然后再将D的数据存入RAM[sum]中</p>
+<p><strong>实现 1 加到 n</strong> :</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924155709.png" alt="img"></p>
+<p>里面有很多JMP,JGT什么的，这是属于C-instruction的东西，后面提及了再看这一个范例代码</p>
+<p><strong>hack instruction</strong> : 总的来说 ，机器语言分为两个主要instruction，一个是A- , 一个是 C- ,A以0为开头，C以111为开头，规则较多，个人认为随便看一下就可以了。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924155912.png" alt="img"></p>
+<p><strong>Symbols</strong> : 认识一些提前定义好的变量</p>
+<ul>
+<li>R0-R15 地址分别为0-15</li>
+<li>SP,LCL,ARG,THIS,THAT地址为0-4</li>
+<li>SCREEN，KBD分别为16384和24576</li>
+<li>Label symbols 使用了(xxx) xxx则为symbol</li>
+<li>Variable symbols 通常从地址16开始记</li>
+</ul>
+<p><strong>关于project</strong> : 作业就是写一些机器语言来实现简单功能，参考着例子基本上就能明白怎么写，我觉得难度甚至比前面几章还简单(</p>
+<h3 id="Computer-Architecture"><a href="#Computer-Architecture" class="headerlink" title="Computer Architecture"></a>Computer Architecture</h3><p>这章大概是过一下计组的框架，不会细讲，主要讲解冯诺伊曼架构以及具体实现。</p>
+<h4 id="von-Neumann-Architecture"><a href="#von-Neumann-Architecture" class="headerlink" title="von Neumann Architecture"></a>von Neumann Architecture</h4><p>下面这张图可以大概解释von-Neumann架构</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924200758.png" alt="img"></p>
+<p><strong>Memory</strong> : Memory就是之前花了一章来讲解的，主要分为Data memory 和 Instruction Memory ，在计算机中供CPU调用和存储</p>
+<p><strong>CPU</strong> : CPU 包含ALU，一堆registers和一个control units。</p>
+<p>然后我们来看看作为chip这些大的构件是如何运作的</p>
+<p><strong>CPU</strong> : CPU 从memory中读取inM(从RAM)和instruction(从ROM) 以及一个reset，if(reset &#x3D;&#x3D; 1) 重启程序 else 继续执行<br>然后会产生一系列结果, out address 和 write(给RAM), pc(给ROM)</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924201303.png" alt="img"></p>
+<p>如果instruction是A的话，CPU就会将instruction存进CPU中的A register里。如果是C-instruction的话，CPU就会让ALU进行计算，并且将结果写到(A,D,M)的子集中，如果C-instruction中其中一个dest是M的话，那么CPU的outM就为CPU中ALU的out，writeM则为 1 。否则 writeM 为 0 ,即不写入RAM中,outM任何结果都有可能。看了这段话可能并不知道CPU的内核时如何运行的。看着下图做完project就知道怎么运行的了。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202059.png" alt="img"></p>
+<p><strong>Instruction Memory</strong> : 看图应该很容易理解</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202202.png" alt="img"></p>
+<p><strong>Screen</strong> : screen 算是一个output设备，虽然现在还有很多output设备，但是我们只考虑简单方面</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202244.png" alt="img"></p>
+<p><strong>Keyboard</strong> : keyboard 也很简单，甚至没有图</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202359.png" alt="img"></p>
+<p><strong>Data Memory</strong> : 学习前面的Screen和keyboard几乎就铺垫完了，基本上只是对这个大chip进行排列组合</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202539.png" alt="img"></p>
+<p><strong>Computer</strong> : 到了最后计算机的组成，计算机这个chip就是用memory，cpu的chip组合而成</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202606.png" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20220924202704.png" alt="img"></p>
+<p><strong>关于project</strong> : 这一章的内容都比较简单，CPU的chip编写可能有些难点，看点参考就可以过了。而且算是一种浅科普吧，如果要对于计算机组成更了解的话可以看看CSAPP。</p>
+<h3 id="Assembler"><a href="#Assembler" class="headerlink" title="Assembler"></a>Assembler</h3><p>这一章大概就讲了下怎么从asm格式的机器语言转化为01十六位二进制。机器语言这里只包含一些要点，第一点是注意各种不同的instruction,A,C,L这三个，注意的是L的symbol地址位优先级是更高的。第二点是注意注释符号。第三点是注意静态变量的symbol。所以总结下来这里的程序运行是先扫一遍删除注释和增加L-instruction的symbol，然后再扫一遍将A-instruction和C-instruction翻译成01二进制</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>学的时候都是一些陌生的知识，需要一到两小时的适应，到后面才知道这些底层知识的好处。同时知识点不难，coursa上老师讲课也讲的好，虽然是看全英版本的，也能够听懂。基本上一个星期就能完成一个Part，不过我太鸽了，现在才着手写这篇blog，希望国庆前能完成Part II的blog</p>
+<p>2022-09-24</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/07/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2054,94 +2247,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/02/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="talentstream">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="南有青鸟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/08/02/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-08-02 13:42:04" itemprop="dateCreated datePublished" datetime="2022-08-02T13:42:04+08:00">2022-08-02</time>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>367</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2209,7 +2318,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -2258,12 +2367,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">166k</span>
+    <span title="站点总字数">180k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:31</span>
+    <span title="站点阅读时长">2:43</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
