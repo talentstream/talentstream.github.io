@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="参考资料网络层：控制层面 5 The Network Layer: Control Plane  5.2 Routing Algorithms3 way to classify routing algorithms : 1.centralized or decentralized 2.static or dynamic 3.load-sensitive or load-insensitive A">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计网：自顶向下方法-第五章 学习笔记">
+<meta property="og:url" content="http://example.com/2022/12/13/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="南有青鸟">
+<meta property="og:description" content="参考资料网络层：控制层面 5 The Network Layer: Control Plane  5.2 Routing Algorithms3 way to classify routing algorithms : 1.centralized or decentralized 2.static or dynamic 3.load-sensitive or load-insensitive A">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131024135.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131024170.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131028947.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131029418.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131030976.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131030872.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131031902.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131032029.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131032552.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131033554.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131033897.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131033505.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131033429.png">
+<meta property="article:published_time" content="2022-12-13T02:10:01.000Z">
+<meta property="article:modified_time" content="2022-12-13T02:36:56.719Z">
+<meta property="article:author" content="talentstream">
+<meta property="article:tag" content="英文">
+<meta property="article:tag" content="计网">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131024135.png">
+
+<link rel="canonical" href="http://example.com/2022/12/13/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>计网：自顶向下方法-第五章 学习笔记 | 南有青鸟</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">南有青鸟</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/13/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="talentstream">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="南有青鸟">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          计网：自顶向下方法-第五章 学习笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-13 10:10:01 / 修改时间：10:36:56" itemprop="dateCreated datePublished" datetime="2022-12-13T10:10:01+08:00">2022-12-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>8.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/jiahonghao2002/article/details/122938212">网络层：控制层面</a></p>
+<h3 id="5-The-Network-Layer-Control-Plane"><a href="#5-The-Network-Layer-Control-Plane" class="headerlink" title="5 The Network Layer: Control Plane"></a>5 The Network Layer: Control Plane</h3><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131024135.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131024170.png"></p>
+<h4 id="5-2-Routing-Algorithms"><a href="#5-2-Routing-Algorithms" class="headerlink" title="5.2 Routing Algorithms"></a>5.2 Routing Algorithms</h4><p>3 way to classify routing algorithms : 1.centralized or decentralized 2.static or dynamic 3.load-sensitive or load-insensitive</p>
+<p>A <strong>centralized routing algorithm</strong> computes the least-cost path between a source and destination using complete, global knowledge about the network. (LS)<br>In a <strong>decentralized routing algorithm</strong>, the calculation of the least-cost path is carried out in an iterative, distributed manner by the rooters. (DV)</p>
+<h5 id="5-2-1-The-Link-State-LS-Routing-Algorithm"><a href="#5-2-1-The-Link-State-LS-Routing-Algorithm" class="headerlink" title="5.2.1 The Link-State (LS) Routing Algorithm"></a>5.2.1 The Link-State (LS) Routing Algorithm</h5><p>Like Dijkstra</p>
+<p>One solution to prevent such oscillations is to mandate that link costs not depend on the amount of traffic carried - an unacceptable solution since one goal of routing is to avoid highly congested links. Another solution is to ensure that not all routers run the LS algorithm at the same time.</p>
+<h5 id="5-2-2-The-Distance-Vector-DV-Routing-Algorithm"><a href="#5-2-2-The-Distance-Vector-DV-Routing-Algorithm" class="headerlink" title="5.2.2 The Distance-Vector (DV) Routing Algorithm"></a>5.2.2 The Distance-Vector (DV) Routing Algorithm</h5><p>Like Bellman-Ford , it is distributed in that each node receives some information from one or more of its directly attached neighbors, performs a calculation, and then distributes the results of its calculation back to its neighbors.</p>
+<p>Count-to-infinity(死循环)</p>
+<p>A Comparison of LS and DV Routing Algorithms</p>
+<ul>
+<li><strong>Message complexity</strong>. LS requires each node to know the cost of each link in the network. This requires O(NE) messages to be sent. Also, whenever a link cost changes, the new link must be sent to all nodes.<br>DV requires message exchanges between directly connected neighbors at each iteration. When link costs change, the DV algorithm will propagate the results of the changed link cost only if the new link cost results in a changed least-cost path for one of the nodes attached to that link.</li>
+<li><strong>Speed of convergence</strong>. LS O(N^2) . DV(NE)</li>
+<li><strong>Robustness</strong>. LS is better</li>
+</ul>
+<h4 id="5-3-Intra-AS-Routing-in-the-Internet-OSPF"><a href="#5-3-Intra-AS-Routing-in-the-Internet-OSPF" class="headerlink" title="5.3 Intra-AS Routing in the Internet: OSPF"></a>5.3 Intra-AS Routing in the Internet: OSPF</h4><p>OSPF intra-AS</p>
+<p>In practice, this algorithm(LS &amp; DV) model and its view of a homogenous set of routers all executing the same routing algorithm simply because of the <strong>Scale</strong> and <strong>Administrative autonomy</strong>.</p>
+<p>Above problems can be solved by organizing routers into <strong>autonomous systems(ASs)</strong>, with each AS consisting of a group of routers that are under the same administrative control.<br>Routers within the same AS all run the same routing algorithm and have information about each other. </p>
+<p><strong>Open Shortest Path First(OSPF)</strong> is a link-state protocol that uses flooding of link-state information and a Dijkstra’s least-cost path algorithm. With OSPF, each router constructs a complete topological map of the entire autonomous system. With OSPF, a router broadcast routing information to all other routers in the autonomous system, not just to its neighboring routers.<br>Some of the advances embodied in OSPF include the following:</p>
+<ul>
+<li>Security.</li>
+<li>Multiple same-cost paths.</li>
+<li>Integrated support for unicast and multicast routing.</li>
+<li>Support for hierarchy within a single AS.</li>
+</ul>
+<h4 id="5-4-Routing-Among-the-ISPs-BGP"><a href="#5-4-Routing-Among-the-ISPs-BGP" class="headerlink" title="5.4 Routing Among the ISPs: BGP"></a>5.4 Routing Among the ISPs: BGP</h4><h5 id="5-4-1-The-Role-of-BGP"><a href="#5-4-1-The-Role-of-BGP" class="headerlink" title="5.4.1 The Role of BGP"></a>5.4.1 The Role of BGP</h5><p>BGP provides each router a means to: 1.Obtain prefix reachability information from neighboring ASs. 2.Determine the “best” routes to the prefixes.</p>
+<h5 id="5-4-2-Advertising-BGP-Route-Information"><a href="#5-4-2-Advertising-BGP-Route-Information" class="headerlink" title="5.4.2 Advertising BGP Route Information"></a>5.4.2 Advertising BGP Route Information</h5><p>For each AS, each router is either a <strong>gateway router</strong> or an <strong>internal router</strong>.<br><strong>A gateway router</strong> is a router on the edge of an AS that directly connects to one or more routers in other ASs.<br><strong>An internal router</strong> connects only to hosts and routers within its own AS.</p>
+<p>Each such TCP connection, along with all the BGP messages sent over the connection, is called <strong>a BGP connection</strong>.<br><strong>External BGP(eBGP)</strong> connection spans two ASs.<br><strong>Internal BGP(iBGP)</strong> connection session between routers in the same AS.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131028947.png"></p>
+<h5 id="5-4-3-Determining-the-Best-Routes"><a href="#5-4-3-Determining-the-Best-Routes" class="headerlink" title="5.4.3 Determining the Best Routes"></a>5.4.3 Determining the Best Routes</h5><p>When a router advertises a prefix across a BGP connection, it includes with the prefix several BGP attributes(<strong>AS-PATH &amp; NEXT-HOP</strong>)<br>The AS-PATH attribute contains the list of ASs through which the advertisement has passed.<br>The NEXT-HOP is the IP address of the router interface that begins the AS-PATH.<br>Each BGP route is written as a list with three components : 1.Next-HOP 2.AS-PATH 3.destination prefix.</p>
+<p><strong>Hot Potato Routing</strong> :  In this algorithm, the route chosen from among all possible routes is that route with the least cost to the NEXT-HOP router beginning that route.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131029418.png"></p>
+<p><strong>Route-Selection Algorithm</strong> : a more complicated algorithm that incorporates hot potato routing.<br>If there are two or more routes to the same prefix, then BGP sequentially invokes the following elimination rules until one route remains:<br>1.A route is assigned a local preference value as one of its attributes.The routes with the highest local preference values are selected.<br>2.From the remaining routes, the route with the shortest AS-PATH is selected.<br>3.From the remaining routes, hot potato routing is used, that is, the route with the closest NEXT-HOP router is selected.<br>4.If more than one route still remains, the router uses BGP identifiers to select the route.</p>
+<h5 id="5-4-4-IP-Anycast"><a href="#5-4-4-IP-Anycast" class="headerlink" title="5.4.4 IP-Anycast"></a>5.4.4 IP-Anycast</h5><p>BFP is often used to implement the IP-anycast service, which is commonly used in DNS.<br>When a user wants to access this replicated content, it is desirable to point the user to the “nearest” server with the replicated content. BGP’s route-selection algorithm provides an easy and natural mechanism for doing so.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131030976.png"></p>
+<p>Although the above CDN example nicely illustrates how IP-anycast can be used, in practice, CDNs generally choose not to use IP-anycast because BGP routing changes can result in different packets of the same TCP connection arriving at different instances of the Web server.<br>But IP-anycast is extensively used by the DNS system to direct DNS queries to the closest root DNS server. </p>
+<h4 id="5-5-The-SDN-Control-Plane"><a href="#5-5-The-SDN-Control-Plane" class="headerlink" title="5.5 The SDN Control Plane"></a>5.5 The SDN Control Plane</h4><p>Four key characteristics of an SDN architecture can be identified:</p>
+<ul>
+<li>Flow-based forwarding.</li>
+<li>Separation of data plane and control plane.</li>
+<li>Network control functions: external to data-plane switch.</li>
+<li>A programmable network.</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131030872.png"></p>
+<h5 id="5-5-1-The-SDN-Control-Plane-SDN-Controller-and-SDN-Network-control-Applications"><a href="#5-5-1-The-SDN-Control-Plane-SDN-Controller-and-SDN-Network-control-Applications" class="headerlink" title="5.5.1 The SDN Control Plane: SDN Controller and SDN Network-control Applications"></a>5.5.1 The SDN Control Plane: SDN Controller and SDN Network-control Applications</h5><ul>
+<li><strong>A communication layer</strong>: communicating between the SDN controller and controlled network devices. </li>
+<li><strong>A network-wide state-management layer</strong>. Collect info.</li>
+<li><strong>The interface to the network-control application layer</strong>. This API allows network-control application to read&#x2F;write network state and flow tables within the state-management layer.</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131031902.png"></p>
+<h5 id="5-5-2-OpenFlow-Protocol"><a href="#5-5-2-OpenFlow-Protocol" class="headerlink" title="5.5.2 OpenFlow Protocol"></a>5.5.2 OpenFlow Protocol</h5><p>Among the important messages flowing <strong>from the controller to the controlled switch</strong> are the following:</p>
+<ul>
+<li>Configuration</li>
+<li>Modify-State</li>
+<li>Read-State</li>
+<li>Send-Packet</li>
+</ul>
+<p>Among the messages flowing <strong>from the SDN-controlled switch to the controller</strong> are the following:</p>
+<ul>
+<li>Flow-Removed</li>
+<li>Port-status</li>
+<li>Packet-in</li>
+</ul>
+<h5 id="5-5-3-Data-and-Control-Plane-Interaction-An-Example"><a href="#5-5-3-Data-and-Control-Plane-Interaction-An-Example" class="headerlink" title="5.5.3 Data and Control Plane Interaction: An Example"></a>5.5.3 Data and Control Plane Interaction: An Example</h5><ol>
+<li>Switch s1, experiencing a link failure between itself and s2, notifies the SDN controller of the link-state change using the OpenFlow port-status message. </li>
+<li>The SDN controller receives the OpenFlow message indicating the link-state change, and notifies the link-state manager, which updates a link-state database. </li>
+<li>The network-control application that implements Dijkstra’s link-state routing has previously registered to be notified when link state changes. That application receives the notification of the link-state change. </li>
+<li>The link-state routing application interacts with the link-state manager to get updated link state; it might also consult other components in the state-management layer. It then computes the new least-cost paths. </li>
+<li>The link-state routing application then interacts with the flow table manager, which determines the flow tables to be updated. </li>
+<li>The flow table manager then uses the OpenFlow protocol to update flow table entries at affected switches—s1 (which will now route packets destined to s2 via s4), s2 (which will now begin receiving packets from s1 via intermediate switch s4), and s4 (which must now forward packets from s1 destined to s2).</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131032029.png"></p>
+<h4 id="5-6-ICMP-The-Internet-Control-Message-Protocol"><a href="#5-6-ICMP-The-Internet-Control-Message-Protocol" class="headerlink" title="5.6 ICMP: The Internet Control Message Protocol"></a>5.6 ICMP: The Internet Control Message Protocol</h4><p>ICMP is used by hosts and routers to communicate network-layer information to each other. The most typical use of ICMP is for error reporting.<br>ICMP is often considered part of IP, but architecturally it lies just above IP, as ICMP messages are carried inside IP datagrams.<br>ICMP messages have a type and a code field, and contain the header and the first 8 bytes of the IP datagram that caused the ICMP message to be generated in the first place.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131032552.png"></p>
+<h4 id="5-7-Network-Management-and-SNMP-NETCONF-x2F-YANG"><a href="#5-7-Network-Management-and-SNMP-NETCONF-x2F-YANG" class="headerlink" title="5.7 Network Management and SNMP, NETCONF&#x2F;YANG"></a>5.7 Network Management and SNMP, NETCONF&#x2F;YANG</h4><p>Network management includes the deployment, integration, and coordination of the hardware, software, and human elements to monitor, test, poll, configure, analyze, evaluate, and control the network and element resources to meet the real-time, operational performance, and Quality of Service requirements at a reasonable cost</p>
+<h5 id="5-7-1-The-Network-Management-Framework"><a href="#5-7-1-The-Network-Management-Framework" class="headerlink" title="5.7.1 The Network Management Framework"></a>5.7.1 The Network Management Framework</h5><ul>
+<li>Managing server.</li>
+<li>Managed device.</li>
+<li>Data.</li>
+<li>Network management agent.</li>
+<li>Network management protocol.</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131033554.png"></p>
+<p>Three commonly used way to manage the network</p>
+<ul>
+<li>CLI(Command Line Interface)</li>
+<li>SNMP(Simple Network Management Protocol)&#x2F;MIB(Management Information Base)</li>
+<li>NETCONF&#x2F;YANG</li>
+</ul>
+<h5 id="5-7-2-The-Simple-Network-Management-Protocol-SNMP-and-the-Management-Information-Base-MIB"><a href="#5-7-2-The-Simple-Network-Management-Protocol-SNMP-and-the-Management-Information-Base-MIB" class="headerlink" title="5.7.2 The Simple Network Management Protocol (SNMP) and the Management Information Base (MIB)"></a>5.7.2 The Simple Network Management Protocol (SNMP) and the Management Information Base (MIB)</h5><p>The most common usage of SNMP is in a request-response mode in which an SNMP managing server sends a request to an SNMP agent, who receives the request, performs some action, and sends a reply to the request.<br>The second common usage of SNMP is for an agent to send an unsolicited message, known as a trap message, to a managing server.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131033897.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131033505.png"></p>
+<h5 id="5-7-3-The-Network-Configuration-Protocol-NETCONF-and-YANG"><a href="#5-7-3-The-Network-Configuration-Protocol-NETCONF-and-YANG" class="headerlink" title="5.7.3 The Network Configuration Protocol (NETCONF) and YANG"></a>5.7.3 The Network Configuration Protocol (NETCONF) and YANG</h5><p>The NETCONF protocol operates between the managing server and the managed network devices, providing messaging<br>(i) to retrieve, set, and modify configuration data at managed devices;<br>(ii) to query operational data and statistics at managed devices;<br>(iii) to subscribe to notifications generated by managed devices. </p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131033429.png"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%8B%B1%E6%96%87/" rel="tag"># 英文</a>
+              <a href="/tags/%E8%AE%A1%E7%BD%91/" rel="tag"># 计网</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/11/25/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="计网：自顶向下方法-第三章 学习笔记">
+      <i class="fa fa-chevron-left"></i> 计网：自顶向下方法-第三章 学习笔记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/13/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="next" title="计网：自顶向下方法-第四章 学习笔记">
+      计网：自顶向下方法-第四章 学习笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">1.</span> <span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-The-Network-Layer-Control-Plane"><span class="nav-number">2.</span> <span class="nav-text">5 The Network Layer: Control Plane</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-Routing-Algorithms"><span class="nav-number">2.1.</span> <span class="nav-text">5.2 Routing Algorithms</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#5-2-1-The-Link-State-LS-Routing-Algorithm"><span class="nav-number">2.1.1.</span> <span class="nav-text">5.2.1 The Link-State (LS) Routing Algorithm</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-2-2-The-Distance-Vector-DV-Routing-Algorithm"><span class="nav-number">2.1.2.</span> <span class="nav-text">5.2.2 The Distance-Vector (DV) Routing Algorithm</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-Intra-AS-Routing-in-the-Internet-OSPF"><span class="nav-number">2.2.</span> <span class="nav-text">5.3 Intra-AS Routing in the Internet: OSPF</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-4-Routing-Among-the-ISPs-BGP"><span class="nav-number">2.3.</span> <span class="nav-text">5.4 Routing Among the ISPs: BGP</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#5-4-1-The-Role-of-BGP"><span class="nav-number">2.3.1.</span> <span class="nav-text">5.4.1 The Role of BGP</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-4-2-Advertising-BGP-Route-Information"><span class="nav-number">2.3.2.</span> <span class="nav-text">5.4.2 Advertising BGP Route Information</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-4-3-Determining-the-Best-Routes"><span class="nav-number">2.3.3.</span> <span class="nav-text">5.4.3 Determining the Best Routes</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-4-4-IP-Anycast"><span class="nav-number">2.3.4.</span> <span class="nav-text">5.4.4 IP-Anycast</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-5-The-SDN-Control-Plane"><span class="nav-number">2.4.</span> <span class="nav-text">5.5 The SDN Control Plane</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#5-5-1-The-SDN-Control-Plane-SDN-Controller-and-SDN-Network-control-Applications"><span class="nav-number">2.4.1.</span> <span class="nav-text">5.5.1 The SDN Control Plane: SDN Controller and SDN Network-control Applications</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-5-2-OpenFlow-Protocol"><span class="nav-number">2.4.2.</span> <span class="nav-text">5.5.2 OpenFlow Protocol</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-5-3-Data-and-Control-Plane-Interaction-An-Example"><span class="nav-number">2.4.3.</span> <span class="nav-text">5.5.3 Data and Control Plane Interaction: An Example</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-6-ICMP-The-Internet-Control-Message-Protocol"><span class="nav-number">2.5.</span> <span class="nav-text">5.6 ICMP: The Internet Control Message Protocol</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-7-Network-Management-and-SNMP-NETCONF-x2F-YANG"><span class="nav-number">2.6.</span> <span class="nav-text">5.7 Network Management and SNMP, NETCONF&#x2F;YANG</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#5-7-1-The-Network-Management-Framework"><span class="nav-number">2.6.1.</span> <span class="nav-text">5.7.1 The Network Management Framework</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-7-2-The-Simple-Network-Management-Protocol-SNMP-and-the-Management-Information-Base-MIB"><span class="nav-number">2.6.2.</span> <span class="nav-text">5.7.2 The Simple Network Management Protocol (SNMP) and the Management Information Base (MIB)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-7-3-The-Network-Configuration-Protocol-NETCONF-and-YANG"><span class="nav-number">2.6.3.</span> <span class="nav-text">5.7.3 The Network Configuration Protocol (NETCONF) and YANG</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="talentstream"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">talentstream</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022-08 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">talentstream</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">194k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:56</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

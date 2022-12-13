@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="参考资料71张图详解IP 地址、IP 路由、分片和重组、三层转发、ARP、ICMP - 知乎 (zhihu.com)  4.1 Overview of Network LayerThe primary data-plane role of each router is to forward datagrams from its  input links to its output links.Th">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计网：自顶向下方法-第四章 学习笔记">
+<meta property="og:url" content="http://example.com/2022/12/13/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="南有青鸟">
+<meta property="og:description" content="参考资料71张图详解IP 地址、IP 路由、分片和重组、三层转发、ARP、ICMP - 知乎 (zhihu.com)  4.1 Overview of Network LayerThe primary data-plane role of each router is to forward datagrams from its  input links to its output links.Th">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131038477.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131039717.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131042710.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131043196.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131043780.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131044901.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131045221.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131045592.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131045108.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131045440.png">
+<meta property="article:published_time" content="2022-12-13T02:35:10.000Z">
+<meta property="article:modified_time" content="2022-12-13T02:46:47.188Z">
+<meta property="article:author" content="talentstream">
+<meta property="article:tag" content="英文">
+<meta property="article:tag" content="计网">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131038477.png">
+
+<link rel="canonical" href="http://example.com/2022/12/13/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>计网：自顶向下方法-第四章 学习笔记 | 南有青鸟</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">南有青鸟</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/13/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="talentstream">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="南有青鸟">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          计网：自顶向下方法-第四章 学习笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-13 10:35:10 / 修改时间：10:46:47" itemprop="dateCreated datePublished" datetime="2022-12-13T10:35:10+08:00">2022-12-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/363651969">71张图详解IP 地址、IP 路由、分片和重组、三层转发、ARP、ICMP - 知乎 (zhihu.com)
+</a></p>
+<h4 id="4-1-Overview-of-Network-Layer"><a href="#4-1-Overview-of-Network-Layer" class="headerlink" title="4.1 Overview of Network Layer"></a>4.1 Overview of Network Layer</h4><p>The primary data-plane role of each router is to forward datagrams from its  input links to its output links.<br>The primary role of the network control plane is to coordinate these local, per-router forwarding actions so that datagrams are ultimately transferred end-to-end, along paths of routers between source and destination hosts.</p>
+<h5 id="4-1-1-Forwarding-and-Routing-The-Data-and-Control-Planes"><a href="#4-1-1-Forwarding-and-Routing-The-Data-and-Control-Planes" class="headerlink" title="4.1.1 Forwarding and Routing: The Data and Control Planes"></a>4.1.1 Forwarding and Routing: The Data and Control Planes</h5><p>The primary role of the network layer is deceptively simple—to move packets from a sending host to a receiving host.</p>
+<ul>
+<li>Forwarding : When a packet arrives at a router’s input link, the router must move the packet to the appropriate output link. Refers to the router-local action of transferring a packet from an input link interface to the appropriate output link interface.</li>
+<li>Routing : The network layer must determine the route or path taken by packets as they flow from a sender to a receiver. Refers to the network-wide process that determines the end-to-end paths that packets take from source to destination.</li>
+</ul>
+<p>Forwarding table, SDN</p>
+<h5 id="4-1-2-Network-Service-Model"><a href="#4-1-2-Network-Service-Model" class="headerlink" title="4.1.2 Network Service Model"></a>4.1.2 Network Service Model</h5><p>Some possible services :</p>
+<ul>
+<li>Guaranteed delivery</li>
+<li>Guaranteed delivery with bounded delay</li>
+<li>In-order packet delivery</li>
+<li>Guaranteed minimal bandwidth</li>
+<li>Security</li>
+</ul>
+<h4 id="4-2-What’s-Inside-a-Router"><a href="#4-2-What’s-Inside-a-Router" class="headerlink" title="4.2 What’s Inside a Router?"></a>4.2 What’s Inside a Router?</h4><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131038477.png"></p>
+<ul>
+<li><strong>Input ports</strong>. 1.It performs the physical layer function of terminating an incoming physical ink at a router. 2.It performs link-layer functions needed to interoperate with the link layer at the other side of the incoming link.</li>
+<li><strong>Switching fabric</strong>. It connects the router’s input ports to its output ports.</li>
+<li><strong>Output ports</strong>. It stores packets received from the switching fabric and transmits these packets on the outgoing link by performing the necessary link-layer and physical-layer functions.</li>
+<li><strong>Routing processor</strong>. 1.In traditional routers, it executes the routing protocols, maintains routing tables and attached link state information, and computes the forwarding table for the router. 2.In SDN routers, the routing processor is responsible for communicating with the remote controller in order to receive forwarding table entries computed by the remote controller, and install these entries in the router’s input ports.</li>
+</ul>
+<h5 id="4-2-1-Input-Port-Processing-and-Destination-Based-Forwarding"><a href="#4-2-1-Input-Port-Processing-and-Destination-Based-Forwarding" class="headerlink" title="4.2.1 Input Port Processing and Destination-Based Forwarding"></a>4.2.1 Input Port Processing and Destination-Based Forwarding</h5><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131039717.png"></p>
+<p>The <strong>line-termination</strong> and <strong>link-layer processing</strong> implement the physical and link layers for that individual input link.<br>The <strong>lookup</strong> that the router uses the forwarding table to look up the output port to which an arriving packet will be forwarded via the switching fabric.</p>
+<p>With this style of forwarding table, the router matches a <strong>prefix</strong> of the packet’s destination address with the entries in the table; if there’s a match, the router forwards the packet to a link associated with the match.<br>When there are multiple matches, the router<br>uses the <strong>longest prefix matching rule</strong>;</p>
+<h5 id="4-2-2-Switching"><a href="#4-2-2-Switching" class="headerlink" title="4.2.2 Switching"></a>4.2.2 Switching</h5><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131042710.png"></p>
+<ul>
+<li><strong>Switching via memory</strong>. An input port with an arriving packet first signaled the routing processor via an interrupt. The packet was then copied from the input port into processor memory. The routing processor then extracted the destination address from the header, looked up the appropriate output port in the forwarding table, and copied the packet to the output port’s buffers.</li>
+<li><strong>Switching via a bus</strong>. An input port transfers a packet directly to the output port over a shared bus, without intervention by the routing processor. All output ports receive the packet, but only the port that matches the label will keep the packet</li>
+<li><strong>Switching via an interconnection network</strong>.</li>
+</ul>
+<h5 id="4-2-3-Output-Port-Processing"><a href="#4-2-3-Output-Port-Processing" class="headerlink" title="4.2.3 Output Port Processing"></a>4.2.3 Output Port Processing</h5><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131043196.png"></p>
+<h5 id="4-2-4-Where-Does-Queuing-Occur"><a href="#4-2-4-Where-Does-Queuing-Occur" class="headerlink" title="4.2.4 Where Does Queuing Occur?"></a>4.2.4 Where Does Queuing Occur?</h5><p><strong>Input Queueing</strong> : packets must join input porty queues to wait their turn to be transferred through the switching fabric to the output port.<br>Head-of-the-line(HOL) blocking in an input-queued switch - a queued packet in an input queue must wait for transfer through the fabric head of the line.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131043780.png"></p>
+<p><strong>Output Queueing</strong> : When there is not enough memory to buffer an incoming packet, a decision must be made to either drop the arriving packet (a policy known as drop-tail) or remove one or more already-queued packets to make room for the newly arrived packet.</p>
+<h5 id="4-2-5-Packet-Scheduling"><a href="#4-2-5-Packet-Scheduling" class="headerlink" title="4.2.5 Packet Scheduling"></a>4.2.5 Packet Scheduling</h5><p>FIFO, Priority Queuing, Round Robin, Weighted Fair Queuing(WFQ)</p>
+<h4 id="4-3-The-Internet-Protocol-IP-IPv4-Addressing-IPv6-and-More"><a href="#4-3-The-Internet-Protocol-IP-IPv4-Addressing-IPv6-and-More" class="headerlink" title="4.3 The Internet Protocol (IP): IPv4, Addressing, IPv6, and More"></a>4.3 The Internet Protocol (IP): IPv4, Addressing, IPv6, and More</h4><h5 id="4-3-1-IPv4-Datagram-Format"><a href="#4-3-1-IPv4-Datagram-Format" class="headerlink" title="4.3.1 IPv4 Datagram Format"></a>4.3.1 IPv4 Datagram Format</h5><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131044901.png"></p>
+<ul>
+<li>Version number. These 4 bits specify the IP protocol version of the datagram.</li>
+<li>Header length. These 4 bits are needed to determine where in the IP datagram the payload actually begins.</li>
+<li>Type of service. To allow different types of IP datagrams to be distinguished from each other.</li>
+<li>Datagram length. This is the total length of the IP datagram, measured in bytes.</li>
+<li>Identifier, flags, fragmentation offset. These three fields have to do with so-called IP fragmentation, when a large IP datagram is broken into several smaller IP datagrams which are then forwarded independently to the destination, where they are reassembled before their payload data (see below) is passed up to the transport layer at the destination host.</li>
+<li>Time-to-live. The time-to-live (TTL) field is included to ensure that datagrams do not circulate forever (due to, for example, a long-lived routing loop) in the network.</li>
+<li>Protocol. This field is typically used only when an IP datagram reaches its final destination. The value of this field indicates the specific transport-layer protocol to which the data portion of this IP datagram should be passed.</li>
+<li>Header checksum. The header checksum aids a router in detecting bit errors in a received IP datagram.</li>
+<li>Source and destination IP addresses.</li>
+<li>Options. The options fields allow an IP header to be extended. </li>
+<li>Data.</li>
+</ul>
+<h5 id="4-3-2-IPv4-Addressing"><a href="#4-3-2-IPv4-Addressing" class="headerlink" title="4.3.2 IPv4 Addressing"></a>4.3.2 IPv4 Addressing</h5><p>To determine the subnets, detach each interface from its host or router, creating islands of isolated networks, with interfaces terminating the end points of the isolated networks. Each of these isolated networks is called a <strong>subnet</strong>.</p>
+<p><strong>Classless Interdomain Routing(CIDR)</strong>, is an IP addressing scheme that improve the allocation of IP addresses. It replaces the old system based on classes A, B, and C. This scheme also helped greatly extend the life of IPv4 as well as slow the growth of routing tables.</p>
+<p><strong>Dynamic Host Configuration Protocol(DHCP)</strong> allows a host to obtain an IP address automatically.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131045221.png"></p>
+<h5 id="4-3-3-Network-Address-Translation-NAT"><a href="#4-3-3-Network-Address-Translation-NAT" class="headerlink" title="4.3.3 Network Address Translation (NAT)"></a>4.3.3 Network Address Translation (NAT)</h5><p>NAT enables the conversions between private network and realm with private address.</p>
+<h5 id="4-3-4-IPv6"><a href="#4-3-4-IPv6" class="headerlink" title="4.3.4 IPv6"></a>4.3.4 IPv6</h5><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131045592.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131045108.png"></p>
+<h4 id="4-4-Generalized-Forwarding-and-SDN"><a href="#4-4-Generalized-Forwarding-and-SDN" class="headerlink" title="4.4 Generalized Forwarding and SDN"></a>4.4 Generalized Forwarding and SDN</h4><p>“match(looking up a destination IP address) plus action(sending the packet into the switching fabric to the specified output port) “ </p>
+<p>Flow table : </p>
+<ul>
+<li>A set of header field values to which an incoming packet will be matched.</li>
+<li>A set of counters that are updated as packets are matched to flow table entries.</li>
+<li>A set of actions to be taken when a packet matches a flow table entry.</li>
+</ul>
+<h5 id="4-4-1-Match"><a href="#4-4-1-Match" class="headerlink" title="4.4.1 Match"></a>4.4.1 Match</h5><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131045440.png"></p>
+<h5 id="4-4-2-Action"><a href="#4-4-2-Action" class="headerlink" title="4.4.2 Action"></a>4.4.2 Action</h5><p>Actions’ list :<br>    - Forwarding<br>    - Dropping<br>    - Modify-field </p>
+<h4 id="4-5-Middleboxes"><a href="#4-5-Middleboxes" class="headerlink" title="4.5 Middleboxes"></a>4.5 Middleboxes</h4><p>Middleboxes which defines as “any intermediary box performing functions apart from normal, standard functions of an IP router on the data path between a source host and destination host”</p>
+<p>Middleboxes 3 services : 1.NAT Translation 2.Security Services 3.Performance Enhancement</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%8B%B1%E6%96%87/" rel="tag"># 英文</a>
+              <a href="/tags/%E8%AE%A1%E7%BD%91/" rel="tag"># 计网</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/13/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="计网：自顶向下方法-第五章 学习笔记">
+      <i class="fa fa-chevron-left"></i> 计网：自顶向下方法-第五章 学习笔记
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">1.</span> <span class="nav-text">参考资料</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-Overview-of-Network-Layer"><span class="nav-number">1.1.</span> <span class="nav-text">4.1 Overview of Network Layer</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-1-1-Forwarding-and-Routing-The-Data-and-Control-Planes"><span class="nav-number">1.1.1.</span> <span class="nav-text">4.1.1 Forwarding and Routing: The Data and Control Planes</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-1-2-Network-Service-Model"><span class="nav-number">1.1.2.</span> <span class="nav-text">4.1.2 Network Service Model</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-What%E2%80%99s-Inside-a-Router"><span class="nav-number">1.2.</span> <span class="nav-text">4.2 What’s Inside a Router?</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-2-1-Input-Port-Processing-and-Destination-Based-Forwarding"><span class="nav-number">1.2.1.</span> <span class="nav-text">4.2.1 Input Port Processing and Destination-Based Forwarding</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-2-2-Switching"><span class="nav-number">1.2.2.</span> <span class="nav-text">4.2.2 Switching</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-2-3-Output-Port-Processing"><span class="nav-number">1.2.3.</span> <span class="nav-text">4.2.3 Output Port Processing</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-2-4-Where-Does-Queuing-Occur"><span class="nav-number">1.2.4.</span> <span class="nav-text">4.2.4 Where Does Queuing Occur?</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-2-5-Packet-Scheduling"><span class="nav-number">1.2.5.</span> <span class="nav-text">4.2.5 Packet Scheduling</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-The-Internet-Protocol-IP-IPv4-Addressing-IPv6-and-More"><span class="nav-number">1.3.</span> <span class="nav-text">4.3 The Internet Protocol (IP): IPv4, Addressing, IPv6, and More</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-3-1-IPv4-Datagram-Format"><span class="nav-number">1.3.1.</span> <span class="nav-text">4.3.1 IPv4 Datagram Format</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-3-2-IPv4-Addressing"><span class="nav-number">1.3.2.</span> <span class="nav-text">4.3.2 IPv4 Addressing</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-3-3-Network-Address-Translation-NAT"><span class="nav-number">1.3.3.</span> <span class="nav-text">4.3.3 Network Address Translation (NAT)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-3-4-IPv6"><span class="nav-number">1.3.4.</span> <span class="nav-text">4.3.4 IPv6</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-Generalized-Forwarding-and-SDN"><span class="nav-number">1.4.</span> <span class="nav-text">4.4 Generalized Forwarding and SDN</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-1-Match"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.4.1 Match</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-2-Action"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.4.2 Action</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-5-Middleboxes"><span class="nav-number">1.5.</span> <span class="nav-text">4.5 Middleboxes</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="talentstream"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">talentstream</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022-08 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">talentstream</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">194k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:56</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

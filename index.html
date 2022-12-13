@@ -160,6 +160,332 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/13/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="talentstream">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="南有青鸟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/13/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">计网：自顶向下方法-第四章 学习笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-13 10:35:10 / 修改时间：10:46:47" itemprop="dateCreated datePublished" datetime="2022-12-13T10:35:10+08:00">2022-12-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/363651969">71张图详解IP 地址、IP 路由、分片和重组、三层转发、ARP、ICMP - 知乎 (zhihu.com)
+</a></p>
+<h4 id="4-1-Overview-of-Network-Layer"><a href="#4-1-Overview-of-Network-Layer" class="headerlink" title="4.1 Overview of Network Layer"></a>4.1 Overview of Network Layer</h4><p>The primary data-plane role of each router is to forward datagrams from its  input links to its output links.<br>The primary role of the network control plane is to coordinate these local, per-router forwarding actions so that datagrams are ultimately transferred end-to-end, along paths of routers between source and destination hosts.</p>
+<h5 id="4-1-1-Forwarding-and-Routing-The-Data-and-Control-Planes"><a href="#4-1-1-Forwarding-and-Routing-The-Data-and-Control-Planes" class="headerlink" title="4.1.1 Forwarding and Routing: The Data and Control Planes"></a>4.1.1 Forwarding and Routing: The Data and Control Planes</h5><p>The primary role of the network layer is deceptively simple—to move packets from a sending host to a receiving host.</p>
+<ul>
+<li>Forwarding : When a packet arrives at a router’s input link, the router must move the packet to the appropriate output link. Refers to the router-local action of transferring a packet from an input link interface to the appropriate output link interface.</li>
+<li>Routing : The network layer must determine the route or path taken by packets as they flow from a sender to a receiver. Refers to the network-wide process that determines the end-to-end paths that packets take from source to destination.</li>
+</ul>
+<p>Forwarding table, SDN</p>
+<h5 id="4-1-2-Network-Service-Model"><a href="#4-1-2-Network-Service-Model" class="headerlink" title="4.1.2 Network Service Model"></a>4.1.2 Network Service Model</h5><p>Some possible services :</p>
+<ul>
+<li>Guaranteed delivery</li>
+<li>Guaranteed delivery with bounded delay</li>
+<li>In-order packet delivery</li>
+<li>Guaranteed minimal bandwidth</li>
+<li>Security</li>
+</ul>
+<h4 id="4-2-What’s-Inside-a-Router"><a href="#4-2-What’s-Inside-a-Router" class="headerlink" title="4.2 What’s Inside a Router?"></a>4.2 What’s Inside a Router?</h4><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131038477.png"></p>
+<ul>
+<li><strong>Input ports</strong>. 1.It performs the physical layer function of terminating an incoming physical ink at a router. 2.It performs link-layer functions needed to interoperate with the link layer at the other side of the incoming link.</li>
+<li><strong>Switching fabric</strong>. It connects the router’s input ports to its output ports.</li>
+<li><strong>Output ports</strong>. It stores packets received from the switching fabric and transmits these packets on the outgoing link by performing the necessary link-layer and physical-layer functions.</li>
+<li><strong>Routing processor</strong>. 1.In traditional routers, it executes the routing protocols, maintains routing tables and attached link state information, and computes the forwarding table for the router. 2.In SDN routers, the routing processor is responsible for communicating with the remote controller in order to receive forwarding table entries computed by the remote controller, and install these entries in the router’s input ports.</li>
+</ul>
+<h5 id="4-2-1-Input-Port-Processing-and-Destination-Based-Forwarding"><a href="#4-2-1-Input-Port-Processing-and-Destination-Based-Forwarding" class="headerlink" title="4.2.1 Input Port Processing and Destination-Based Forwarding"></a>4.2.1 Input Port Processing and Destination-Based Forwarding</h5><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131039717.png"></p>
+<p>The <strong>line-termination</strong> and <strong>link-layer processing</strong> implement the physical and link layers for that individual input link.<br>The <strong>lookup</strong> that the router uses the forwarding table to look up the output port to which an arriving packet will be forwarded via the switching fabric.</p>
+<p>With this style of forwarding table, the router matches a <strong>prefix</strong> of the packet’s destination address with the entries in the table; if there’s a match, the router forwards the packet to a link associated with the match.<br>When there are multiple matches, the router<br>uses the <strong>longest prefix matching rule</strong>;</p>
+<h5 id="4-2-2-Switching"><a href="#4-2-2-Switching" class="headerlink" title="4.2.2 Switching"></a>4.2.2 Switching</h5><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131042710.png"></p>
+<ul>
+<li><strong>Switching via memory</strong>. An input port with an arriving packet first signaled the routing processor via an interrupt. The packet was then copied from the input port into processor memory. The routing processor then extracted the destination address from the header, looked up the appropriate output port in the forwarding table, and copied the packet to the output port’s buffers.</li>
+<li><strong>Switching via a bus</strong>. An input port transfers a packet directly to the output port over a shared bus, without intervention by the routing processor. All output ports receive the packet, but only the port that matches the label will keep the packet</li>
+<li><strong>Switching via an interconnection network</strong>.</li>
+</ul>
+<h5 id="4-2-3-Output-Port-Processing"><a href="#4-2-3-Output-Port-Processing" class="headerlink" title="4.2.3 Output Port Processing"></a>4.2.3 Output Port Processing</h5><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131043196.png"></p>
+<h5 id="4-2-4-Where-Does-Queuing-Occur"><a href="#4-2-4-Where-Does-Queuing-Occur" class="headerlink" title="4.2.4 Where Does Queuing Occur?"></a>4.2.4 Where Does Queuing Occur?</h5><p><strong>Input Queueing</strong> : packets must join input porty queues to wait their turn to be transferred through the switching fabric to the output port.<br>Head-of-the-line(HOL) blocking in an input-queued switch - a queued packet in an input queue must wait for transfer through the fabric head of the line.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131043780.png"></p>
+<p><strong>Output Queueing</strong> : When there is not enough memory to buffer an incoming packet, a decision must be made to either drop the arriving packet (a policy known as drop-tail) or remove one or more already-queued packets to make room for the newly arrived packet.</p>
+<h5 id="4-2-5-Packet-Scheduling"><a href="#4-2-5-Packet-Scheduling" class="headerlink" title="4.2.5 Packet Scheduling"></a>4.2.5 Packet Scheduling</h5><p>FIFO, Priority Queuing, Round Robin, Weighted Fair Queuing(WFQ)</p>
+<h4 id="4-3-The-Internet-Protocol-IP-IPv4-Addressing-IPv6-and-More"><a href="#4-3-The-Internet-Protocol-IP-IPv4-Addressing-IPv6-and-More" class="headerlink" title="4.3 The Internet Protocol (IP): IPv4, Addressing, IPv6, and More"></a>4.3 The Internet Protocol (IP): IPv4, Addressing, IPv6, and More</h4><h5 id="4-3-1-IPv4-Datagram-Format"><a href="#4-3-1-IPv4-Datagram-Format" class="headerlink" title="4.3.1 IPv4 Datagram Format"></a>4.3.1 IPv4 Datagram Format</h5><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131044901.png"></p>
+<ul>
+<li>Version number. These 4 bits specify the IP protocol version of the datagram.</li>
+<li>Header length. These 4 bits are needed to determine where in the IP datagram the payload actually begins.</li>
+<li>Type of service. To allow different types of IP datagrams to be distinguished from each other.</li>
+<li>Datagram length. This is the total length of the IP datagram, measured in bytes.</li>
+<li>Identifier, flags, fragmentation offset. These three fields have to do with so-called IP fragmentation, when a large IP datagram is broken into several smaller IP datagrams which are then forwarded independently to the destination, where they are reassembled before their payload data (see below) is passed up to the transport layer at the destination host.</li>
+<li>Time-to-live. The time-to-live (TTL) field is included to ensure that datagrams do not circulate forever (due to, for example, a long-lived routing loop) in the network.</li>
+<li>Protocol. This field is typically used only when an IP datagram reaches its final destination. The value of this field indicates the specific transport-layer protocol to which the data portion of this IP datagram should be passed.</li>
+<li>Header checksum. The header checksum aids a router in detecting bit errors in a received IP datagram.</li>
+<li>Source and destination IP addresses.</li>
+<li>Options. The options fields allow an IP header to be extended. </li>
+<li>Data.</li>
+</ul>
+<h5 id="4-3-2-IPv4-Addressing"><a href="#4-3-2-IPv4-Addressing" class="headerlink" title="4.3.2 IPv4 Addressing"></a>4.3.2 IPv4 Addressing</h5><p>To determine the subnets, detach each interface from its host or router, creating islands of isolated networks, with interfaces terminating the end points of the isolated networks. Each of these isolated networks is called a <strong>subnet</strong>.</p>
+<p><strong>Classless Interdomain Routing(CIDR)</strong>, is an IP addressing scheme that improve the allocation of IP addresses. It replaces the old system based on classes A, B, and C. This scheme also helped greatly extend the life of IPv4 as well as slow the growth of routing tables.</p>
+<p><strong>Dynamic Host Configuration Protocol(DHCP)</strong> allows a host to obtain an IP address automatically.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131045221.png"></p>
+<h5 id="4-3-3-Network-Address-Translation-NAT"><a href="#4-3-3-Network-Address-Translation-NAT" class="headerlink" title="4.3.3 Network Address Translation (NAT)"></a>4.3.3 Network Address Translation (NAT)</h5><p>NAT enables the conversions between private network and realm with private address.</p>
+<h5 id="4-3-4-IPv6"><a href="#4-3-4-IPv6" class="headerlink" title="4.3.4 IPv6"></a>4.3.4 IPv6</h5><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131045592.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131045108.png"></p>
+<h4 id="4-4-Generalized-Forwarding-and-SDN"><a href="#4-4-Generalized-Forwarding-and-SDN" class="headerlink" title="4.4 Generalized Forwarding and SDN"></a>4.4 Generalized Forwarding and SDN</h4><p>“match(looking up a destination IP address) plus action(sending the packet into the switching fabric to the specified output port) “ </p>
+<p>Flow table : </p>
+<ul>
+<li>A set of header field values to which an incoming packet will be matched.</li>
+<li>A set of counters that are updated as packets are matched to flow table entries.</li>
+<li>A set of actions to be taken when a packet matches a flow table entry.</li>
+</ul>
+<h5 id="4-4-1-Match"><a href="#4-4-1-Match" class="headerlink" title="4.4.1 Match"></a>4.4.1 Match</h5><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131045440.png"></p>
+<h5 id="4-4-2-Action"><a href="#4-4-2-Action" class="headerlink" title="4.4.2 Action"></a>4.4.2 Action</h5><p>Actions’ list :<br>    - Forwarding<br>    - Dropping<br>    - Modify-field </p>
+<h4 id="4-5-Middleboxes"><a href="#4-5-Middleboxes" class="headerlink" title="4.5 Middleboxes"></a>4.5 Middleboxes</h4><p>Middleboxes which defines as “any intermediary box performing functions apart from normal, standard functions of an IP router on the data path between a source host and destination host”</p>
+<p>Middleboxes 3 services : 1.NAT Translation 2.Security Services 3.Performance Enhancement</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/13/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="talentstream">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="南有青鸟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/13/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">计网：自顶向下方法-第五章 学习笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-13 10:10:01 / 修改时间：10:36:56" itemprop="dateCreated datePublished" datetime="2022-12-13T10:10:01+08:00">2022-12-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>8.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/jiahonghao2002/article/details/122938212">网络层：控制层面</a></p>
+<h3 id="5-The-Network-Layer-Control-Plane"><a href="#5-The-Network-Layer-Control-Plane" class="headerlink" title="5 The Network Layer: Control Plane"></a>5 The Network Layer: Control Plane</h3><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131024135.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131024170.png"></p>
+<h4 id="5-2-Routing-Algorithms"><a href="#5-2-Routing-Algorithms" class="headerlink" title="5.2 Routing Algorithms"></a>5.2 Routing Algorithms</h4><p>3 way to classify routing algorithms : 1.centralized or decentralized 2.static or dynamic 3.load-sensitive or load-insensitive</p>
+<p>A <strong>centralized routing algorithm</strong> computes the least-cost path between a source and destination using complete, global knowledge about the network. (LS)<br>In a <strong>decentralized routing algorithm</strong>, the calculation of the least-cost path is carried out in an iterative, distributed manner by the rooters. (DV)</p>
+<h5 id="5-2-1-The-Link-State-LS-Routing-Algorithm"><a href="#5-2-1-The-Link-State-LS-Routing-Algorithm" class="headerlink" title="5.2.1 The Link-State (LS) Routing Algorithm"></a>5.2.1 The Link-State (LS) Routing Algorithm</h5><p>Like Dijkstra</p>
+<p>One solution to prevent such oscillations is to mandate that link costs not depend on the amount of traffic carried - an unacceptable solution since one goal of routing is to avoid highly congested links. Another solution is to ensure that not all routers run the LS algorithm at the same time.</p>
+<h5 id="5-2-2-The-Distance-Vector-DV-Routing-Algorithm"><a href="#5-2-2-The-Distance-Vector-DV-Routing-Algorithm" class="headerlink" title="5.2.2 The Distance-Vector (DV) Routing Algorithm"></a>5.2.2 The Distance-Vector (DV) Routing Algorithm</h5><p>Like Bellman-Ford , it is distributed in that each node receives some information from one or more of its directly attached neighbors, performs a calculation, and then distributes the results of its calculation back to its neighbors.</p>
+<p>Count-to-infinity(死循环)</p>
+<p>A Comparison of LS and DV Routing Algorithms</p>
+<ul>
+<li><strong>Message complexity</strong>. LS requires each node to know the cost of each link in the network. This requires O(NE) messages to be sent. Also, whenever a link cost changes, the new link must be sent to all nodes.<br>DV requires message exchanges between directly connected neighbors at each iteration. When link costs change, the DV algorithm will propagate the results of the changed link cost only if the new link cost results in a changed least-cost path for one of the nodes attached to that link.</li>
+<li><strong>Speed of convergence</strong>. LS O(N^2) . DV(NE)</li>
+<li><strong>Robustness</strong>. LS is better</li>
+</ul>
+<h4 id="5-3-Intra-AS-Routing-in-the-Internet-OSPF"><a href="#5-3-Intra-AS-Routing-in-the-Internet-OSPF" class="headerlink" title="5.3 Intra-AS Routing in the Internet: OSPF"></a>5.3 Intra-AS Routing in the Internet: OSPF</h4><p>OSPF intra-AS</p>
+<p>In practice, this algorithm(LS &amp; DV) model and its view of a homogenous set of routers all executing the same routing algorithm simply because of the <strong>Scale</strong> and <strong>Administrative autonomy</strong>.</p>
+<p>Above problems can be solved by organizing routers into <strong>autonomous systems(ASs)</strong>, with each AS consisting of a group of routers that are under the same administrative control.<br>Routers within the same AS all run the same routing algorithm and have information about each other. </p>
+<p><strong>Open Shortest Path First(OSPF)</strong> is a link-state protocol that uses flooding of link-state information and a Dijkstra’s least-cost path algorithm. With OSPF, each router constructs a complete topological map of the entire autonomous system. With OSPF, a router broadcast routing information to all other routers in the autonomous system, not just to its neighboring routers.<br>Some of the advances embodied in OSPF include the following:</p>
+<ul>
+<li>Security.</li>
+<li>Multiple same-cost paths.</li>
+<li>Integrated support for unicast and multicast routing.</li>
+<li>Support for hierarchy within a single AS.</li>
+</ul>
+<h4 id="5-4-Routing-Among-the-ISPs-BGP"><a href="#5-4-Routing-Among-the-ISPs-BGP" class="headerlink" title="5.4 Routing Among the ISPs: BGP"></a>5.4 Routing Among the ISPs: BGP</h4><h5 id="5-4-1-The-Role-of-BGP"><a href="#5-4-1-The-Role-of-BGP" class="headerlink" title="5.4.1 The Role of BGP"></a>5.4.1 The Role of BGP</h5><p>BGP provides each router a means to: 1.Obtain prefix reachability information from neighboring ASs. 2.Determine the “best” routes to the prefixes.</p>
+<h5 id="5-4-2-Advertising-BGP-Route-Information"><a href="#5-4-2-Advertising-BGP-Route-Information" class="headerlink" title="5.4.2 Advertising BGP Route Information"></a>5.4.2 Advertising BGP Route Information</h5><p>For each AS, each router is either a <strong>gateway router</strong> or an <strong>internal router</strong>.<br><strong>A gateway router</strong> is a router on the edge of an AS that directly connects to one or more routers in other ASs.<br><strong>An internal router</strong> connects only to hosts and routers within its own AS.</p>
+<p>Each such TCP connection, along with all the BGP messages sent over the connection, is called <strong>a BGP connection</strong>.<br><strong>External BGP(eBGP)</strong> connection spans two ASs.<br><strong>Internal BGP(iBGP)</strong> connection session between routers in the same AS.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131028947.png"></p>
+<h5 id="5-4-3-Determining-the-Best-Routes"><a href="#5-4-3-Determining-the-Best-Routes" class="headerlink" title="5.4.3 Determining the Best Routes"></a>5.4.3 Determining the Best Routes</h5><p>When a router advertises a prefix across a BGP connection, it includes with the prefix several BGP attributes(<strong>AS-PATH &amp; NEXT-HOP</strong>)<br>The AS-PATH attribute contains the list of ASs through which the advertisement has passed.<br>The NEXT-HOP is the IP address of the router interface that begins the AS-PATH.<br>Each BGP route is written as a list with three components : 1.Next-HOP 2.AS-PATH 3.destination prefix.</p>
+<p><strong>Hot Potato Routing</strong> :  In this algorithm, the route chosen from among all possible routes is that route with the least cost to the NEXT-HOP router beginning that route.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131029418.png"></p>
+<p><strong>Route-Selection Algorithm</strong> : a more complicated algorithm that incorporates hot potato routing.<br>If there are two or more routes to the same prefix, then BGP sequentially invokes the following elimination rules until one route remains:<br>1.A route is assigned a local preference value as one of its attributes.The routes with the highest local preference values are selected.<br>2.From the remaining routes, the route with the shortest AS-PATH is selected.<br>3.From the remaining routes, hot potato routing is used, that is, the route with the closest NEXT-HOP router is selected.<br>4.If more than one route still remains, the router uses BGP identifiers to select the route.</p>
+<h5 id="5-4-4-IP-Anycast"><a href="#5-4-4-IP-Anycast" class="headerlink" title="5.4.4 IP-Anycast"></a>5.4.4 IP-Anycast</h5><p>BFP is often used to implement the IP-anycast service, which is commonly used in DNS.<br>When a user wants to access this replicated content, it is desirable to point the user to the “nearest” server with the replicated content. BGP’s route-selection algorithm provides an easy and natural mechanism for doing so.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131030976.png"></p>
+<p>Although the above CDN example nicely illustrates how IP-anycast can be used, in practice, CDNs generally choose not to use IP-anycast because BGP routing changes can result in different packets of the same TCP connection arriving at different instances of the Web server.<br>But IP-anycast is extensively used by the DNS system to direct DNS queries to the closest root DNS server. </p>
+<h4 id="5-5-The-SDN-Control-Plane"><a href="#5-5-The-SDN-Control-Plane" class="headerlink" title="5.5 The SDN Control Plane"></a>5.5 The SDN Control Plane</h4><p>Four key characteristics of an SDN architecture can be identified:</p>
+<ul>
+<li>Flow-based forwarding.</li>
+<li>Separation of data plane and control plane.</li>
+<li>Network control functions: external to data-plane switch.</li>
+<li>A programmable network.</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131030872.png"></p>
+<h5 id="5-5-1-The-SDN-Control-Plane-SDN-Controller-and-SDN-Network-control-Applications"><a href="#5-5-1-The-SDN-Control-Plane-SDN-Controller-and-SDN-Network-control-Applications" class="headerlink" title="5.5.1 The SDN Control Plane: SDN Controller and SDN Network-control Applications"></a>5.5.1 The SDN Control Plane: SDN Controller and SDN Network-control Applications</h5><ul>
+<li><strong>A communication layer</strong>: communicating between the SDN controller and controlled network devices. </li>
+<li><strong>A network-wide state-management layer</strong>. Collect info.</li>
+<li><strong>The interface to the network-control application layer</strong>. This API allows network-control application to read&#x2F;write network state and flow tables within the state-management layer.</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131031902.png"></p>
+<h5 id="5-5-2-OpenFlow-Protocol"><a href="#5-5-2-OpenFlow-Protocol" class="headerlink" title="5.5.2 OpenFlow Protocol"></a>5.5.2 OpenFlow Protocol</h5><p>Among the important messages flowing <strong>from the controller to the controlled switch</strong> are the following:</p>
+<ul>
+<li>Configuration</li>
+<li>Modify-State</li>
+<li>Read-State</li>
+<li>Send-Packet</li>
+</ul>
+<p>Among the messages flowing <strong>from the SDN-controlled switch to the controller</strong> are the following:</p>
+<ul>
+<li>Flow-Removed</li>
+<li>Port-status</li>
+<li>Packet-in</li>
+</ul>
+<h5 id="5-5-3-Data-and-Control-Plane-Interaction-An-Example"><a href="#5-5-3-Data-and-Control-Plane-Interaction-An-Example" class="headerlink" title="5.5.3 Data and Control Plane Interaction: An Example"></a>5.5.3 Data and Control Plane Interaction: An Example</h5><ol>
+<li>Switch s1, experiencing a link failure between itself and s2, notifies the SDN controller of the link-state change using the OpenFlow port-status message. </li>
+<li>The SDN controller receives the OpenFlow message indicating the link-state change, and notifies the link-state manager, which updates a link-state database. </li>
+<li>The network-control application that implements Dijkstra’s link-state routing has previously registered to be notified when link state changes. That application receives the notification of the link-state change. </li>
+<li>The link-state routing application interacts with the link-state manager to get updated link state; it might also consult other components in the state-management layer. It then computes the new least-cost paths. </li>
+<li>The link-state routing application then interacts with the flow table manager, which determines the flow tables to be updated. </li>
+<li>The flow table manager then uses the OpenFlow protocol to update flow table entries at affected switches—s1 (which will now route packets destined to s2 via s4), s2 (which will now begin receiving packets from s1 via intermediate switch s4), and s4 (which must now forward packets from s1 destined to s2).</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131032029.png"></p>
+<h4 id="5-6-ICMP-The-Internet-Control-Message-Protocol"><a href="#5-6-ICMP-The-Internet-Control-Message-Protocol" class="headerlink" title="5.6 ICMP: The Internet Control Message Protocol"></a>5.6 ICMP: The Internet Control Message Protocol</h4><p>ICMP is used by hosts and routers to communicate network-layer information to each other. The most typical use of ICMP is for error reporting.<br>ICMP is often considered part of IP, but architecturally it lies just above IP, as ICMP messages are carried inside IP datagrams.<br>ICMP messages have a type and a code field, and contain the header and the first 8 bytes of the IP datagram that caused the ICMP message to be generated in the first place.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131032552.png"></p>
+<h4 id="5-7-Network-Management-and-SNMP-NETCONF-x2F-YANG"><a href="#5-7-Network-Management-and-SNMP-NETCONF-x2F-YANG" class="headerlink" title="5.7 Network Management and SNMP, NETCONF&#x2F;YANG"></a>5.7 Network Management and SNMP, NETCONF&#x2F;YANG</h4><p>Network management includes the deployment, integration, and coordination of the hardware, software, and human elements to monitor, test, poll, configure, analyze, evaluate, and control the network and element resources to meet the real-time, operational performance, and Quality of Service requirements at a reasonable cost</p>
+<h5 id="5-7-1-The-Network-Management-Framework"><a href="#5-7-1-The-Network-Management-Framework" class="headerlink" title="5.7.1 The Network Management Framework"></a>5.7.1 The Network Management Framework</h5><ul>
+<li>Managing server.</li>
+<li>Managed device.</li>
+<li>Data.</li>
+<li>Network management agent.</li>
+<li>Network management protocol.</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131033554.png"></p>
+<p>Three commonly used way to manage the network</p>
+<ul>
+<li>CLI(Command Line Interface)</li>
+<li>SNMP(Simple Network Management Protocol)&#x2F;MIB(Management Information Base)</li>
+<li>NETCONF&#x2F;YANG</li>
+</ul>
+<h5 id="5-7-2-The-Simple-Network-Management-Protocol-SNMP-and-the-Management-Information-Base-MIB"><a href="#5-7-2-The-Simple-Network-Management-Protocol-SNMP-and-the-Management-Information-Base-MIB" class="headerlink" title="5.7.2 The Simple Network Management Protocol (SNMP) and the Management Information Base (MIB)"></a>5.7.2 The Simple Network Management Protocol (SNMP) and the Management Information Base (MIB)</h5><p>The most common usage of SNMP is in a request-response mode in which an SNMP managing server sends a request to an SNMP agent, who receives the request, performs some action, and sends a reply to the request.<br>The second common usage of SNMP is for an agent to send an unsolicited message, known as a trap message, to a managing server.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131033897.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131033505.png"></p>
+<h5 id="5-7-3-The-Network-Configuration-Protocol-NETCONF-and-YANG"><a href="#5-7-3-The-Network-Configuration-Protocol-NETCONF-and-YANG" class="headerlink" title="5.7.3 The Network Configuration Protocol (NETCONF) and YANG"></a>5.7.3 The Network Configuration Protocol (NETCONF) and YANG</h5><p>The NETCONF protocol operates between the managing server and the managed network devices, providing messaging<br>(i) to retrieve, set, and modify configuration data at managed devices;<br>(ii) to query operational data and statistics at managed devices;<br>(iii) to subscribe to notifications generated by managed devices. </p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/202212131033429.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/25/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1306,218 +1632,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/14/Games104%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="talentstream">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="南有青鸟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/14/Games104%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">Games104学习笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-09-14 20:53:24" itemprop="dateCreated datePublished" datetime="2022-09-14T20:53:24+08:00">2022-09-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-05 21:40:15" itemprop="dateModified" datetime="2022-10-05T21:40:15+08:00">2022-10-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>感觉104这套课程很不错，虽然我志不在引擎，但是了解引擎各部分的组成会更有利于自己使用引擎。104会从比较简单的部分介绍引擎的各个模块是如何组成。正好后续也打算花时间阅读《GameEngineArchitecture》这本书，算是一种相辅相成的学习。我可能了解了API的调用却不明白总体情况，这是我所缺少的。</p>
-<h3 id="01-导论"><a href="#01-导论" class="headerlink" title="01-导论"></a>01-导论</h3><p>第一讲内容并不是这么干货，大概介绍了什么是游戏引擎，引擎历史和课程内容。简单了解一下课程的大概组成，引擎架构，各系统原理和开发，前沿领域。各系统大概分为，引擎架构和数据管理，渲染，动画，物理系统，Gameplay，特效，导航，相机，工具链的开发，网上联机。先进技术在课上会讲的有吗motion matching(动态匹配？) ,procedural content generation(PCG),Data-Oriented Programming(DOP),Job System(未来的可能架构，即让多线程每个线程尽量吃满),Lumen(全局光照)，Nanite（高精度多几何面？)。<br>同时也推荐了参考，《Game Engine Architecture》正好配合来读。总而言之，第一节课导论都算是大概性介绍，我对游戏引擎的探索估计也就是浅尝辄止，104的介绍估计足够了（或许不一定）。</p>
-<p>2022-9-14</p>
-<h3 id="02-引擎架构分层"><a href="#02-引擎架构分层" class="headerlink" title="02-引擎架构分层"></a>02-引擎架构分层</h3><p>时隔一周再看104，尽管很久没看了仍就记忆深刻，老师讲的东西尽量都很基础了，根据闫神说的话，如果Games系列听不懂的话那就说明是自己的问题。开始进入正题，这一次讲的是游戏引擎的架构如何分层，在《Game Engine Architecture》有一个传世经典的图。这里简单分一下 Tool -&gt; Function -&gt; Resource -&gt; Core -&gt; Platform 以及 3rd SDK ，构成游戏引擎。课程安排是按照 32451来进行讲解的。数据层顾名思义就是将导入的资源统一转换成引擎的资产，毕竟资源有很多格式，同时进行全局的唯一识别和管理资产的生命周期。然后是功能层，功能层就是各种具体的实现，比如引擎的核心，tick，之前看过计算机体系结构，能够很容易理解，每一次tick相当于一次周期，tick又有tickLogic和tickRender，通常先进行逻辑运算再进行渲染运算，也可以多线程分别加载。然后是核心层，核心层就是底层代码了，主要是Math Library(提高数学运算效率) ， Data Structure &amp; Containers(减少内存碎片),内存管理(1.尽量让数据放一起被处理 2.尽量让数据按顺序访问 3.allocate and de-allocate as a block尽量以块进行分配和回收)。第四个便是平台层，一个要考虑多种平台中graphics API的变化，就比如dx11和dx12，还有考虑硬件架构的变化，方便做移植。最后是工具层，工具层性能要求便没有这么高，用各种语言开发都可以，开发效率越高越好，尽可能地让非程序员也能轻松使用工具。<br>记不住没关系，记住三条金科玉律就可以 1.引擎是分层架构，为了降低程序的复杂度，这与我在设计模式中学到的思想差不多。2.越底层的代码越稳定，质量要越高，越顶层越灵活,顶层可以调用底层代码，但是底层不能调用顶层代码 3.游戏世界的核心是tick，即我们在一次tick中完成所有运算</p>
-<p>2022-9-21</p>
-<h3 id="03-如何构建游戏世界"><a href="#03-如何构建游戏世界" class="headerlink" title="03-如何构建游戏世界"></a>03-如何构建游戏世界</h3><p>104的这一章课含金量很足，解决了许多问题。同样的，难度也不是很高（指听得懂的程度）,如果要进一步了解的话，务必要阅读104团队引擎的源码（但是我的c++还只认识98😭）。在看完后写博客组织知识架构并记录算是十分重要的，看完去外面吃了顿饭时隔4个小时，记忆消失的有点快。杂谈完了，让我们快速进入到正题吧。<br>各种游戏里我们能看到的世界是由什么组成的，我们如何描述这些事情，以及它们是怎么被组织起来的，这是我们需要了解的事情。首先提到的就是GAMEOBJECT了，这里分为许多种，dynamic，static，environment，空气墙，网格，Trigger(触发器)，以及Ruler（即由代码写好的规则），这一切都为game object。如果了解了这一件事，对于unity中gameobject的理解会更加深刻。然后在代码层面讲述了用习以为常的OOP思想来描述物体，这个算是很简单的。只要学过OOP思想类的语言都能理解，但是在游戏引擎方面中有所不同。假设一群GO，比如课程中讲述的无人机，无人机有很多种，但是相似处很多，如果只是简单的用组成思想（即has a），代码容易耦合。在这里，提出了component思想，即每个GO由许多component构成，在unity中也能体会到这一点，比如transform，rigidbody，renderer，collider等等。在现实世界中，就好比装配一辆汽车，是由不同构件构成的，也就是用组成（contains a）来描述一个GO，这与设计模式中学习的思想差不多。如果学过c#，即多用接口定义行为，用类定义是什么。尽管是随便看看这个104课程，对于GO和component的理解也能进一步加强，所以说，gameplay程序员了解一下就引擎方面的知识还是很有必要的。总结一下，在游戏世界中，任何事(everything)都是GO，GO是由组件构成的。<br>仅仅讲述GO，并不能让这个游戏世界动起来。然后便详细讲到了Tick方面（即游戏在每一帧更新）的知识（虽然也不是很详细）。凭直觉来说，就是在一帧中每个GO按顺序加载完成。但是游戏引擎目前来说是采用Component方式的更新，即每一帧每个Component按顺序更新，最后在将GO更新好。类比来说，就是现实世界的流水线，像课程中的例子，做汉堡，并不是一个汉堡一个汉堡地做，而是面包，肉饼，菜，蛋分开来做，最后有一个人来做成汉堡，同时可以并行操作，更符合多线程，游戏引擎也是如此。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Games104/20221005213056.png" alt="img"></p>
-<p>接着讲述事件系统和管理游戏对象，首先简单提出了一个问题，当炮弹射到某个区域，如何对炮弹范围内的GO进行处理，这在unity中写gameplay十分简单，如果是游戏引擎层面，该如何解决。首先我们最容易想到的是如果范围内的东西，如果触发了先判断类别，然后再执行各部分代码（这种代码我感觉直接在unity逻辑上这样写都挺傻的，更何况引擎层面），接着就引出了事件系统，事件系统是十分重要的内容，Unity也经常用，感觉就像是设计模式中的订阅者模式。但是也不可能给全部GO发信，那么如何管理成千上万的GO。就是给每个GO一个UID，并且每个GO有自己的坐标，这是最直觉的思路。回到之前的炮弹问题，场景中的很多GO如何处理。最简单的思路就是计算每个GO的位置是否在炮弹范围里，但是这样就很容陷入n^2的时间复杂度。一个升级思路就是将一块场景分成很多块（分块思想），虽然相对之前有所进步，但是有种常见的情况即分布密集程度的问题，每个方块拥有的GO不一样。在之后，提出以二分为思想，即四叉树思想，先将整个大场景分成四块，然后选择最密集的一块再分四块，以此推进，能够有效保证每个方块的数量大概相同。这样子在也减少了搜索所需要的时间复杂度。同样还有许多场景管理方法，比如BVN，八叉树，BSP等等，王希老师推荐一个引擎里至少要包含两到三种场景管理的算法，<br>总结一下，GO的状态在tickloop更新，GO通过事件机制进行交互，GO在场景管理中需要用到高效的算法。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Games104/20221005212415.png" alt="img"><br><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Games104/20221005212733.png" alt="img"></p>
-<p>然后是关于一些复杂情况的处理，就比如说物体的绑定，就比如人坐车上。还有组件之间的依赖，通常是先完成运动，虽然坐标已经到了，但是之后才播放动画和物理计算。然后是事件系统，如何确定信息的发送是否重复耦合，就比如说发生了一件事件，A想发信息给B，同时B也想，但是信息冲突了，一个解决方法是建立了一个中间项，让中间项（邮局）先把所有信息收集了，然后再统一发出去，这样子B想发送冲突的信息前一定会收到A的信息，这样子A与B所发的信息不会相同了。</p>
-<p>这就是课程的大概了，课程的QA也很重要，一个是讲如果在一次tick中需要处理的时间超过一次tick会怎么样，还有component系统的优缺点等等，王希老师虽然回答了，但是我只是有所了解，但是并不能完全理解，便不在这里写出了。希望到后面的学习中可以触类旁通。</p>
-<p>2022-10-5</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/03/Nand2Tetris-Part-II-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="talentstream">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="南有青鸟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/10/03/Nand2Tetris-Part-II-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">Nand2Tetris Part II 学习笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-10-03 13:51:03 / 修改时间：21:24:51" itemprop="dateCreated datePublished" datetime="2022-10-03T13:51:03+08:00">2022-10-03</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.5k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>国庆前做完还是鸽鸽了，主要是瓦罗兰特太好玩了，虽然已经学完了，但还是没写，趁国庆没回家补补blog。关于 Part II 主要是讲计算机软件层面的东西，一个是Virtual Machine(虚拟机)，一个是高级语言，一个是Compiler(编译器),最后稍微提了一下operating system，不过这个是我在后面一门课要学的，所以只是稍微了解一下就可以了。关于这部分的project，稍微做了一下7的project，然后就不打算做了。就是嗯磨时间，其实看看参考代码看明白就行了，跟Part I的机器语言转化为01字符串是一样的。总的来说，还是比较容易理解的，看完之后我稍微明白了C#和C++的区别，还有为什么有各种编译器的区别了。Let’s go</p>
-<p>2022-10-03</p>
-<h3 id="Virtual-Machine"><a href="#Virtual-Machine" class="headerlink" title="Virtual Machine"></a>Virtual Machine</h3><p>关于这部分我是打算7，8章一起的，如果做project的话也是建议一起做了，难度并不大，只是磨时间。而且我认为理解起来也挺简单的，顺便也能理解为什么递归会出栈溢出这个报错了。<br>第7章我们会快速过一下VM是什么，并且理解一些VM的语言，基本上基于栈的思想，不过详细一点就没有了，只是让你了解操作逻辑。下图是java程序如何转化为计算机认得的语言，跟C#差不多，这也是为什么C++运行效率较高，因为C++少了一层编译，简单来说就是讲高级语言通过编译器转化成VM语言，这也是我们第10、11章要做的，然后将VM语言转化成机器语言，这是我们现在要做的。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20221003135914.png" alt="img"></p>
-<p><strong>virtual machine paradigm</strong> : 虚拟机范例，也就是上面那张图，以java为例，通过VM framework 进行编译后，虽然损失了些运行效率，但是代码会更加优雅，同时开发效率会更高。C和C++是单层编译的，但是Modern C++是单层编译和包含VM两层编译的结合，也就是说新特性让C++在代码中更好用。</p>
-<p><strong>Stack Machine</strong> : 基于栈实现VM，这是这章课的核心。首先是push和pop,如果学过数据结构的可以一下子就懂了，没有学过也不要紧，栈就是一个简单的先入后出的存储数据的结构。下面四图是关于在栈上的基本实现。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20221003152725.png" alt="img"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20221003152903.png" alt="img"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20221003152920.png" alt="img"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20221003153007.png" alt="img"></p>
-<p>上述几张图简单讲了一下如何存储数据和进行一些逻辑运算，那么如果要像在高级语言中一样实现分支，循环，函数等操作，同样也有提供，了解过后，也是非常的简单。</p>
-<p><strong>Branching</strong> : 分支，也就是用if goto 实现所有的if else switch while for 等条件。根据下图高级语言和VMcode对比一下便能理解</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20221003153314.png" alt="img"></p>
-<p><strong>Functions</strong> : 在Branching部分我们就看到了function和return，在这一部分会有更详细地解释，同时可以了解为什么递归太多次会造成栈溢出的问题。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20221003153531.png" alt="img"></p>
-<p>这个是关于存储函数栈的结构</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20221003153618.png" alt="img"></p>
-<p>这张图很好地解释了当函数执行时，临时变量在栈中如何占据储存空间，当函数执行的时候会为临时变量占用一定的空间，此时临时变量还没有计算出来。也就是先push进去，当最后运算的时候才pop出来，只有当函数return后才会正式回收这些数据。这下子大概理解了数据为什么要回收了，调用其他函数都是自动回收，但是在main中的数据只有当结束了才会回收，那么垃圾回收十分重要，不过这是在c++，c#大部分是自动回收机制，还是很方便的。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20221003153741.png" alt="img"></p>
-<p>大部分内容都是关于VM语言如果转化为机器语言的具体实操建议，并不是很需要去理解记住，如果不做project的话，我甚至认为没有必要去看。</p>
-<h3 id="Compiler"><a href="#Compiler" class="headerlink" title="Compiler"></a>Compiler</h3><p>直接跳到Compiler这里，因为High-level language那一章是Nand2Tetris作者自己写的语言，如果学过高级语言的话我认为没必要了解了，内容基本上都差不多。Compiler这里都可以是编译原理的点了，我们稍微了解一下就可以了，学习一下Syntax Analysis 和 Code Generation两个核心知识点就可以了。编译器也就是将高级语言翻译成更底层的语言(VM语言或者是直接到机器语言)，我们主要就是学习编译器是如何理解程序的。</p>
-<h4 id="syntax-analysis"><a href="#syntax-analysis" class="headerlink" title="syntax analysis"></a>syntax analysis</h4><p>语法分析通常分为两个子部分，一个是tokenizing(单词化？),parsing(解释),看下图大概就明白大概流程了，不用太管project10那个线。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20221003155333.png" alt="img"></p>
-<p><strong>Lexical Analysis</strong> : 词法分析，也就是将程序中的字符序列转化为tokens的操作。tokens通常分为5类，keywords(关键词，也就是class while if这些)，symbols(像+-*&lt;&gt;这些)，integer constants(整型常数)，string constants(字符串),identifiers(就是我们命名的一些东西，比如说类，变量，函数等等) 下图可以理解大概分类</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20221003155854.png" alt="img"></p>
-<p><strong>Grammars</strong> : 语法也就是要每一句程序都判断是否写的正确，就如编译器给出的警告。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20221003160201.png" alt="img"></p>
-<p><strong>Parsing</strong> : 当嵌套循环了怎么办，比如if(x&gt;0){if(y&lt;0) z &#x3D; c;} 我们可以整理出类似parse tree的东西，如果能生成树，那么这一段语法就是合法的。同时也很容易理解层次结构。</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/Nand2Tetris/20221003160856.png" alt="img"></p>
-<p>接下来就是关于project的说明了，理解还是很容易的，就此跳过，如果时间充裕的话，可以做做，这也是编译原理的作业之一。</p>
-<h4 id="code-generation"><a href="#code-generation" class="headerlink" title="code generation"></a>code generation</h4><p>前面是分析，现在是将程序分析生成底层代码。其实这个没什么好说的，书上说的很详细，从variable、expressions、strings、statements、objects、arrays等一系列都讲完了。如果要写project的建议认真读一读，不写的话看一下图片就差不多了。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Software部分主要就包括虚拟机和编译器，这两个部分主要又是编译原理的部分讲的更详细些，了解一下就足够了。关于Part II的操作系统，我基本上只是扫了一眼，后续打算仔细学习OS的内容，所以只是了解个大概。Nand2Tetris对于了解整个计算机的大概很有帮助，同时也不难，对于直接读黑皮书来说读这个门槛会低一些。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1589,7 +1703,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1638,12 +1752,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">180k</span>
+    <span title="站点总字数">194k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:43</span>
+    <span title="站点阅读时长">2:56</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
