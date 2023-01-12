@@ -160,6 +160,106 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/12/leetcode-%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="talentstream">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="南有青鸟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/12/leetcode-%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/" class="post-title-link" itemprop="url">leetcode 刷题记录</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-12 23:32:11" itemprop="dateCreated datePublished" datetime="2023-01-12T23:32:11+08:00">2023-01-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-01-13 00:23:27" itemprop="dateModified" datetime="2023-01-13T00:23:27+08:00">2023-01-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="01-二分查找-704"><a href="#01-二分查找-704" class="headerlink" title="01 - 二分查找(704)"></a>01 - 二分查找(704)</h3><p>这题就是基本的二分查找模板，由于是升序数组，我们可以从O(n)的直接遍历转到O(logn)的二分查找。唯一要考虑的只有 while 循环的条件，通常只有两种 （left &lt;&#x3D; right） 和 （left &lt; right）， 前者通常是 left &#x3D; mid + 1, right &#x3D; mid - 1 且初始化 right &#x3D; n-1， 后者是 right &#x3D; mid , right &#x3D; n . 个人更喜欢前者。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target，</span></span><br><span class="line"><span class="comment">写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">输入: nums = [-1,0,3,5,9,12], target = 9</span></span><br><span class="line"><span class="comment">输出: 4</span></span><br><span class="line"><span class="comment">解释: 9 出现在 nums 中并且下标为 4</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">1.你可以假设 nums 中的所有元素是不重复的。</span></span><br><span class="line"><span class="comment">2.n 将在 [1, 10000]之间。</span></span><br><span class="line"><span class="comment">3.nums 的每个元素都将在 [-9999, 9999]之间。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">Search</span>(<span class="params"><span class="built_in">int</span>[] nums, <span class="built_in">int</span> target</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> left = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">int</span> right = nums.Length<span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">while</span>(left&lt;=right)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">int</span> mid = (left+right)/<span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span>(nums[mid] == target) <span class="keyword">return</span> mid;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &lt; target) </span><br><span class="line">            &#123;</span><br><span class="line">                left = mid +<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &gt; target)</span><br><span class="line">            &#123;</span><br><span class="line">                right = mid<span class="number">-1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="02-移除元素-27"><a href="#02-移除元素-27" class="headerlink" title="02 - 移除元素(27)"></a>02 - 移除元素(27)</h3><p>这道题可以用暴力算法，即两层循环O(n^2)，虽然是可以做的，但是当数组长度起来就会很痛苦，所以我们用O(n)的思路，即<strong>双指针算法</strong>——通过一个快指针和慢指针在一个for循环下完成两个for循环的工作。虽然叫做双指针算法，其实我感觉可以理解为两个数组，即一个数组用来读（快指针），一个数组用来写（慢指针），快指针按顺序读原数组，慢指针只需接收快指针读取的有用的数据即可。看了力扣题解，发现还可以再优化，即两个指针分别置于头尾，即使在最坏情况下也与之前的时间复杂度相同，对于 val较少的数组，可以有效减少一点点时间的浪费。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">给你一个数组 nums 和一个值 val，你需要原地移除所有数值等于 val 的元素，并返回移除后数组的新长度。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">不要使用额外的数组空间，你必须仅使用 O(1) 额外空间并 原地 修改输入数组。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">元素的顺序可以改变。你不需要考虑数组中超出新长度后面的元素。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">输入：nums = [3,2,2,3], val = 3</span></span><br><span class="line"><span class="comment">输出：2, nums = [2,2]</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">1.0 &lt;= nums.length &lt;= 100</span></span><br><span class="line"><span class="comment">2.0 &lt;= nums[i] &lt;= 50</span></span><br><span class="line"><span class="comment">3.0 &lt;= val &lt;= 100</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">RemoveElement</span>(<span class="params"><span class="built_in">int</span>[] nums, <span class="built_in">int</span> val</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> left = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">int</span> right = nums.Length <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">while</span>(left &lt;= right)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[left] == val)</span><br><span class="line">            &#123;</span><br><span class="line">                nums[left] = nums[right];</span><br><span class="line">                right--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> </span><br><span class="line">            &#123;</span><br><span class="line">                left++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> left;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="03-有序数组的平方-977"><a href="#03-有序数组的平方-977" class="headerlink" title="03 - 有序数组的平方(977)"></a>03 - 有序数组的平方(977)</h3><p>首先都是思考暴力算法的可能性，最简单的就是先把全部的平方算出来，然后再用排序排好，我们用快速排序，最终的时间复杂度为O(n+nlogn).也就是O(nlogn)。<br>我们可以在计算的时候就进行排序，由于是一个带有负数的非递减顺序的数组，也就是说，可以用上一题的双指针思路，头尾各来一个指针，谁大排在后面，然后指针位移，这样保证一个数组只会遍历一次，也就是O(n)的算法。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">给你一个按 非递减顺序 排序的整数数组 nums，</span></span><br><span class="line"><span class="comment">返回 每个数字的平方 组成的新数组，要求也按 非递减顺序 排序。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">输入：nums = [-4,-1,0,3,10]</span></span><br><span class="line"><span class="comment">输出：[0,1,9,16,100]</span></span><br><span class="line"><span class="comment">解释：平方后，数组变为 [16,1,0,9,100]</span></span><br><span class="line"><span class="comment">排序后，数组变为 [0,1,9,16,100]</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">1.1 &lt;= nums.length &lt;= 104</span></span><br><span class="line"><span class="comment">2.-104 &lt;= nums[i] &lt;= 104</span></span><br><span class="line"><span class="comment">3.nums 已按 非递减顺序 排序</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span>[] <span class="title">SortedSquares</span>(<span class="params"><span class="built_in">int</span>[] nums</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span>[] results = <span class="keyword">new</span> <span class="built_in">int</span>[nums.Length];</span><br><span class="line">        <span class="built_in">int</span> left = <span class="number">0</span>, right = nums.Length - <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">int</span> k = nums.Length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(left &lt;= right)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">int</span> rightNum = nums[right]*nums[right];</span><br><span class="line">            <span class="built_in">int</span> leftNum = nums[left]*nums[left];</span><br><span class="line">            <span class="keyword">if</span>( rightNum &gt; leftNum) </span><br><span class="line">            &#123;</span><br><span class="line">                results[k--] = rightNum;</span><br><span class="line">                right--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> </span><br><span class="line">            &#123;</span><br><span class="line">                results[k--] = leftNum;</span><br><span class="line">                left++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> results;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="04-长度最小的数组-209"><a href="#04-长度最小的数组-209" class="headerlink" title="04 - 长度最小的数组(209)"></a>04 - 长度最小的数组(209)</h3><p>首先最容易想到的就是暴力法了，基本上跟时间复杂度O(n^2)的排序一个思路。题目给到，数组元素为正数，虽然本身数组不是升序或者降序数组，但是用前缀和思想，可以保证新的数组一定为升序，然后再利用二分查找，只要找到 sums[k] &gt;&#x3D; sums[i-1] + target 的那个k的最小值即可，可以压缩暴力法的第二层循环，也就是O(nlogn)的算法。<br>看题解了解了滑动窗口的思路，其实跟双指针思路差不多，设定一个起始指针和终点指针，先用终点指针找到一小段子数组&gt;&#x3D;target的,然后终点指针，然后再起始指针慢慢向前，保证&gt;&#x3D;target的同时，数组长度尽可能地小，每个元素只会遍历到两次，也就是O(2n)的时间复杂度。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">给定一个含有 n 个正整数的数组和一个正整数 target 。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">找出该数组中满足其和 ≥ target 的长度最小的 </span></span><br><span class="line"><span class="comment">连续子数组 [numsl, numsl+1, ..., numsr-1, numsr] ，</span></span><br><span class="line"><span class="comment">并返回其长度。如果不存在符合条件的子数组，返回 0 。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">给定一个含有 n 个正整数的数组和一个正整数 target 。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">找出该数组中满足其和 ≥ target 的长度最小的 连续子数组 [numsl, numsl+1, ..., numsr-1, numsr] ，并返回其长度。如果不存在符合条件的子数组，返回 0 。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">1.1 &lt;= target &lt;= 109</span></span><br><span class="line"><span class="comment">2.1 &lt;= nums.length &lt;= 105</span></span><br><span class="line"><span class="comment">3.1 &lt;= nums[i] &lt;= 105</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 前缀和 + 二分</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">MinSubArrayLen</span>(<span class="params"><span class="built_in">int</span> target, <span class="built_in">int</span>[] nums</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> result = <span class="built_in">int</span>.MaxValue;</span><br><span class="line">        <span class="keyword">var</span> n = nums.Length;</span><br><span class="line">        <span class="built_in">int</span>[] sums = <span class="keyword">new</span> <span class="built_in">int</span>[n+<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">1</span>; i&lt;=n;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            sums[i] = sums[i<span class="number">-1</span>] + nums[i<span class="number">-1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> left = <span class="number">1</span>; left &lt;= n ; left++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> newtarget = target + sums[left<span class="number">-1</span>];</span><br><span class="line">            <span class="keyword">var</span> right = Find(sums,left,n,newtarget);</span><br><span class="line">            <span class="keyword">if</span>(right != <span class="number">-1</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                result = Math.Min(result,right-left+<span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result == <span class="built_in">int</span>.MaxValue ? <span class="number">0</span> : result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">Find</span>(<span class="params"><span class="built_in">int</span>[] array,<span class="built_in">int</span> left,<span class="built_in">int</span> right,<span class="built_in">int</span> target</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span>(left&lt;right)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> mid = (left+right)/<span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span>(array[mid]&lt;target) left = mid+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span> right = mid;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> array[left]&gt;=target?left:<span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 滑动窗口</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">MinSubArrayLen</span>(<span class="params"><span class="built_in">int</span> target, <span class="built_in">int</span>[] nums</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> result = <span class="built_in">int</span>.MaxValue;</span><br><span class="line">        <span class="built_in">int</span> n = nums.Length<span class="number">-1</span>;</span><br><span class="line">        <span class="built_in">int</span> start = <span class="number">0</span>,end = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(end&lt;=n)</span><br><span class="line">        &#123;</span><br><span class="line">            sum+=nums[end];</span><br><span class="line">            <span class="keyword">while</span>(sum&gt;=target)</span><br><span class="line">            &#123;</span><br><span class="line">                result = Math.Min(result,end-start+<span class="number">1</span>); </span><br><span class="line">                sum-=nums[start++];</span><br><span class="line">            &#125;</span><br><span class="line">            end++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result == <span class="built_in">int</span>.MaxValue ? <span class="number">0</span> : result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="05-螺旋矩阵II-59"><a href="#05-螺旋矩阵II-59" class="headerlink" title="05 - 螺旋矩阵II(59)"></a>05 - 螺旋矩阵II(59)</h3><p>暴力模拟题，没什么难度，让我感到奇怪的是leetcode的c#提交出了bug，但是放在visual studio 没有报错，所以这题用了c++来写。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">给你一个正整数 n ，生成一个包含 1 到 n2 所有元素，</span></span><br><span class="line"><span class="comment">且元素按顺时针顺序螺旋排列的 n x n 正方形矩阵 matrix 。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">输入：n = 3</span></span><br><span class="line"><span class="comment">输出：[[1,2,3],[8,9,4],[7,6,5]]</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">1.1 &lt;= n &lt;= 20</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">generateMatrix</span>(<span class="type">int</span> n) &#123;</span><br><span class="line">        <span class="type">int</span> top = <span class="number">0</span>;      <span class="comment">// top</span></span><br><span class="line">        <span class="type">int</span> bottom = n<span class="number">-1</span>;    <span class="comment">// bottom</span></span><br><span class="line">        <span class="type">int</span> left = <span class="number">0</span>;      <span class="comment">// left</span></span><br><span class="line">        <span class="type">int</span> right = n<span class="number">-1</span>;    <span class="comment">// right</span></span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">ans</span>(n,<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n));</span><br><span class="line">        <span class="type">int</span> num = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(num &lt;= n*n)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> i=left;i&lt;=right;i++) ans[top][i] = num++;</span><br><span class="line">            ++top;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> i=top;i&lt;=bottom;++i) ans[i][right] = num++;</span><br><span class="line">            --right;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> i=right;i&gt;=left;--i) ans[bottom][i] = num++;</span><br><span class="line">            --bottom;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> i=bottom;i&gt;=top;--i) ans[i][left] = num++;</span><br><span class="line">            ++left;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/13/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1515,123 +1615,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/17/OSTEP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="talentstream">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="南有青鸟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/10/17/OSTEP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">OSTEP学习笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-10-17 09:43:40" itemprop="dateCreated datePublished" datetime="2022-10-17T09:43:40+08:00">2022-10-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-19 14:17:09" itemprop="dateModified" datetime="2022-10-19T14:17:09+08:00">2022-10-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.5k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近DDL比较多，但是计划是在10月完成对OS的学习，几乎在月中才开始加快进度，刚看完自己所计划的关于这本书的Part I部分，也就是对CPU的Virtualization，简单来说就是操作系统如何调度CPU，刚接触这方面有很多新词，虽然不是很难，但是看起来还是比较辛苦的，希望月底能看完OS方面的东西并且完成这本书的project，毕竟下个月要计网了。关于最近看的书，《人月神话》算是看完了，每天睡前在床上看一点算是看完了，对于这本书如果我是小白的话，肯定收获颇丰。但是并不是，不过仍然可以收获很多东西，只是大部分收获的东西应该在工作的时候才能体会到了。</p>
-<p>再回到这本书，这本书本身作者写的很容易让人理解，同时每一小章开始会问问题，差不多就是阅读理解了，如果你能找到问题的所有答案，基本上就代表了你理解了这一章。大部分homework都是运行式的，也就是给你代码你运行看结果，用于加深理解。而且在一大部分的内容前后会有作者自己模拟的两段对话，差不多算是作者给你概要和总结了。</p>
-<p>关于作业，作者使用的c语言头文件都是在linu才有的，windows自己并不能编译，所以我装了一个VMware虚拟机来使用Ubuntu系统，基本上没什么难度，一次成功，仅仅是用来写小型代码和阅读C，linux还是挺方便的。</p>
-<p>2022-10-17</p>
-<h3 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h3><h4 id="Diaglogue"><a href="#Diaglogue" class="headerlink" title="Diaglogue"></a>Diaglogue</h4><p>Dialogue 部分就是大概讲了一下这本书的组成和OS的组成，算是抛砖引玉。简单来说，我们将会在这里以三部分——virtualization,concurrency and persistence 进行学习，具体来说，就是会学到一个操作系统是如何运作的，包括如何让哪一个程序在CPU是下一个运行的，如何处理内存溢出，虚拟机如何工作，如何管理硬盘内容，甚至会了解如何建造一个并发系统可以在部分系统崩溃时运作。</p>
-<h4 id="Introduction-to-operating-systems"><a href="#Introduction-to-operating-systems" class="headerlink" title="Introduction to operating systems"></a>Introduction to operating systems</h4><p>首先知道程序是如何运作的，简单来说，就是执行指令。处理器从内存中捕获指令，然后解码它最后执行，这也就是von Neumann 结构。那么在软件方面上便是操作系统，Virtualization 也就是将物理资源(processer memory disk等) 转化成虚拟的，然后便是稍微提了一下虚拟化CPU和Memory。这本书提供的程序只要看一下就可以了，如果写过类C语言基本上都能看懂的，之后是Concurrency，中文翻译是并发，看了下程序感觉就是多线程。接着提了Persistence，也就是这本书的第三部分，刚开始看到这个词的时候还是云里雾里的，看了内容，就是关于存储数据的。</p>
-<p>看完前面这三部分的介绍，大概就能理解OS在做什么，使用物理资产，比如CPU，内存，硬盘，然后虚拟化它们。并发可以来同时处理很多问题，然后长时间地存储文件，保证安全性。</p>
-<p>最后是介绍OS的发展，从早期的库，再到各种概念,system call , trap hander, kernel mode, return-from trap,后面到multiprogramming的介绍，再到UNIX、LINUX，MacOS的介绍，不过都只是泛泛的介绍，如果已经知道的话就没什么营养。</p>
-<h3 id="Virtualization"><a href="#Virtualization" class="headerlink" title="Virtualization"></a>Virtualization</h3><h4 id="Dialogue-on-Virtualization"><a href="#Dialogue-on-Virtualization" class="headerlink" title="Dialogue on Virtualization"></a>Dialogue on Virtualization</h4><p>依然是熟悉的Dialogue，如果去看官方网站的话，你会发现作者将书的内容分为了大概5个部分，虽然总体还是三个部分，但是学习起来还是5个部分方便一些。这一部分就是在讲关于CPU怎么Virtualization，其中的例子就是桃子，很多人要吃桃子，但是只有一个，如何骗他们每个人都可以吃到。这也就是CPU在OS的工作原理，只有一块CPU，但是OS可以给一堆程序制造很多虚拟CPU的幻象，让每个程序都可以在CPU上跑。</p>
-<h4 id="Process"><a href="#Process" class="headerlink" title="Process"></a>Process</h4><p>这一章的两个问题感觉很相近</p>
-<ul>
-<li>如何产生有很多CPU的假象</li>
-<li>虽然只有一些可用的物理CPU，如何让OS提供看起来用不完的CPU</li>
-</ul>
-<p>在这一章，我们将会讨论最基本的抽象概念:进程，简单来说，就是在运行的程序。如果打开任务管理器的话，我们就能看到一个一个进程，并且能看到进程的状态，以及各种占用率，如果看到详细信息，可以看到名称，PID，状态，CPU，内存以及一堆信息等等。那么CPU是如何运行一堆程序的呢？<br>最基本的技术，就是time sharing，就是CPU被一段程序用了一段时间，可以再让另一个东西用一段时间。相对应的是space sharing,磁盘空间就是被共享的资源，如果其中一块被分配给一个文件，这块就不能被分配给其他文件了，除非这个文件被删除。</p>
-<p><strong>Process API</strong> : Create,Destroy,wait,Miscellaneous Control,Status.<br>前面的大概就是Process 的API，进行部分的讲解。</p>
-<p><strong>Process Creation</strong> : OS如何让程序运行。第一件事便是将磁盘加载程序的代码和数据到内存中，一旦加载好，然后将一些内存分配到栈上，一些分配到堆上，最后再完成一些关于I&#x2F;O的设置，这样就为程序的执行准备好了条件</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20221017161057.png" alt="img"></p>
-<p><strong>Process States</strong> : 在了解了什么是进程，以及粗略地了解了如何创建，现在来了解一些进程的状态，并且有几张图帮助理解：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20221017161126.png" alt="img"></p>
-<ul>
-<li>Running : 运行</li>
-<li>Ready : 准备运行，但是没轮到</li>
-<li>Blocked : 阻塞状态，程序运行到无法进行操作会先挂起让其他Ready程序先运行，等好了进入Ready状态，还得等别人Running完</li>
-</ul>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20221017162004.png" alt="img"></p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20221017162019.png" alt="img"></p>
-<p><strong>Summary</strong> ：这一章探讨了进程，可以简单地被看成运行的程序，关于这一章的问题，虽然这里没有直接提及，我的理解就是，因为大部分程序不一定在运行，将运行中的程序转化成一个一个进程的概念，来使用CPU，但是是有顺序使用CPU的，这样每个程序都能用到CPU，这样就造成了每个程序都有自己的CPU的感觉（这里并没有提到多线程的内容）</p>
-<h4 id="Direct-Execution"><a href="#Direct-Execution" class="headerlink" title="Direct Execution"></a>Direct Execution</h4><p>这一章的是主要问题就是如何有效通过控制来虚拟化CPU</p>
-<p><strong>Limited Direct Execution</strong> :</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1703,7 +1686,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1716,7 +1699,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1743,7 +1726,7 @@
 <div class="copyright">
   
   &copy; 2022-08 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -1752,12 +1735,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">194k</span>
+    <span title="站点总字数">199k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:56</span>
+    <span title="站点阅读时长">3:01</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

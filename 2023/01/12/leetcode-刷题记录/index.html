@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="01 - 二分查找(704)这题就是基本的二分查找模板，由于是升序数组，我们可以从O(n)的直接遍历转到O(logn)的二分查找。唯一要考虑的只有 while 循环的条件，通常只有两种 （left &lt;&#x3D; right） 和 （left &lt; right）， 前者通常是 left &#x3D; mid + 1, right &#x3D; mid - 1 且初始化 right &amp;#x">
+<meta property="og:type" content="article">
+<meta property="og:title" content="leetcode 刷题记录">
+<meta property="og:url" content="http://example.com/2023/01/12/leetcode-%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="南有青鸟">
+<meta property="og:description" content="01 - 二分查找(704)这题就是基本的二分查找模板，由于是升序数组，我们可以从O(n)的直接遍历转到O(logn)的二分查找。唯一要考虑的只有 while 循环的条件，通常只有两种 （left &lt;&#x3D; right） 和 （left &lt; right）， 前者通常是 left &#x3D; mid + 1, right &#x3D; mid - 1 且初始化 right &amp;#x">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-01-12T15:32:11.000Z">
+<meta property="article:modified_time" content="2023-01-12T16:23:27.185Z">
+<meta property="article:author" content="talentstream">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="leetcode">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2023/01/12/leetcode-%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>leetcode 刷题记录 | 南有青鸟</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">南有青鸟</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/12/leetcode-%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="talentstream">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="南有青鸟">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          leetcode 刷题记录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-12 23:32:11" itemprop="dateCreated datePublished" datetime="2023-01-12T23:32:11+08:00">2023-01-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-01-13 00:23:27" itemprop="dateModified" datetime="2023-01-13T00:23:27+08:00">2023-01-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="01-二分查找-704"><a href="#01-二分查找-704" class="headerlink" title="01 - 二分查找(704)"></a>01 - 二分查找(704)</h3><p>这题就是基本的二分查找模板，由于是升序数组，我们可以从O(n)的直接遍历转到O(logn)的二分查找。唯一要考虑的只有 while 循环的条件，通常只有两种 （left &lt;&#x3D; right） 和 （left &lt; right）， 前者通常是 left &#x3D; mid + 1, right &#x3D; mid - 1 且初始化 right &#x3D; n-1， 后者是 right &#x3D; mid , right &#x3D; n . 个人更喜欢前者。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target，</span></span><br><span class="line"><span class="comment">写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">输入: nums = [-1,0,3,5,9,12], target = 9</span></span><br><span class="line"><span class="comment">输出: 4</span></span><br><span class="line"><span class="comment">解释: 9 出现在 nums 中并且下标为 4</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">1.你可以假设 nums 中的所有元素是不重复的。</span></span><br><span class="line"><span class="comment">2.n 将在 [1, 10000]之间。</span></span><br><span class="line"><span class="comment">3.nums 的每个元素都将在 [-9999, 9999]之间。</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">Search</span>(<span class="params"><span class="built_in">int</span>[] nums, <span class="built_in">int</span> target</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> left = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">int</span> right = nums.Length<span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">while</span>(left&lt;=right)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">int</span> mid = (left+right)/<span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span>(nums[mid] == target) <span class="keyword">return</span> mid;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &lt; target) </span><br><span class="line">            &#123;</span><br><span class="line">                left = mid +<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &gt; target)</span><br><span class="line">            &#123;</span><br><span class="line">                right = mid<span class="number">-1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="02-移除元素-27"><a href="#02-移除元素-27" class="headerlink" title="02 - 移除元素(27)"></a>02 - 移除元素(27)</h3><p>这道题可以用暴力算法，即两层循环O(n^2)，虽然是可以做的，但是当数组长度起来就会很痛苦，所以我们用O(n)的思路，即<strong>双指针算法</strong>——通过一个快指针和慢指针在一个for循环下完成两个for循环的工作。虽然叫做双指针算法，其实我感觉可以理解为两个数组，即一个数组用来读（快指针），一个数组用来写（慢指针），快指针按顺序读原数组，慢指针只需接收快指针读取的有用的数据即可。看了力扣题解，发现还可以再优化，即两个指针分别置于头尾，即使在最坏情况下也与之前的时间复杂度相同，对于 val较少的数组，可以有效减少一点点时间的浪费。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">给你一个数组 nums 和一个值 val，你需要原地移除所有数值等于 val 的元素，并返回移除后数组的新长度。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">不要使用额外的数组空间，你必须仅使用 O(1) 额外空间并 原地 修改输入数组。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">元素的顺序可以改变。你不需要考虑数组中超出新长度后面的元素。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">输入：nums = [3,2,2,3], val = 3</span></span><br><span class="line"><span class="comment">输出：2, nums = [2,2]</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">1.0 &lt;= nums.length &lt;= 100</span></span><br><span class="line"><span class="comment">2.0 &lt;= nums[i] &lt;= 50</span></span><br><span class="line"><span class="comment">3.0 &lt;= val &lt;= 100</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">RemoveElement</span>(<span class="params"><span class="built_in">int</span>[] nums, <span class="built_in">int</span> val</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> left = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">int</span> right = nums.Length <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">while</span>(left &lt;= right)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[left] == val)</span><br><span class="line">            &#123;</span><br><span class="line">                nums[left] = nums[right];</span><br><span class="line">                right--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> </span><br><span class="line">            &#123;</span><br><span class="line">                left++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> left;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="03-有序数组的平方-977"><a href="#03-有序数组的平方-977" class="headerlink" title="03 - 有序数组的平方(977)"></a>03 - 有序数组的平方(977)</h3><p>首先都是思考暴力算法的可能性，最简单的就是先把全部的平方算出来，然后再用排序排好，我们用快速排序，最终的时间复杂度为O(n+nlogn).也就是O(nlogn)。<br>我们可以在计算的时候就进行排序，由于是一个带有负数的非递减顺序的数组，也就是说，可以用上一题的双指针思路，头尾各来一个指针，谁大排在后面，然后指针位移，这样保证一个数组只会遍历一次，也就是O(n)的算法。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">给你一个按 非递减顺序 排序的整数数组 nums，</span></span><br><span class="line"><span class="comment">返回 每个数字的平方 组成的新数组，要求也按 非递减顺序 排序。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">输入：nums = [-4,-1,0,3,10]</span></span><br><span class="line"><span class="comment">输出：[0,1,9,16,100]</span></span><br><span class="line"><span class="comment">解释：平方后，数组变为 [16,1,0,9,100]</span></span><br><span class="line"><span class="comment">排序后，数组变为 [0,1,9,16,100]</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">1.1 &lt;= nums.length &lt;= 104</span></span><br><span class="line"><span class="comment">2.-104 &lt;= nums[i] &lt;= 104</span></span><br><span class="line"><span class="comment">3.nums 已按 非递减顺序 排序</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span>[] <span class="title">SortedSquares</span>(<span class="params"><span class="built_in">int</span>[] nums</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span>[] results = <span class="keyword">new</span> <span class="built_in">int</span>[nums.Length];</span><br><span class="line">        <span class="built_in">int</span> left = <span class="number">0</span>, right = nums.Length - <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">int</span> k = nums.Length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(left &lt;= right)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">int</span> rightNum = nums[right]*nums[right];</span><br><span class="line">            <span class="built_in">int</span> leftNum = nums[left]*nums[left];</span><br><span class="line">            <span class="keyword">if</span>( rightNum &gt; leftNum) </span><br><span class="line">            &#123;</span><br><span class="line">                results[k--] = rightNum;</span><br><span class="line">                right--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> </span><br><span class="line">            &#123;</span><br><span class="line">                results[k--] = leftNum;</span><br><span class="line">                left++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> results;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="04-长度最小的数组-209"><a href="#04-长度最小的数组-209" class="headerlink" title="04 - 长度最小的数组(209)"></a>04 - 长度最小的数组(209)</h3><p>首先最容易想到的就是暴力法了，基本上跟时间复杂度O(n^2)的排序一个思路。题目给到，数组元素为正数，虽然本身数组不是升序或者降序数组，但是用前缀和思想，可以保证新的数组一定为升序，然后再利用二分查找，只要找到 sums[k] &gt;&#x3D; sums[i-1] + target 的那个k的最小值即可，可以压缩暴力法的第二层循环，也就是O(nlogn)的算法。<br>看题解了解了滑动窗口的思路，其实跟双指针思路差不多，设定一个起始指针和终点指针，先用终点指针找到一小段子数组&gt;&#x3D;target的,然后终点指针，然后再起始指针慢慢向前，保证&gt;&#x3D;target的同时，数组长度尽可能地小，每个元素只会遍历到两次，也就是O(2n)的时间复杂度。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">给定一个含有 n 个正整数的数组和一个正整数 target 。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">找出该数组中满足其和 ≥ target 的长度最小的 </span></span><br><span class="line"><span class="comment">连续子数组 [numsl, numsl+1, ..., numsr-1, numsr] ，</span></span><br><span class="line"><span class="comment">并返回其长度。如果不存在符合条件的子数组，返回 0 。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">给定一个含有 n 个正整数的数组和一个正整数 target 。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">找出该数组中满足其和 ≥ target 的长度最小的 连续子数组 [numsl, numsl+1, ..., numsr-1, numsr] ，并返回其长度。如果不存在符合条件的子数组，返回 0 。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">1.1 &lt;= target &lt;= 109</span></span><br><span class="line"><span class="comment">2.1 &lt;= nums.length &lt;= 105</span></span><br><span class="line"><span class="comment">3.1 &lt;= nums[i] &lt;= 105</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 前缀和 + 二分</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">MinSubArrayLen</span>(<span class="params"><span class="built_in">int</span> target, <span class="built_in">int</span>[] nums</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> result = <span class="built_in">int</span>.MaxValue;</span><br><span class="line">        <span class="keyword">var</span> n = nums.Length;</span><br><span class="line">        <span class="built_in">int</span>[] sums = <span class="keyword">new</span> <span class="built_in">int</span>[n+<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">1</span>; i&lt;=n;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            sums[i] = sums[i<span class="number">-1</span>] + nums[i<span class="number">-1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> left = <span class="number">1</span>; left &lt;= n ; left++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> newtarget = target + sums[left<span class="number">-1</span>];</span><br><span class="line">            <span class="keyword">var</span> right = Find(sums,left,n,newtarget);</span><br><span class="line">            <span class="keyword">if</span>(right != <span class="number">-1</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                result = Math.Min(result,right-left+<span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result == <span class="built_in">int</span>.MaxValue ? <span class="number">0</span> : result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">Find</span>(<span class="params"><span class="built_in">int</span>[] array,<span class="built_in">int</span> left,<span class="built_in">int</span> right,<span class="built_in">int</span> target</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span>(left&lt;right)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> mid = (left+right)/<span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span>(array[mid]&lt;target) left = mid+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span> right = mid;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> array[left]&gt;=target?left:<span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 滑动窗口</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">MinSubArrayLen</span>(<span class="params"><span class="built_in">int</span> target, <span class="built_in">int</span>[] nums</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">int</span> result = <span class="built_in">int</span>.MaxValue;</span><br><span class="line">        <span class="built_in">int</span> n = nums.Length<span class="number">-1</span>;</span><br><span class="line">        <span class="built_in">int</span> start = <span class="number">0</span>,end = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(end&lt;=n)</span><br><span class="line">        &#123;</span><br><span class="line">            sum+=nums[end];</span><br><span class="line">            <span class="keyword">while</span>(sum&gt;=target)</span><br><span class="line">            &#123;</span><br><span class="line">                result = Math.Min(result,end-start+<span class="number">1</span>); </span><br><span class="line">                sum-=nums[start++];</span><br><span class="line">            &#125;</span><br><span class="line">            end++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result == <span class="built_in">int</span>.MaxValue ? <span class="number">0</span> : result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="05-螺旋矩阵II-59"><a href="#05-螺旋矩阵II-59" class="headerlink" title="05 - 螺旋矩阵II(59)"></a>05 - 螺旋矩阵II(59)</h3><p>暴力模拟题，没什么难度，让我感到奇怪的是leetcode的c#提交出了bug，但是放在visual studio 没有报错，所以这题用了c++来写。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">给你一个正整数 n ，生成一个包含 1 到 n2 所有元素，</span></span><br><span class="line"><span class="comment">且元素按顺时针顺序螺旋排列的 n x n 正方形矩阵 matrix 。</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">输入：n = 3</span></span><br><span class="line"><span class="comment">输出：[[1,2,3],[8,9,4],[7,6,5]]</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">1.1 &lt;= n &lt;= 20</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">generateMatrix</span>(<span class="type">int</span> n) &#123;</span><br><span class="line">        <span class="type">int</span> top = <span class="number">0</span>;      <span class="comment">// top</span></span><br><span class="line">        <span class="type">int</span> bottom = n<span class="number">-1</span>;    <span class="comment">// bottom</span></span><br><span class="line">        <span class="type">int</span> left = <span class="number">0</span>;      <span class="comment">// left</span></span><br><span class="line">        <span class="type">int</span> right = n<span class="number">-1</span>;    <span class="comment">// right</span></span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">ans</span>(n,<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n));</span><br><span class="line">        <span class="type">int</span> num = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(num &lt;= n*n)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> i=left;i&lt;=right;i++) ans[top][i] = num++;</span><br><span class="line">            ++top;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> i=top;i&lt;=bottom;++i) ans[i][right] = num++;</span><br><span class="line">            --right;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> i=right;i&gt;=left;--i) ans[bottom][i] = num++;</span><br><span class="line">            --bottom;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> i=bottom;i&gt;=top;--i) ans[i][left] = num++;</span><br><span class="line">            ++left;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"># 算法</a>
+              <a href="/tags/leetcode/" rel="tag"># leetcode</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/13/%E8%AE%A1%E7%BD%91%EF%BC%9A%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95-%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="计网：自顶向下方法-第四章 学习笔记">
+      <i class="fa fa-chevron-left"></i> 计网：自顶向下方法-第四章 学习笔记
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE-704"><span class="nav-number">1.</span> <span class="nav-text">01 - 二分查找(704)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#02-%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0-27"><span class="nav-number">2.</span> <span class="nav-text">02 - 移除元素(27)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#03-%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E5%B9%B3%E6%96%B9-977"><span class="nav-number">3.</span> <span class="nav-text">03 - 有序数组的平方(977)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#04-%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E7%9A%84%E6%95%B0%E7%BB%84-209"><span class="nav-number">4.</span> <span class="nav-text">04 - 长度最小的数组(209)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#05-%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5II-59"><span class="nav-number">5.</span> <span class="nav-text">05 - 螺旋矩阵II(59)</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="talentstream"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">talentstream</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2022-08 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">talentstream</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">199k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:01</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

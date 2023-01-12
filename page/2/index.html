@@ -160,6 +160,123 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/17/OSTEP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="talentstream">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="南有青鸟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/10/17/OSTEP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">OSTEP学习笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-10-17 09:43:40" itemprop="dateCreated datePublished" datetime="2022-10-17T09:43:40+08:00">2022-10-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-10-19 14:17:09" itemprop="dateModified" datetime="2022-10-19T14:17:09+08:00">2022-10-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近DDL比较多，但是计划是在10月完成对OS的学习，几乎在月中才开始加快进度，刚看完自己所计划的关于这本书的Part I部分，也就是对CPU的Virtualization，简单来说就是操作系统如何调度CPU，刚接触这方面有很多新词，虽然不是很难，但是看起来还是比较辛苦的，希望月底能看完OS方面的东西并且完成这本书的project，毕竟下个月要计网了。关于最近看的书，《人月神话》算是看完了，每天睡前在床上看一点算是看完了，对于这本书如果我是小白的话，肯定收获颇丰。但是并不是，不过仍然可以收获很多东西，只是大部分收获的东西应该在工作的时候才能体会到了。</p>
+<p>再回到这本书，这本书本身作者写的很容易让人理解，同时每一小章开始会问问题，差不多就是阅读理解了，如果你能找到问题的所有答案，基本上就代表了你理解了这一章。大部分homework都是运行式的，也就是给你代码你运行看结果，用于加深理解。而且在一大部分的内容前后会有作者自己模拟的两段对话，差不多算是作者给你概要和总结了。</p>
+<p>关于作业，作者使用的c语言头文件都是在linu才有的，windows自己并不能编译，所以我装了一个VMware虚拟机来使用Ubuntu系统，基本上没什么难度，一次成功，仅仅是用来写小型代码和阅读C，linux还是挺方便的。</p>
+<p>2022-10-17</p>
+<h3 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h3><h4 id="Diaglogue"><a href="#Diaglogue" class="headerlink" title="Diaglogue"></a>Diaglogue</h4><p>Dialogue 部分就是大概讲了一下这本书的组成和OS的组成，算是抛砖引玉。简单来说，我们将会在这里以三部分——virtualization,concurrency and persistence 进行学习，具体来说，就是会学到一个操作系统是如何运作的，包括如何让哪一个程序在CPU是下一个运行的，如何处理内存溢出，虚拟机如何工作，如何管理硬盘内容，甚至会了解如何建造一个并发系统可以在部分系统崩溃时运作。</p>
+<h4 id="Introduction-to-operating-systems"><a href="#Introduction-to-operating-systems" class="headerlink" title="Introduction to operating systems"></a>Introduction to operating systems</h4><p>首先知道程序是如何运作的，简单来说，就是执行指令。处理器从内存中捕获指令，然后解码它最后执行，这也就是von Neumann 结构。那么在软件方面上便是操作系统，Virtualization 也就是将物理资源(processer memory disk等) 转化成虚拟的，然后便是稍微提了一下虚拟化CPU和Memory。这本书提供的程序只要看一下就可以了，如果写过类C语言基本上都能看懂的，之后是Concurrency，中文翻译是并发，看了下程序感觉就是多线程。接着提了Persistence，也就是这本书的第三部分，刚开始看到这个词的时候还是云里雾里的，看了内容，就是关于存储数据的。</p>
+<p>看完前面这三部分的介绍，大概就能理解OS在做什么，使用物理资产，比如CPU，内存，硬盘，然后虚拟化它们。并发可以来同时处理很多问题，然后长时间地存储文件，保证安全性。</p>
+<p>最后是介绍OS的发展，从早期的库，再到各种概念,system call , trap hander, kernel mode, return-from trap,后面到multiprogramming的介绍，再到UNIX、LINUX，MacOS的介绍，不过都只是泛泛的介绍，如果已经知道的话就没什么营养。</p>
+<h3 id="Virtualization"><a href="#Virtualization" class="headerlink" title="Virtualization"></a>Virtualization</h3><h4 id="Dialogue-on-Virtualization"><a href="#Dialogue-on-Virtualization" class="headerlink" title="Dialogue on Virtualization"></a>Dialogue on Virtualization</h4><p>依然是熟悉的Dialogue，如果去看官方网站的话，你会发现作者将书的内容分为了大概5个部分，虽然总体还是三个部分，但是学习起来还是5个部分方便一些。这一部分就是在讲关于CPU怎么Virtualization，其中的例子就是桃子，很多人要吃桃子，但是只有一个，如何骗他们每个人都可以吃到。这也就是CPU在OS的工作原理，只有一块CPU，但是OS可以给一堆程序制造很多虚拟CPU的幻象，让每个程序都可以在CPU上跑。</p>
+<h4 id="Process"><a href="#Process" class="headerlink" title="Process"></a>Process</h4><p>这一章的两个问题感觉很相近</p>
+<ul>
+<li>如何产生有很多CPU的假象</li>
+<li>虽然只有一些可用的物理CPU，如何让OS提供看起来用不完的CPU</li>
+</ul>
+<p>在这一章，我们将会讨论最基本的抽象概念:进程，简单来说，就是在运行的程序。如果打开任务管理器的话，我们就能看到一个一个进程，并且能看到进程的状态，以及各种占用率，如果看到详细信息，可以看到名称，PID，状态，CPU，内存以及一堆信息等等。那么CPU是如何运行一堆程序的呢？<br>最基本的技术，就是time sharing，就是CPU被一段程序用了一段时间，可以再让另一个东西用一段时间。相对应的是space sharing,磁盘空间就是被共享的资源，如果其中一块被分配给一个文件，这块就不能被分配给其他文件了，除非这个文件被删除。</p>
+<p><strong>Process API</strong> : Create,Destroy,wait,Miscellaneous Control,Status.<br>前面的大概就是Process 的API，进行部分的讲解。</p>
+<p><strong>Process Creation</strong> : OS如何让程序运行。第一件事便是将磁盘加载程序的代码和数据到内存中，一旦加载好，然后将一些内存分配到栈上，一些分配到堆上，最后再完成一些关于I&#x2F;O的设置，这样就为程序的执行准备好了条件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20221017161057.png" alt="img"></p>
+<p><strong>Process States</strong> : 在了解了什么是进程，以及粗略地了解了如何创建，现在来了解一些进程的状态，并且有几张图帮助理解：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20221017161126.png" alt="img"></p>
+<ul>
+<li>Running : 运行</li>
+<li>Ready : 准备运行，但是没轮到</li>
+<li>Blocked : 阻塞状态，程序运行到无法进行操作会先挂起让其他Ready程序先运行，等好了进入Ready状态，还得等别人Running完</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20221017162004.png" alt="img"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20221017162019.png" alt="img"></p>
+<p><strong>Summary</strong> ：这一章探讨了进程，可以简单地被看成运行的程序，关于这一章的问题，虽然这里没有直接提及，我的理解就是，因为大部分程序不一定在运行，将运行中的程序转化成一个一个进程的概念，来使用CPU，但是是有顺序使用CPU的，这样每个程序都能用到CPU，这样就造成了每个程序都有自己的CPU的感觉（这里并没有提到多线程的内容）</p>
+<h4 id="Direct-Execution"><a href="#Direct-Execution" class="headerlink" title="Direct Execution"></a>Direct Execution</h4><p>这一章的是主要问题就是如何有效通过控制来虚拟化CPU</p>
+<p><strong>Limited Direct Execution</strong> :</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/14/Games104%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2159,105 +2276,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/08/%E8%BF%99%E4%BA%9B%E6%97%B6%E5%80%99%E6%88%91%E9%83%BD%E5%9C%A8%E5%BF%99%E4%BA%9B%E4%BB%80%E4%B9%88-%E5%90%8C%E6%97%B6%E4%BD%9C%E4%B8%BA2021%E6%80%BB%E7%BB%93%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="talentstream">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="南有青鸟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/08/%E8%BF%99%E4%BA%9B%E6%97%B6%E5%80%99%E6%88%91%E9%83%BD%E5%9C%A8%E5%BF%99%E4%BA%9B%E4%BB%80%E4%B9%88-%E5%90%8C%E6%97%B6%E4%BD%9C%E4%B8%BA2021%E6%80%BB%E7%BB%93%EF%BC%89/" class="post-title-link" itemprop="url">这些时候我都在忙些什么(同时作为2021总结）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-10-08 21:31:21" itemprop="dateCreated datePublished" datetime="2021-10-08T21:31:21+08:00">2021-10-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-06 10:06:55" itemprop="dateModified" datetime="2022-08-06T10:06:55+08:00">2022-08-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9D%82%E8%B0%88/" itemprop="url" rel="index"><span itemprop="name">杂谈</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>太忙了，先把这段时间要做的事情放出来（加油）😂<br>10.8 循环设计QA<br>10.10 建模小作业DDL<br>10.15 循环设计实物报告<br>10.19 马原pre<br>10.20 循环设计海报pre<br>10.27 平面构成<br>色彩构成<br>构成海报<br>11.5 绘画打卡<br>11.8 家族史论文<br>11月中旬 游戏demo<br>建模大作业<br>12月 logbook 、速写、工概考试、交互导论汇报</p>
-<p>当做完一些我会挑一些自己说说自己干了些什么🤯<br>——2021.10.8</p>
-<p>现在才开始写这篇推文，属于是大拖更了，虽然忙了一阵子，但是忙完后会颓废上几天，什么事都不想干，稍微画了点画才调整好状态，属于我的经典状态了。<br>——2022.1.7</p>
-<p>完成后才发现没什么可以讲的，即使完成的时候很耗时间，但是回过头来看才发现原来就这么点东西。可能最值得讲的是我的速写作业？</p>
-<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/2021ZongJie/1.png" alt="img"><br><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/2021ZongJie/2.png" alt="img"></p>
-<p>速写，我是一直在寻找有效练习，可以说我有一半的画作是有效练习的就不错了。看到朋友圈的同学发的画的比我好未免心生嫉妒，同时也会去查找原因。因为有些人本身就是在工设读的，我作为一个理工科学生，毕竟在绘画方面学的相比他们要少很多。可能我在我们班的绘画水平中是中间水平吧，但是在这个领域不比差，只比谁更强，所以有时候会emo😫。</p>
-<p>作业既然没什么说的，做之前还会觉得很困难，可以说很多，做完后才发现只是个小事（建模再也不可能用alias了，太辣鸡了）。接下来说说我的2021吧。</p>
-<p>2021刚开始就是军训+放假，可以说我的2021是在下学期开学之后才算开始。课业也多了很多，从第一学期的三门考试变到了七门考试（在电信的时候），学的那叫一个痛苦。不过翘课频率也增加了，主要还是翘数据结构，毕竟对我来说很简单。我花了2周时间对着视频教程做了小狐狸，当时生活巨不节律，喝奶茶健身加熬夜早起写代码，翘了很多课，搞得内分泌失调，长了好多痘痘😭（直到现在还有些没有消去），不过算是对unity有了些基本认知。<br><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/2021ZongJie/3.png" alt="img"><br>同时，多亏与wtw一次聊天，想去查一下转计算机学院的要求，突然发现已经开始转交互专业的time了，根据我查的资料，发现是早了一整个月的，才发现前两年是有疫情所以是线上的，差点错过（错过了宣讲会，不过根据现在的同学说，当时只有三个人去，七个老师给三个学生宣讲，🤣），于是准备了一个月，各种补知识，在排名比较中间的地方转专业成功了。<br><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/2021ZongJie/4.png" alt="img"><br>当时同时考7科，天天喝咖啡从早复习到晚上，就怕挂科。不过最终还是没挂科，最难的电路67险过（没想到在班里还可以排十几名，班里四十多个人😂），成功地转到了设计学院。</p>
-<p>暑假稍微对做网站有点兴趣，于是花了一周时间简单学了三件套，加上不断地练习，练习到开学后十几天，搭好网站后就变成懒狗了（bushi），但是应付下学期的课程绰绰有余了。</p>
-<p>到了中期，大作业不断接踵而至，有段时间每天2点睡觉8点起床去上课，那段时间真的是要累死，emo率也很高。学习了素描与色彩，对于绘画的初步认知不再是大一时的玩玩而已，也对下一步的绘画道路进行思考。</p>
-<p>我的2021，简单来说，便是重新认识自我，确认目标，可能现在还不是特别清楚，因为时间不多了，我又有两条道路可以选择（游戏与设计），所以还不能坚定地立下来。</p>
-<p>总的来说，还是学到很多，但是还不够，2022，唔，由不得不卷的理由了。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2329,7 +2347,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -2342,7 +2360,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -2369,7 +2387,7 @@
 <div class="copyright">
   
   &copy; 2022-08 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -2378,12 +2396,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">194k</span>
+    <span title="站点总字数">199k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:56</span>
+    <span title="站点阅读时长">3:01</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
