@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="前言最近在复习图形学理论知识，顺便补一下记录，在这里记录的是比较常见的变换，会有一些比较复杂的地方没有涉及到。在图形学的变换中，对于数学的要求并不是很高，只需要会简单的线性代数矩阵乘法即可。 2D线性变换(Linear Transformation)我们将点坐标以向量作为表示，变换以矩阵表示。两者相乘就是点经过变换后的新位置  缩放变换(Scaling)缩放变换就是原坐标乘以一个数进行变换,设原点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图形学 几何变换">
+<meta property="og:url" content="http://example.com/2023/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/index.html">
+<meta property="og:site_name" content="TALENTSTREAM">
+<meta property="og:description" content="前言最近在复习图形学理论知识，顺便补一下记录，在这里记录的是比较常见的变换，会有一些比较复杂的地方没有涉及到。在图形学的变换中，对于数学的要求并不是很高，只需要会简单的线性代数矩阵乘法即可。 2D线性变换(Linear Transformation)我们将点坐标以向量作为表示，变换以矩阵表示。两者相乘就是点经过变换后的新位置  缩放变换(Scaling)缩放变换就是原坐标乘以一个数进行变换,设原点">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502132310.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502132549.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502132346.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502132736.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502132842.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502133038.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502133409.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502133613.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502133738.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502133827.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502133856.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502134045.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502134020.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502134249.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502134720.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502134828.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502134727.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502153826.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502154126.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502142043.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502142647.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502143533.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502150436.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502151041.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502151452.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502151648.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502151707.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502151125.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502153229.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502153251.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502153514.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502154621.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502154602.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502154855.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502155145.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502155553.png">
+<meta property="article:published_time" content="2023-05-02T05:11:11.000Z">
+<meta property="article:modified_time" content="2024-01-07T07:45:35.789Z">
+<meta property="article:author" content="TALENTSTREAM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502132310.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>图形学 几何变换</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="TALENTSTREAM" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Blog</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%85%89%E6%A0%85%E5%8C%96/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/04/15/c-primer/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/&text=图形学 几何变换"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/&title=图形学 几何变换"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/&is_video=false&description=图形学 几何变换"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=图形学 几何变换&body=Check out this article: http://example.com/2023/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/&title=图形学 几何变换"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/&title=图形学 几何变换"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/&title=图形学 几何变换"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/&title=图形学 几何变换"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/&name=图形学 几何变换&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/&t=图形学 几何变换"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2D%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2-Linear-Transformation"><span class="toc-number">2.</span> <span class="toc-text">2D线性变换(Linear Transformation)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%A9%E6%94%BE%E5%8F%98%E6%8D%A2-Scaling"><span class="toc-number">2.1.</span> <span class="toc-text">缩放变换(Scaling)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%AA%E5%88%87%E5%8F%98%E6%8D%A2-Shearing"><span class="toc-number">2.2.</span> <span class="toc-text">剪切变换(Shearing)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%8B%E8%BD%AC%E5%8F%98%E6%8D%A2-Rotation"><span class="toc-number">2.3.</span> <span class="toc-text">旋转变换(Rotation)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E7%A7%B0%E5%8F%98%E6%8D%A2-Reflection"><span class="toc-number">2.4.</span> <span class="toc-text">对称变换(Reflection)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%98%E6%8D%A2%E7%9A%84%E7%BB%84%E5%90%88"><span class="toc-number">2.5.</span> <span class="toc-text">变换的组合</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3D%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2"><span class="toc-number">3.</span> <span class="toc-text">3D线性变换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#scaling"><span class="toc-number">3.1.</span> <span class="toc-text">scaling</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rotation"><span class="toc-number">3.2.</span> <span class="toc-text">rotation</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BF%E5%B0%84%E5%8F%98%E6%8D%A2-affine-transformation"><span class="toc-number">4.</span> <span class="toc-text">仿射变换(affine transformation)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE%E5%8F%98%E6%8D%A2-Viewing-Transformation"><span class="toc-number">5.</span> <span class="toc-text">视图变换(Viewing Transformation)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%86%E5%8F%A3%E5%8F%98%E6%8D%A2"><span class="toc-number">5.1.</span> <span class="toc-text">视口变换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A3%E4%BA%A4%EF%BC%88Orthographic%EF%BC%89%E6%8A%95%E5%BD%B1%E5%8F%98%E6%8D%A2"><span class="toc-number">5.2.</span> <span class="toc-text">正交（Orthographic）投影变换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%91%84%E5%83%8F%E6%9C%BA%E5%8F%98%E6%8D%A2"><span class="toc-number">5.3.</span> <span class="toc-text">摄像机变换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%8F%E8%A7%86%E6%8A%95%E5%BD%B1%E5%8F%98%E6%8D%A2"><span class="toc-number">5.4.</span> <span class="toc-text">透视投影变换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%80%E7%9F%AD%E7%9A%84%E6%80%BB%E7%BB%93"><span class="toc-number">5.5.</span> <span class="toc-text">简短的总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        图形学 几何变换
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">TALENTSTREAM</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-05-02T05:11:11.000Z" class="dt-published" itemprop="datePublished">2023-05-02</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近在复习图形学理论知识，顺便补一下记录，在这里记录的是比较常见的变换，会有一些比较复杂的地方没有涉及到。在图形学的变换中，对于数学的要求并不是很高，只需要会简单的线性代数矩阵乘法即可。</p>
+<h3 id="2D线性变换-Linear-Transformation"><a href="#2D线性变换-Linear-Transformation" class="headerlink" title="2D线性变换(Linear Transformation)"></a>2D线性变换(Linear Transformation)</h3><p>我们将点坐标以向量作为表示，变换以矩阵表示。两者相乘就是点经过变换后的新位置</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502132310.png"></p>
+<h4 id="缩放变换-Scaling"><a href="#缩放变换-Scaling" class="headerlink" title="缩放变换(Scaling)"></a>缩放变换(Scaling)</h4><p>缩放变换就是原坐标乘以一个数进行变换,设原点为(x,y),新点为(sx * x, sy * y),可以很快反推出矩阵。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502132549.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502132346.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502132736.png"></p>
+<h4 id="剪切变换-Shearing"><a href="#剪切变换-Shearing" class="headerlink" title="剪切变换(Shearing)"></a>剪切变换(Shearing)</h4><p>不知道该怎么翻译，应该是将正方形变形为平行四边形的操作。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502132842.png"></p>
+<p>假设只对x进行变换，而不对y进行变换，那么x新坐标即为(1+ay)，稍微反推一下，获取关键坐标(0,0) (a,1),y 没有进行剪切变换。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502133038.png"></p>
+<p>另一种方法可以想为shearing只是对一个轴进行旋转一个角度</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502133409.png"></p>
+<h4 id="旋转变换-Rotation"><a href="#旋转变换-Rotation" class="headerlink" title="旋转变换(Rotation)"></a>旋转变换(Rotation)</h4><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502133613.png"></p>
+<p>假设点a到(0,0)距离为r，那么xa &#x3D; rcosα, ya &#x3D; rsinα所示，我们将a向量旋转到b向量，那么</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502133738.png"></p>
+<p>将xa &#x3D; rcosα, ya &#x3D; rsinα带入后得到</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502133827.png"></p>
+<p>然后我们推出旋转矩阵为</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502133856.png"></p>
+<p>以上是逆时针旋转的矩阵</p>
+<h4 id="对称变换-Reflection"><a href="#对称变换-Reflection" class="headerlink" title="对称变换(Reflection)"></a>对称变换(Reflection)</h4><p>其实跟缩放变换差不多 </p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502134045.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502134020.png"></p>
+<h4 id="变换的组合"><a href="#变换的组合" class="headerlink" title="变换的组合"></a>变换的组合</h4><p>由于矩阵乘法一般不满足交换律，即 A<em>B !&#x3D; B</em>A,所以变换的顺序比较重要</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502134249.png"></p>
+<h3 id="3D线性变换"><a href="#3D线性变换" class="headerlink" title="3D线性变换"></a>3D线性变换</h3><h4 id="scaling"><a href="#scaling" class="headerlink" title="scaling"></a>scaling</h4><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502134720.png"></p>
+<h4 id="rotation"><a href="#rotation" class="headerlink" title="rotation"></a>rotation</h4><p>旋转较二维有所不同，我们只需要了解对应不同轴旋转的矩阵</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502134828.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502134727.png"></p>
+<p><strong>绕任意轴旋转</strong>：我们只有绕x，y，z旋转的方法，我们将轴给旋转到x&#x2F;y&#x2F;z上，然后再应用标准旋转矩阵，最后将轴逆旋转回到原先的地方就完成了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502153826.png"></p>
+<p>接下来我们尝试将将u v w(已知u，任取t方向与u组成平面，利用叉乘特性得到v w) 对应到 x y z </p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502154126.png"></p>
+<h3 id="仿射变换-affine-transformation"><a href="#仿射变换-affine-transformation" class="headerlink" title="仿射变换(affine transformation)"></a>仿射变换(affine transformation)</h3><p>前面一直在讨论线性变换，也就是依据原点(0,0)进行变换，如果我们加上位置变换(Translation)就会让之前的所有矩阵都不成立。为了相同，我们增加一维，让(x,y) -&gt; (x,y,1) 这样子当 x’ &#x3D; m11x + m12y + xt时，就不会打乱之前的线性变换矩阵。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502142043.png"></p>
+<p>这样子的向量是不是很熟悉，也就是齐次坐标，最后一维为1是一个坐标，为0时是一个向量，对于其他数字，我们要将坐标进行归一化，也就是(x,y,w) -&gt; (x&#x2F;w,y&#x2F;w,1)</p>
+<p>在三维状态下也是如此</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502142647.png"></p>
+<h3 id="视图变换-Viewing-Transformation"><a href="#视图变换-Viewing-Transformation" class="headerlink" title="视图变换(Viewing Transformation)"></a>视图变换(Viewing Transformation)</h3><p>在之前的变换，我们讨论了如何变换点的位置。现在我们要将现实世界中的点投影在屏幕上，我们将要经历三步</p>
+<ul>
+<li>摄像机变换(eye&#x2F;camera transformation) : 调整摄像机位置，旋转角度，也就是得到<strong>物体与摄像机的相对位置</strong></li>
+<li>投影变换(projection transformation) : 摄像机变换后，得到可视范围物体对于摄像机的相对坐标，之后根据情况选择平行投影或者透视头型，将<strong>三维空间投影至标准二维平面</strong>[-1,1]^2</li>
+<li>视口变换(viewport transformatino) ： 将[-1,1]^2 -&gt; [0,width]<em>[0,height],也就是*<em>将标准平面映射到屏幕分辨率范围上</em></em></li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502143533.png"></p>
+<h4 id="视口变换"><a href="#视口变换" class="headerlink" title="视口变换"></a>视口变换</h4><p>先从视口变换入手，视口变换是最简单也是最容易理解的矩阵，将-1 -&gt; 0 ,1 - &gt; width&#x2F;height 也就是简单的缩放变换，然后为了保持原点在屏幕中间，多了一步Translation</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502150436.png"></p>
+<h4 id="正交（Orthographic）投影变换"><a href="#正交（Orthographic）投影变换" class="headerlink" title="正交（Orthographic）投影变换"></a>正交（Orthographic）投影变换</h4><p>正交投影也是简单的缩放变换和位移，我们用一个包围盒围住物体，要注意的是在这里，n &gt; f，因为我们是从-z往物体上看的</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502151041.png"></p>
+<p>由于是空间的变换，容易得到以下矩阵<br>证明过程，先举一个二维的例子：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502151452.png"></p>
+<p>可以发现分三步走，Translate（移动到原点）-&gt;Scale（进行缩放变化）-&gt;Translate（移动到对应的位置）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502151648.png"></p>
+<p>推广到三维</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502151707.png"></p>
+<p>将[l, r] [t, b] [n, f] 和 [-1, 1]^3 代入得正交矩阵</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502151125.png"></p>
+<h4 id="摄像机变换"><a href="#摄像机变换" class="headerlink" title="摄像机变换"></a>摄像机变换</h4><p>虽然说是摄像机变换，但其实是调整物体的位置，将摄像机的坐标轴对应到原世界的x，y，z就行了，问题就变成了将camera的坐标系变到与原世界坐标系重合</p>
+<p>我们先定义摄像机的三个属性</p>
+<ul>
+<li>e(eye position) : 摄像机位置</li>
+<li>g(gaze direction) : 摄像机朝向的角度</li>
+<li>t(view-up vector) : 摄像机朝向角度的正上方向，也就是为了g，t组成一个平面</li>
+</ul>
+<p>然后我们得到摄像机坐标系</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502153229.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502153251.png"></p>
+<p>我们将摄像机变换分成两步</p>
+<ul>
+<li>移动到原点</li>
+<li>通过旋转矩阵将二者坐标系重合</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502153514.png"></p>
+<h4 id="透视投影变换"><a href="#透视投影变换" class="headerlink" title="透视投影变换"></a>透视投影变换</h4><p>透视变换就是将原本的包围盒变成一个具有近大远小属性的锥形盒子</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502154621.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502154602.png"></p>
+<p>我们容易得到以下对应关系，但是第三行如何得出，利用近平面和远平面的z坐标不变的性质进行代入</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502154855.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502155145.png"></p>
+<p>现在我们已经得到了包围盒变为锥形盒子的矩阵 P<br>可以很快得到一个等式 <strong>Mper &#x3D; Morth * P</strong><br>也就是说，我们先将包围盒变成 [-1,1] ^ 2 的，然后在这个[-1,1] ^ 2的小正方体进行透视变换，这与先变为锥形盒子再压缩到[-1,1] ^ 2是一样的,得出以下矩阵</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230502155553.png"></p>
+<h4 id="简短的总结"><a href="#简短的总结" class="headerlink" title="简短的总结"></a>简短的总结</h4><p>我们在经历过上述计算后，可以得出现实世界到屏幕上的矩阵变换 M &#x3D; Mview * Mper * Mcam * Mmodel</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li>Fundamentals of Computer Graphics 4th 第六章第七章</li>
+<li>GAMES101-现代计算机图形学入门-闫令琪 变换部分</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/144329075">计算机图形学二：视图变换(坐标系转化，正交投影，透视投影，视口变换)</a></li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/archives/">Blog</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2D%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2-Linear-Transformation"><span class="toc-number">2.</span> <span class="toc-text">2D线性变换(Linear Transformation)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%A9%E6%94%BE%E5%8F%98%E6%8D%A2-Scaling"><span class="toc-number">2.1.</span> <span class="toc-text">缩放变换(Scaling)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%AA%E5%88%87%E5%8F%98%E6%8D%A2-Shearing"><span class="toc-number">2.2.</span> <span class="toc-text">剪切变换(Shearing)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%8B%E8%BD%AC%E5%8F%98%E6%8D%A2-Rotation"><span class="toc-number">2.3.</span> <span class="toc-text">旋转变换(Rotation)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E7%A7%B0%E5%8F%98%E6%8D%A2-Reflection"><span class="toc-number">2.4.</span> <span class="toc-text">对称变换(Reflection)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%98%E6%8D%A2%E7%9A%84%E7%BB%84%E5%90%88"><span class="toc-number">2.5.</span> <span class="toc-text">变换的组合</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3D%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2"><span class="toc-number">3.</span> <span class="toc-text">3D线性变换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#scaling"><span class="toc-number">3.1.</span> <span class="toc-text">scaling</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rotation"><span class="toc-number">3.2.</span> <span class="toc-text">rotation</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%BF%E5%B0%84%E5%8F%98%E6%8D%A2-affine-transformation"><span class="toc-number">4.</span> <span class="toc-text">仿射变换(affine transformation)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E5%9B%BE%E5%8F%98%E6%8D%A2-Viewing-Transformation"><span class="toc-number">5.</span> <span class="toc-text">视图变换(Viewing Transformation)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%86%E5%8F%A3%E5%8F%98%E6%8D%A2"><span class="toc-number">5.1.</span> <span class="toc-text">视口变换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A3%E4%BA%A4%EF%BC%88Orthographic%EF%BC%89%E6%8A%95%E5%BD%B1%E5%8F%98%E6%8D%A2"><span class="toc-number">5.2.</span> <span class="toc-text">正交（Orthographic）投影变换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%91%84%E5%83%8F%E6%9C%BA%E5%8F%98%E6%8D%A2"><span class="toc-number">5.3.</span> <span class="toc-text">摄像机变换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%8F%E8%A7%86%E6%8A%95%E5%BD%B1%E5%8F%98%E6%8D%A2"><span class="toc-number">5.4.</span> <span class="toc-text">透视投影变换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%80%E7%9F%AD%E7%9A%84%E6%80%BB%E7%BB%93"><span class="toc-number">5.5.</span> <span class="toc-text">简短的总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/&text=图形学 几何变换"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/&title=图形学 几何变换"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/&is_video=false&description=图形学 几何变换"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=图形学 几何变换&body=Check out this article: http://example.com/2023/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/&title=图形学 几何变换"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/&title=图形学 几何变换"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/&title=图形学 几何变换"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/&title=图形学 几何变换"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/&name=图形学 几何变换&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/&t=图形学 几何变换"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2024
+    TALENTSTREAM
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Blog</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

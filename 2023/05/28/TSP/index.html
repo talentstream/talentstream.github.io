@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="简介 TSP全称为Travelling Salesman Problem（旅行商问题），通俗而言，它是指对于给定的一系列城市和每对城市之间的距离，找到访问每一座城市仅一次并回到起始城市的最短回路。由于求精确解的时间复杂度很大，衍生出了很多近似算法，不过在这里不讨论，我们在这里只讨论精确解DP算法   有n个城市，从起点 0 开始游历每一个城市，只访问每个城市一次，最后回到起点，所需要的最短路径是多">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TSP">
+<meta property="og:url" content="http://example.com/2023/05/28/TSP/index.html">
+<meta property="og:site_name" content="TALENTSTREAM">
+<meta property="og:description" content="简介 TSP全称为Travelling Salesman Problem（旅行商问题），通俗而言，它是指对于给定的一系列城市和每对城市之间的距离，找到访问每一座城市仅一次并回到起始城市的最短回路。由于求精确解的时间复杂度很大，衍生出了很多近似算法，不过在这里不讨论，我们在这里只讨论精确解DP算法   有n个城市，从起点 0 开始游历每一个城市，只访问每个城市一次，最后回到起点，所需要的最短路径是多">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230528224632.png">
+<meta property="article:published_time" content="2023-05-28T11:01:14.000Z">
+<meta property="article:modified_time" content="2024-01-07T07:46:38.663Z">
+<meta property="article:author" content="TALENTSTREAM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230528224632.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>TSP</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="TALENTSTREAM" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Blog</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2024/01/07/Moving-From-Next-to-Cactus/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/05/26/LRU-TopK/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/05/28/TSP/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/05/28/TSP/&text=TSP"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/05/28/TSP/&title=TSP"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/05/28/TSP/&is_video=false&description=TSP"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=TSP&body=Check out this article: http://example.com/2023/05/28/TSP/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/05/28/TSP/&title=TSP"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/05/28/TSP/&title=TSP"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/05/28/TSP/&title=TSP"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/05/28/TSP/&title=TSP"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/05/28/TSP/&name=TSP&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/05/28/TSP/&t=TSP"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">2.</span> <span class="toc-text">参考</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        TSP
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">TALENTSTREAM</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-05-28T11:01:14.000Z" class="dt-published" itemprop="datePublished">2023-05-28</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><blockquote>
+<p>TSP全称为Travelling Salesman Problem（旅行商问题），通俗而言，它是指对于给定的一系列城市和每对城市之间的距离，找到访问每一座城市仅一次并回到起始城市的最短回路。<br>由于求精确解的时间复杂度很大，衍生出了很多近似算法，不过在这里不讨论，我们在这里只讨论精确解DP算法</p>
+</blockquote>
+<ul>
+<li>有n个城市，从起点 0 开始游历每一个城市，只访问每个城市一次，最后回到起点，所需要的最短路径是多少？</li>
+<li>定义dp[S][i] ,S为集合即已经走过的城市，但是从0个城市到所有城市的集合太多了，所以我们采用状态压缩，便于遍历。dp[S][i] 即在i点结束，集合S中每个点恰好走过一次时的最短路长度</li>
+<li>所以最终答案是 min(dp[S][i]),S为所有城市，i的话每个点都可能是终点。</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230528224632.png"></p>
+<p>容易得出以上状态转移方程，即dp[S][i] &#x3D; min(不包括 i 的集合 + j 到 i 的距离)<br>上图有些错误，应该是 <strong>dp[S-{i}]</strong> ,下面看代码</p>
+<p><strong>参考代码，模板</strong>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> n = <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> d[n][n] = &#123;</span><br><span class="line">    &#123;<span class="number">0</span>, <span class="number">10</span>, <span class="number">15</span>, <span class="number">20</span>&#125;,</span><br><span class="line">    &#123;<span class="number">10</span>, <span class="number">0</span>, <span class="number">25</span>, <span class="number">25</span>&#125;,</span><br><span class="line">    &#123;<span class="number">15</span>, <span class="number">25</span>, <span class="number">0</span>, <span class="number">30</span>&#125;,</span><br><span class="line">    &#123;<span class="number">20</span>, <span class="number">25</span>, <span class="number">30</span>, <span class="number">0</span>&#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> minn = INT_MAX;</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">dp</span>(<span class="number">1</span> &lt;&lt; n, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> nowstate = <span class="number">1</span>; nowstate &lt; (<span class="number">1</span> &lt;&lt; n); ++nowstate) <span class="comment">// 集合变化</span></span><br><span class="line">    &#123;</span><br><span class="line">        dp[nowstate] = <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n, INT_MAX);<span class="comment">// 初始化dp数组</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> ((nowstate &amp; (<span class="number">1</span> &lt;&lt; j))) <span class="comment">// 如果现在的状态包括 j 这个城市</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="type">int</span> preState = nowstate ^ (<span class="number">1</span> &lt;&lt; j);</span><br><span class="line">                <span class="keyword">if</span> (preState == <span class="number">0</span>) <span class="comment">// 如果集合只包括 j 这个城市 那么dp值为 d[0][j] 假设起点是0的话</span></span><br><span class="line">                    dp[nowstate][j] = d[<span class="number">0</span>][j];</span><br><span class="line">                <span class="keyword">else</span> <span class="comment">// 集合不止 j 这个城市 , 遍历 0 ~ n 城市，如果前置状态也就是 S - &#123;j&#125; 这个集合都没更新的话就不用理了，如果更新了就进行比较</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">if</span> (dp[preState][i] &lt; INT_MAX &amp;&amp; dp[preState][i] + d[i][j] &lt; dp[nowstate][j])</span><br><span class="line">                            dp[nowstate][j] = dp[preState][i] + d[i][j];</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; ++j)</span><br><span class="line">        minn = <span class="built_in">min</span>(minn, dp[(<span class="number">1</span> &lt;&lt; n) - <span class="number">1</span>][j] + d[<span class="number">0</span>][j]); <span class="comment">// 如果是要求环就加上 d[0][j] 如果不是的话就不用加</span></span><br><span class="line">    cout &lt;&lt; minn &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>943.最短超级串</strong>:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stack&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bitset&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">calu</span><span class="params">(<span class="type">const</span> string &amp;a, <span class="type">const</span> string &amp;b)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">string <span class="title">shortestSuperstring</span><span class="params">(vector&lt;string&gt; &amp;words)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> n = words.<span class="built_in">size</span>();</span><br><span class="line"></span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">graph</span>(n, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; i; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            graph[i][j] = <span class="built_in">calu</span>(words[i], words[j]);</span><br><span class="line">            graph[j][i] = <span class="built_in">calu</span>(words[j], words[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">dp</span>(<span class="number">1</span> &lt;&lt; n, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n));</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">path</span>(<span class="number">1</span> &lt;&lt; n, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> now_state = <span class="number">1</span>; now_state &lt; (<span class="number">1</span> &lt;&lt; n); ++now_state)</span><br><span class="line">    &#123;</span><br><span class="line">        dp[now_state] = <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n, INT_MAX);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; ++j)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> ((now_state &amp; (<span class="number">1</span> &lt;&lt; j)) &gt; <span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="type">int</span> pre_state = now_state ^ (<span class="number">1</span> &lt;&lt; j);</span><br><span class="line">                <span class="keyword">if</span> (pre_state == <span class="number">0</span>)</span><br><span class="line">                    dp[now_state][j] = words[j].<span class="built_in">size</span>();</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">if</span> (dp[pre_state][i] &lt; INT_MAX &amp;&amp; dp[pre_state][i] + graph[i][j] &lt; dp[now_state][j])</span><br><span class="line">                        &#123;</span><br><span class="line">                            dp[now_state][j] = dp[pre_state][i] + graph[i][j];</span><br><span class="line">                            path[now_state][j] = i;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> last = <span class="number">-1</span>, minn = INT_MAX;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = (<span class="number">1</span> &lt;&lt; n) - <span class="number">1</span>, j = <span class="number">0</span>; j &lt; n; ++j)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (dp[i][j] &lt; minn)</span><br><span class="line">        &#123;</span><br><span class="line">            minn = dp[i][j];</span><br><span class="line">            last = j;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> cur = (<span class="number">1</span> &lt;&lt; n) - <span class="number">1</span>;</span><br><span class="line">    stack&lt;<span class="type">int</span>&gt; s;</span><br><span class="line">    <span class="keyword">while</span> (cur &gt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        s.<span class="built_in">push</span>(last);</span><br><span class="line">        <span class="type">int</span> temp = cur;</span><br><span class="line">        cur ^= (<span class="number">1</span> &lt;&lt; last);</span><br><span class="line">        last = path[temp][last];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    string result = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="type">int</span> i = s.<span class="built_in">top</span>();</span><br><span class="line">    s.<span class="built_in">pop</span>();</span><br><span class="line">    result += words[i];</span><br><span class="line">    <span class="keyword">while</span> (!s.<span class="built_in">empty</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> j = s.<span class="built_in">top</span>();</span><br><span class="line">        s.<span class="built_in">pop</span>();</span><br><span class="line">        result += (words[j].<span class="built_in">substr</span>(words[j].<span class="built_in">size</span>() - graph[i][j]));</span><br><span class="line">        i = j;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">calu</span><span class="params">(<span class="type">const</span> string &amp;a, <span class="type">const</span> string &amp;b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; a.<span class="built_in">size</span>(); ++i)</span><br><span class="line">        <span class="keyword">if</span> (b.<span class="built_in">rfind</span>(a.<span class="built_in">substr</span>(i), <span class="number">0</span>) == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> b.<span class="built_in">size</span>() - (a.<span class="built_in">size</span>() - i);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> b.<span class="built_in">size</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    vector&lt;string&gt; words&#123;<span class="string">&quot;ab&quot;</span>, <span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>&#125;;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; <span class="built_in">shortestSuperstring</span>(words);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://leetcode.com/problems/find-the-shortest-superstring/solutions/194932/travelling-salesman-problem/">Leetcode -Travelling Salesman Problem</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/609551220">开学算法练习—状态压缩DP解决TSP问题</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/travelling-salesman-problem-using-dynamic-programming/">Travelling Salesman Problem using Dynamic Programming</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/blog/Starlight237/solution-p1433">题解 P1433 【吃奶酪】</a></li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/archives/">Blog</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">2.</span> <span class="toc-text">参考</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/05/28/TSP/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/05/28/TSP/&text=TSP"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/05/28/TSP/&title=TSP"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/05/28/TSP/&is_video=false&description=TSP"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=TSP&body=Check out this article: http://example.com/2023/05/28/TSP/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/05/28/TSP/&title=TSP"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/05/28/TSP/&title=TSP"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/05/28/TSP/&title=TSP"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/05/28/TSP/&title=TSP"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/05/28/TSP/&name=TSP&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/05/28/TSP/&t=TSP"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2024
+    TALENTSTREAM
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Blog</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

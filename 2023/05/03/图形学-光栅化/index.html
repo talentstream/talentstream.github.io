@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="图形管线（graphics pipeline）总览 光栅化绘制线条（midpoint-Bresenham算法）我们首先知道任何一条一维直线可以用 f(x,y) &#x3D; ax + by + c &#x3D; 0 ,将点(x0,y0) 和(x1,y1)代入得以下结果  我们在这里先考虑斜率在(0,1]的情况，之后类推到 (-∞,-1],(-1,0],(1,∞)  在基于斜率在0-1的情况下，如上">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图形学-光栅化">
+<meta property="og:url" content="http://example.com/2023/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%85%89%E6%A0%85%E5%8C%96/index.html">
+<meta property="og:site_name" content="TALENTSTREAM">
+<meta property="og:description" content="图形管线（graphics pipeline）总览 光栅化绘制线条（midpoint-Bresenham算法）我们首先知道任何一条一维直线可以用 f(x,y) &#x3D; ax + by + c &#x3D; 0 ,将点(x0,y0) 和(x1,y1)代入得以下结果  我们在这里先考虑斜率在(0,1]的情况，之后类推到 (-∞,-1],(-1,0],(1,∞)  在基于斜率在0-1的情况下，如上">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503140547.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503214800.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503215239.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503215544.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503215938.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503220154.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503221856.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503223329.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503223237.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503223729.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503222945.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503223826.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503225042.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503225034.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503233930.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230504210946.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230504211039.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230504211346.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230504211515.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230504211558.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230504211732.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230504211851.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230504212148.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230504212203.png">
+<meta property="article:published_time" content="2023-05-03T05:30:56.000Z">
+<meta property="article:modified_time" content="2024-01-07T07:45:33.036Z">
+<meta property="article:author" content="TALENTSTREAM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503140547.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>图形学-光栅化</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="TALENTSTREAM" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Blog</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/05/04/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E4%B8%80%E4%BA%9B%E9%A2%9D%E5%A4%96%E7%BB%86%E8%8A%82/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/05/02/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%87%A0%E4%BD%95%E5%8F%98%E6%8D%A2/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%85%89%E6%A0%85%E5%8C%96/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%85%89%E6%A0%85%E5%8C%96/&text=图形学-光栅化"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%85%89%E6%A0%85%E5%8C%96/&title=图形学-光栅化"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%85%89%E6%A0%85%E5%8C%96/&is_video=false&description=图形学-光栅化"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=图形学-光栅化&body=Check out this article: http://example.com/2023/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%85%89%E6%A0%85%E5%8C%96/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%85%89%E6%A0%85%E5%8C%96/&title=图形学-光栅化"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%85%89%E6%A0%85%E5%8C%96/&title=图形学-光栅化"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%85%89%E6%A0%85%E5%8C%96/&title=图形学-光栅化"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%85%89%E6%A0%85%E5%8C%96/&title=图形学-光栅化"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%85%89%E6%A0%85%E5%8C%96/&name=图形学-光栅化&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%85%89%E6%A0%85%E5%8C%96/&t=图形学-光栅化"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E5%BD%A2%E7%AE%A1%E7%BA%BF%EF%BC%88graphics-pipeline%EF%BC%89%E6%80%BB%E8%A7%88"><span class="toc-number">1.</span> <span class="toc-text">图形管线（graphics pipeline）总览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%89%E6%A0%85%E5%8C%96"><span class="toc-number">2.</span> <span class="toc-text">光栅化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%98%E5%88%B6%E7%BA%BF%E6%9D%A1%EF%BC%88midpoint-Bresenham%E7%AE%97%E6%B3%95%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">绘制线条（midpoint-Bresenham算法）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96"><span class="toc-number">2.2.</span> <span class="toc-text">三角形的光栅化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Z-buffer%E7%AE%97%E6%B3%95"><span class="toc-number">2.3.</span> <span class="toc-text">Z-buffer算法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9D%80%E8%89%B2%E9%A2%91%E7%8E%87"><span class="toc-number">3.</span> <span class="toc-text">着色频率</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%90%E5%B9%B3%E9%9D%A2%E7%9D%80%E8%89%B2-Flat-Shading"><span class="toc-number">3.1.</span> <span class="toc-text">逐平面着色(Flat Shading)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%90%E9%A1%B6%E7%82%B9%E7%9D%80%E8%89%B2-Per-vertex-Shading-x2F-Gouraud-shading"><span class="toc-number">3.2.</span> <span class="toc-text">逐顶点着色(Per-vertex Shading&#x2F;Gouraud shading)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%90%E5%83%8F%E7%B4%A0%E7%9D%80%E8%89%B2-Phong-shading"><span class="toc-number">3.3.</span> <span class="toc-text">逐像素着色(Phong shading)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%88%E6%9E%9C%E5%AF%B9%E6%AF%94"><span class="toc-number">3.4.</span> <span class="toc-text">效果对比</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9D%80%E8%89%B2%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.</span> <span class="toc-text">着色模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ambient%E6%B3%9B%E5%85%89%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.1.</span> <span class="toc-text">Ambient泛光模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Lambert%E6%BC%AB%E5%8F%8D%E5%B0%84%E6%A8%A1%E5%9E%8B-diffuse"><span class="toc-number">4.2.</span> <span class="toc-text">Lambert漫反射模型(diffuse)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Phong%E5%8F%8D%E5%B0%84%E6%A8%A1%E5%9E%8B-Specular"><span class="toc-number">4.3.</span> <span class="toc-text">Phong反射模型(Specular)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Blinn-Phong%E5%8F%8D%E5%B0%84%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.4.</span> <span class="toc-text">Blinn-Phong反射模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F"><span class="toc-number">4.5.</span> <span class="toc-text">整体计算公式</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        图形学-光栅化
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">TALENTSTREAM</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-05-03T05:30:56.000Z" class="dt-published" itemprop="datePublished">2023-05-03</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h3 id="图形管线（graphics-pipeline）总览"><a href="#图形管线（graphics-pipeline）总览" class="headerlink" title="图形管线（graphics pipeline）总览"></a>图形管线（graphics pipeline）总览</h3><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503140547.png"></p>
+<h3 id="光栅化"><a href="#光栅化" class="headerlink" title="光栅化"></a>光栅化</h3><h4 id="绘制线条（midpoint-Bresenham算法）"><a href="#绘制线条（midpoint-Bresenham算法）" class="headerlink" title="绘制线条（midpoint-Bresenham算法）"></a>绘制线条（midpoint-Bresenham算法）</h4><p>我们首先知道任何一条一维直线可以用 f(x,y) &#x3D; ax + by + c &#x3D; 0 ,将点(x0,y0) 和(x1,y1)代入得以下结果</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503214800.png"></p>
+<p>我们在这里先考虑斜率在(0,1]的情况，之后类推到 (-∞,-1],(-1,0],(1,∞)</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503215239.png"></p>
+<p>在基于斜率在0-1的情况下，如上图所示，假设我们现在要画橙色格子，只可能是在最后一个蓝色格子的右边或者右上，如果直线高于黑色圆点就画在右上，如果低于黑色圆点就画在右边。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503215544.png"></p>
+<p>伪代码如上，那么some condition是什么，我们知道每个像素坐标是方格的中间，那么黑色原点应该是最后一个蓝色方格的(x+1,y+0.5),所以得到f(x+1,y+0.5) &gt; 0 时，也就是中点在直线上面，那就把橙色格子画在右边。相反就画在右上，如果相等，取决于自己，影响不大。</p>
+<p>上面就是比较好的直线绘制算法，但是有一个问题，我们每次都要进行一次F(x,y)的计算，在现在光三角形面数就有几百万的模型上，无疑是十分消耗资源的。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503215938.png"></p>
+<p>在上式，我们找到所对应的关系，我们一开始就将(x0+1,y0+0.5)代入，后面每次计算我们只要累加上述图片的函数后面的一部分就可以省下很多次f(x,y)的计算。因此我们得到以下改进过的伪代码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503220154.png"></p>
+<p>接着我们推广不同的角度的直线，也就是将x，y转化为斜率（0，1）的范围，也就是进行翻转等。下面是milo yip实现的一份很漂亮的代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">bresenham</span><span class="params">(<span class="type">int</span> x0, <span class="type">int</span> y0, <span class="type">int</span> x1, <span class="type">int</span> y1)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> dx = <span class="built_in">abs</span>(x1 - x0), sx = x0 &lt; x1 ? <span class="number">1</span> : <span class="number">-1</span>;</span><br><span class="line">    <span class="type">int</span> dy = <span class="built_in">abs</span>(y1 - y0), sy = y0 &lt; y1 ? <span class="number">1</span> : <span class="number">-1</span>;</span><br><span class="line">    <span class="type">int</span> err = (dx &gt; dy ? dx : -dy) / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// setpixel = draw</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">setpixel</span>(x0, y0), x0 != x1 || y0 != y1) &#123;</span><br><span class="line">        <span class="type">int</span> e2 = err;</span><br><span class="line">        <span class="keyword">if</span> (e2 &gt; -dx) &#123; err -= dy; x0 += sx; &#125;</span><br><span class="line">        <span class="keyword">if</span> (e2 &lt;  dy) &#123; err += dx; y0 += sy; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="三角形的光栅化"><a href="#三角形的光栅化" class="headerlink" title="三角形的光栅化"></a>三角形的光栅化</h4><p>有了直线绘制算法，我们就可以画出一个三角形了，但是如何涂满三角形内部呢。最简单的做法就是判断每个像素点是否在内部，利用叉乘的性质，我们事先知道想要光栅化的三角形的三个顶点P0，P1，P2，以及检测点Q。 只要分别计算 P0P1 × P0Q , P1P2 × P1Q , P2P0 × P2Q ，三者同号就说明必然处于三角形内部，不同号则说明该点一定在三角形外部。但是对全部像素点还是很浪费，可以用包围盒的思路，快速算出包围盒然后对包围盒里的点进行判断即可。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503221856.png"></p>
+<p>因为每个在三角形的点都可以用重心表示法表示出来</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503223329.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503223237.png"></p>
+<p>只要点在里面，我们算出来的值就会 &gt; 0，利用这个性质以及，任意两个二维向量组合成矩阵的行列式的绝对值，为这两个向量所围成平行四边形的面积，不难得出</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503223729.png"></p>
+<p>我们尝试将叉乘列出来，发现巧妙的是，正好对应方程式</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503222945.png"></p>
+<p>发现很符合上面求α，β，γ的式子，代入获得伪代码</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503223826.png"></p>
+<p>注意到，如果一个点在边上的话，如何解决，毕竟有可能同时在两个三角形上，答案是取决你自己，详见虎书8.1.2。因为如果不画的话，两个三角形将会产生缝隙，如果两个都画的话，如果三角形是透明的，这将导致双重着色。</p>
+<h4 id="Z-buffer算法"><a href="#Z-buffer算法" class="headerlink" title="Z-buffer算法"></a>Z-buffer算法</h4><p>常见的处理前后关系有画家算法和z-buffer算法，前者性能消耗较大已经很少用了，后者很简单，我们设置一个zbuffer数组，绘制三角形的时候如果该三角形的深度比较小，就覆盖掉zbuffer的值，同时更新该点的颜色。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503225042.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503225034.png"></p>
+<p>即使这样，我们可能会遇到深度冲突的问题，也就是物体z轴相同，会进行闪烁。越接近far平面，depth变化越小，精度变差越容易出现z-fighting问题。<br>避免Z-fighting问题：</p>
+<ul>
+<li>可以将near和 far的距离缩小，同时尽量将near变大一些。</li>
+<li>当然也可以使用精度更高的zbuffer，简单来说就是 float -&gt; double</li>
+</ul>
+<p>参考：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/25095708">全面认识Depth - 这里有关于Depth的一切</a></p>
+<h3 id="着色频率"><a href="#着色频率" class="headerlink" title="着色频率"></a>着色频率</h3><h4 id="逐平面着色-Flat-Shading"><a href="#逐平面着色-Flat-Shading" class="headerlink" title="逐平面着色(Flat Shading)"></a>逐平面着色(Flat Shading)</h4><p>顾名思义，就是以每一个面作为一个着色单位进行着色计算</p>
+<h4 id="逐顶点着色-Per-vertex-Shading-x2F-Gouraud-shading"><a href="#逐顶点着色-Per-vertex-Shading-x2F-Gouraud-shading" class="headerlink" title="逐顶点着色(Per-vertex Shading&#x2F;Gouraud shading)"></a>逐顶点着色(Per-vertex Shading&#x2F;Gouraud shading)</h4><p>顾名思义就是对每一个顶点进行着色计算，顶点法线计算就是由这个点相关的每个面的法线求平均值再进行标准化即可得到,对于内部的点就用重心坐标计算颜色</p>
+<h4 id="逐像素着色-Phong-shading"><a href="#逐像素着色-Phong-shading" class="headerlink" title="逐像素着色(Phong shading)"></a>逐像素着色(Phong shading)</h4><p>就是对每个像素进行着色计算，三角形内部的点同样用重心法进行计算，只不过这次是计算法线，这样子可能要更准确些。</p>
+<h4 id="效果对比"><a href="#效果对比" class="headerlink" title="效果对比"></a>效果对比</h4><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230503233930.png"></p>
+<h3 id="着色模型"><a href="#着色模型" class="headerlink" title="着色模型"></a>着色模型</h3><h4 id="Ambient泛光模型"><a href="#Ambient泛光模型" class="headerlink" title="Ambient泛光模型"></a>Ambient泛光模型</h4><p>即只考虑环境光，这时一个经验模型</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230504210946.png"></p>
+<p>其中<br>Ka代表物体表面对环境光的反射率，Ia代表入射环境光的亮度，Ienv存储结果，即人眼所能看到从物体表面反射的环境光的亮度。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230504211039.png"></p>
+<h4 id="Lambert漫反射模型-diffuse"><a href="#Lambert漫反射模型-diffuse" class="headerlink" title="Lambert漫反射模型(diffuse)"></a>Lambert漫反射模型(diffuse)</h4><p>就是在Ambient上增加了漫反射项。漫反射便是光从一定角度入射之后从入射点向四面八方反射，且每个不同方向反射的光的强度相等，而产生漫反射的原因是物体表面的粗糙，导致了这种物理现象的发生。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230504211346.png"></p>
+<p>只有当入射光线与平面垂直的时候才能接受完整的光，入射角度越倾斜损失的能量越大。<br>除了入射角度，光源与照射点的距离也要考虑，离得越远强度越弱。 </p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230504211515.png"></p>
+<p>其中Kd为漫反射系数，I为入射光强，n,l分别如图中所示为法线向量和入射方向，max是为了剔除夹角大于90°的光。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230504211558.png"></p>
+<h4 id="Phong反射模型-Specular"><a href="#Phong反射模型-Specular" class="headerlink" title="Phong反射模型(Specular)"></a>Phong反射模型(Specular)</h4><p>phong 反射模型主要是为了计算高光，下图R为光线反射方向，v为人眼观察方向，</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230504211732.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230504211851.png"></p>
+<p>其中Ks为镜面反射系数，I为入射光强，r为光源到入射点距离，注意这里在max剔除大于90°的光之后，我们还乘了一个指数p，添加该项的原因很直接，因为离反射光越远就越不应该看见反射光，需要一个指数p加速衰减，α为R和v的夹角，当p越大越准确</p>
+<h4 id="Blinn-Phong反射模型"><a href="#Blinn-Phong反射模型" class="headerlink" title="Blinn-Phong反射模型"></a>Blinn-Phong反射模型</h4><p>我们将R和v夹角转化为R的半程向量转化为与h的夹角，得到结果十分近似，同时计算速度变快很多。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230504212148.png"></p>
+<h4 id="整体计算公式"><a href="#整体计算公式" class="headerlink" title="整体计算公式"></a>整体计算公式</h4><p><img src="https://cdn.jsdelivr.net/gh/talentstream/PictureCDN/OSTEP/20230504212203.png"></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/archives/">Blog</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E5%BD%A2%E7%AE%A1%E7%BA%BF%EF%BC%88graphics-pipeline%EF%BC%89%E6%80%BB%E8%A7%88"><span class="toc-number">1.</span> <span class="toc-text">图形管线（graphics pipeline）总览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%89%E6%A0%85%E5%8C%96"><span class="toc-number">2.</span> <span class="toc-text">光栅化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%98%E5%88%B6%E7%BA%BF%E6%9D%A1%EF%BC%88midpoint-Bresenham%E7%AE%97%E6%B3%95%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">绘制线条（midpoint-Bresenham算法）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E5%85%89%E6%A0%85%E5%8C%96"><span class="toc-number">2.2.</span> <span class="toc-text">三角形的光栅化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Z-buffer%E7%AE%97%E6%B3%95"><span class="toc-number">2.3.</span> <span class="toc-text">Z-buffer算法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9D%80%E8%89%B2%E9%A2%91%E7%8E%87"><span class="toc-number">3.</span> <span class="toc-text">着色频率</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%90%E5%B9%B3%E9%9D%A2%E7%9D%80%E8%89%B2-Flat-Shading"><span class="toc-number">3.1.</span> <span class="toc-text">逐平面着色(Flat Shading)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%90%E9%A1%B6%E7%82%B9%E7%9D%80%E8%89%B2-Per-vertex-Shading-x2F-Gouraud-shading"><span class="toc-number">3.2.</span> <span class="toc-text">逐顶点着色(Per-vertex Shading&#x2F;Gouraud shading)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%90%E5%83%8F%E7%B4%A0%E7%9D%80%E8%89%B2-Phong-shading"><span class="toc-number">3.3.</span> <span class="toc-text">逐像素着色(Phong shading)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%88%E6%9E%9C%E5%AF%B9%E6%AF%94"><span class="toc-number">3.4.</span> <span class="toc-text">效果对比</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9D%80%E8%89%B2%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.</span> <span class="toc-text">着色模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ambient%E6%B3%9B%E5%85%89%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.1.</span> <span class="toc-text">Ambient泛光模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Lambert%E6%BC%AB%E5%8F%8D%E5%B0%84%E6%A8%A1%E5%9E%8B-diffuse"><span class="toc-number">4.2.</span> <span class="toc-text">Lambert漫反射模型(diffuse)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Phong%E5%8F%8D%E5%B0%84%E6%A8%A1%E5%9E%8B-Specular"><span class="toc-number">4.3.</span> <span class="toc-text">Phong反射模型(Specular)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Blinn-Phong%E5%8F%8D%E5%B0%84%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.4.</span> <span class="toc-text">Blinn-Phong反射模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F"><span class="toc-number">4.5.</span> <span class="toc-text">整体计算公式</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://example.com/2023/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%85%89%E6%A0%85%E5%8C%96/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://example.com/2023/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%85%89%E6%A0%85%E5%8C%96/&text=图形学-光栅化"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://example.com/2023/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%85%89%E6%A0%85%E5%8C%96/&title=图形学-光栅化"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://example.com/2023/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%85%89%E6%A0%85%E5%8C%96/&is_video=false&description=图形学-光栅化"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=图形学-光栅化&body=Check out this article: http://example.com/2023/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%85%89%E6%A0%85%E5%8C%96/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://example.com/2023/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%85%89%E6%A0%85%E5%8C%96/&title=图形学-光栅化"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://example.com/2023/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%85%89%E6%A0%85%E5%8C%96/&title=图形学-光栅化"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://example.com/2023/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%85%89%E6%A0%85%E5%8C%96/&title=图形学-光栅化"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://example.com/2023/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%85%89%E6%A0%85%E5%8C%96/&title=图形学-光栅化"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://example.com/2023/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%85%89%E6%A0%85%E5%8C%96/&name=图形学-光栅化&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://example.com/2023/05/03/%E5%9B%BE%E5%BD%A2%E5%AD%A6-%E5%85%89%E6%A0%85%E5%8C%96/&t=图形学-光栅化"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2024
+    TALENTSTREAM
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Blog</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
